@@ -49,11 +49,8 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
 
     protected function buildDataflow(DataflowBuilder $builder, array $options): void
     {
-
         $builder->setReader($this->fileReader->read($options['csv-source']));
-
         $builder->addWriter($this->contentWriter);
-
         $builder->addStep(function ($data) use ($options) {
             $mapping = $options['mapping'];
             if (!isset($data[$mapping['id_key']])) {
@@ -69,16 +66,13 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
                 'address' => $data[$mapping['address']],
                 ];
 
-
-            $structure =  $this->contentStructureFactory->transform(
+            return $this->contentStructureFactory->transform(
                 $contentData,
                 $remoteId,
                 'fre-FR',
                 'location',
                 $options['parent-location-id']
             );
-            dump(get_class($structure));
-            return $structure;
         });
         $builder->addWriter($this->contentWriter);
     }
@@ -87,7 +81,5 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
     {
         $optionsResolver->setDefaults(['csv-source' => '', 'parent-location-id' => null, 'mapping' => []]);
         $optionsResolver->setRequired(['csv-source', 'parent-location-id', 'mapping']);
-        // 'identifiant_public_unite'
     }
-
 }
