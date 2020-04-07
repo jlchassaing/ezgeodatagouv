@@ -1,0 +1,31 @@
+{
+  "name": "jlchassaing/ezgeodatagouv",
+  "description": "EzGeoDataGouv bundle helps interact with datagouv to import location and search them using geo.data.gouv tool",
+  "type": "ezplatform-bundle",
+  "keywords": [
+    "ezplatform",
+    "ezpublish",
+    "data-gouv"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jean-Luc Chassaing"
+    },
+    {
+      "name": "Grégory Lévêque"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "ezsystems/ezpublish-kernel": "~7.5.5",
+    "symfony/symfony": "^3.4",
+    "code-rhapsodie/ezdataflow-bundle": "^2.0",
+  },
+  "autoload": {
+    "psr-4": {
+      "eZGeoDataGouvBundle\\": "src/bundle",
+      "eZGeoDataGouv\\": "src/lib"
+    }
+  }
+}

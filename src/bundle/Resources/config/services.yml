@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  eZGeoDataGouv\DataFlowType\DataGouvImportLocationsDataFlowType:
+    tags:
+      - { name: coderhapsodie.dataflow.type }
