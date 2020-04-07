@@ -13,7 +13,7 @@ use CodeRhapsodie\DataflowBundle\DataflowType\Result;
 use CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory;
 use CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactoryInterface;
 use CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter;
-use GieNat\Common\FrontDisplayBundle\DataFlow\FileReader;
+use eZGeoDataGouv\DataFlow\FileReader;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implements DataflowTypeInterface
