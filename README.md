@@ -62,7 +62,7 @@ bin/console code-rhapsodie:dataflow:execute --siteaccess=<siteaccess> dtgi  '{"p
 
 ## Todos
 
-- [] add csv config
-- [] if no location parameters are given (longitude, latitude) the geocode before importing data
-- [] set a mapping configuration interface and only pass a configuration id to import script
-- [] add parameters to conactenate fields to build the adress field
+- [ ] add csv config
+- [ ] if no location parameters are given (longitude, latitude) the geocode before importing data
+- [ ] set a mapping configuration interface and only pass a configuration id to import script
+- [ ] add parameters to conactenate fields to build the adress field
