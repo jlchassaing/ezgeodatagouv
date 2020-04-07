@@ -34,6 +34,12 @@ public function registerBundles()
 }
 ```
 
+Create the new location content type 
+
+```
+bin/console kaliop:migration:migrate --siteaccess=rec_admin --path=vendor/jlchassaing/ezgeodatagouv/src/bundle/MigrationVersions/20200407105655_create_location_content_type.yml
+```
+
 ## how to import data
 
 

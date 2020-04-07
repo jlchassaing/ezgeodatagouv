@@ -1,0 +1,22 @@
+
+-
+    type: content_type
+    mode: create
+    content_type_group: 1
+    identifier: location
+    name: Location
+    name_pattern: <name>
+    attributes:
+        -
+            type: ezstring
+            identifier: name
+            name: Name
+        -
+            type: ezgmaplocation
+            identifier: address
+            name: Address
+        -
+            type: ezurl
+            identifier: url
+            name: Url
+
