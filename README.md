@@ -58,7 +58,9 @@ ez_geo_data_gouv:
                 latitude: latitude
                 address: csv_field_used_for_full_address
             fields: # if using a custom class identifier cet specific fields
-                url: url
+                url:
+                    datatype: ezurl
+                    value: url
             geocoding_fields:
                 columns:
                     - commune # csv field to send for geo coding in geo.api.gouv
@@ -71,6 +73,10 @@ ez_geo_data_gouv:
 
 The settings help set how the csv fields will be used.
 The ressoure name must be passed in option to the import script
+
+The fields sections helps you add specific content_type fields. The key is the conten_type field identifier.
+the datatype is te content_type field datatype and value is the csv field name
+
 
 ### running import
 
