@@ -7,8 +7,13 @@
 namespace eZGeoDataGouv\DataFlow;
 
 
-class FileReader
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+
+class FileReader extends AbstractReader
 {
+    protected $keys;
+
     public function read(string $filename): iterable
     {
         if (!$filename) {
@@ -20,13 +25,21 @@ class FileReader
         }
 
         $keys = [];
-        while (false !== ($read = fgetcsv($fh,1024,';','"'))) {
-            if (empty($keys)) {
-                $keys=$read;
-                continue;
-            }
-            yield array_combine($keys,$read);;
+
+        while (false !== ($read = fread($fh,1024))) {
+            $data = $this->getData($line);
+            if (empty($data)) continue;
+            else yield $data;
         }
     }
 
+    private function getData($line)
+    {
+        $data = str_getcsv($line,';','"');
+        if (empty($this->keys)){
+            $this->keys = $data;
+            return null;
+        }
+        return array_combine($this->keys,$data);
+    }
 }

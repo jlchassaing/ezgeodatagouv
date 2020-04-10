@@ -6,6 +6,8 @@
 
 namespace eZGeoDataGouvBundle\DependencyInjection;
 
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -18,8 +20,12 @@ class EzGeoDataGouvExtension extends Extension
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        // TODO: Implement load() method.
+
+        $configuration = new Configuration();
+
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('ez_geo_data_gouv.resources', $config['resources']);
+        $container->setParameter('ez_geo_data_gouv.api_url', $config['api_url']);
     }
-
-
 }

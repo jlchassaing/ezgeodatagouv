@@ -42,6 +42,37 @@ bin/console kaliop:migration:migrate --siteaccess=rec_admin --path=vendor/jlchas
 
 ## how to import data
 
+### Set a resource
+
+Resouces are set in a config.yml file
+
+```yaml
+ez_geo_data_gouv:
+    resources:
+        resource_key_name:
+            do_geocoding: true|false
+            id_key: csv_uniq_id_key
+            name: csv_field_used_for_name
+            address:
+                longitude: longitude
+                latitude: latitude
+                address: csv_field_used_for_full_address
+            fields: # if using a custom class identifier cet specific fields
+                url: url
+            geocoding_fields:
+                columns:
+                    - commune # csv field to send for geo coding in geo.api.gouv
+                    - voie
+                postcode: code_postal 
+                citycode: code_commune_insee
+                result_columns:
+                    - result_label # set specific fields for result if not set default are longitude and latidue
+```
+
+The settings help set how the csv fields will be used.
+The ressoure name must be passed in option to the import script
+
+### running import
 
 The import script alias is 'dtgi'
 
@@ -51,24 +82,15 @@ The options to provide are :
 
 * the parent_location_id where contents will be added
 * the csv_source path where the csv source is can be online (for now the file must be semicolon field seperated and quotation marks)
-* filed mapping 
-
-The field mapping is important here to help match csv parameters to the eZ Content fields.
-By defaut you must provide :
- * **id_key** : identifier field
- * **name** : the location name
- * **latitude** : the latitude csv field
- * **longitude** : the longitude csv field
- * **address** : the adresse field
+* resource name 
  
-
 ```shell script
-bin/console code-rhapsodie:dataflow:execute --siteaccess=<siteaccess> dtgi  '{"parent-location-id":<locationId>,"csv-source":"<csvpath>","mapping":{"id_key":"<id_field>", "name":"<name_field>","longitude":"<longitude_field>","latitude":"<latitude_field>","address":"<address_field>"}}'
+bin/console code-rhapsodie:dataflow:execute --siteaccess=<siteaccess> dtgi  '{"parent-location-id":<locationId>,"csv-source":"<csvpath>","resource":"<resource_name>"}'
 ```
 
 ## Todos
 
-- [ ] add csv config
+- [X] add csv config
 - [ ] if no location parameters are given (longitude, latitude) the geocode before importing data
 - [ ] set a mapping configuration interface and only pass a configuration id to import script
 - [ ] add parameters to conactenate fields to build the adress field
