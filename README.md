@@ -51,6 +51,8 @@ ez_geo_data_gouv:
     resources:
         resource_key_name:
             do_geocoding: true|false
+            content_type: content_type_identifier # content type where to import data
+            language: import_language # should be eng-GB or fre-FR or any other language default is eng-GB
             id_key: csv_uniq_id_key
             name: csv_field_used_for_name
             address:

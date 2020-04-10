@@ -98,8 +98,8 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
             return $this->contentStructureFactory->transform(
                 $contentData,
                 $remoteId,
-                'fre-FR',
-                'location',
+                $config['language'],
+                $config['content_type'],
                 $options['parent-location-id']
             );
         });
