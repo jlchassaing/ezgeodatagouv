@@ -101,7 +101,7 @@ class GeocodingFileReader extends AbstractReader
             /**
              * @todo deal correctly with this error
              */
-            dump($response->getReasonPhrase());die();
+            throw new \Exception($response->getReasonPhrase());
         }
     }
 
