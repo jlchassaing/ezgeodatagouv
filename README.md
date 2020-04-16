@@ -26,6 +26,7 @@ public function registerBundles()
 {
     $bundles = [
         // ...
+        new Kaliop\eZMigrationBundle\EzMigrationBundle(),
         new CodeRhapsodie\DataflowBundle\CodeRhapsodieDataflowBundle(),
         new CodeRhapsodie\EzDataflowBundle\CodeRhapsodieEzDataflowBundle(),
         new eZGeoDataGouvBundle\EzGeoDataGouvBundle(),
@@ -37,7 +38,7 @@ public function registerBundles()
 Create the new location content type 
 
 ```
-bin/console kaliop:migration:migrate --siteaccess=rec_admin --path=vendor/jlchassaing/ezgeodatagouv/src/bundle/MigrationVersions/20200407105655_create_location_content_type.yml
+bin/console kaliop:migration:migrate --siteaccess=admin --path=vendor/jlchassaing/ezgeodatagouv/src/bundle/MigrationVersions/20200407105655_create_location_content_type.yml
 ```
 
 ## how to import data
