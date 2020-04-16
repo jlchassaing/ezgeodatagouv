@@ -26,8 +26,8 @@ class FileReader extends AbstractReader
 
         $keys = [];
 
-        while (false !== ($read = fread($fh,1024))) {
-            $data = $this->getData($line);
+        while (false !== ($read = fgets($fh,1024))) {
+            $data = $this->getData($read);
             if (empty($data)) continue;
             else yield $data;
         }
@@ -35,6 +35,7 @@ class FileReader extends AbstractReader
 
     private function getData($line)
     {
+
         $data = str_getcsv($line,';','"');
         if (empty($this->keys)){
             $this->keys = $data;
