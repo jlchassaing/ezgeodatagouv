@@ -35,6 +35,13 @@ public function registerBundles()
 }
 ```
 
+in routing.yml add the coderhapsody routing parameter
+
+```yaml
+_cr.dataflow:
+    resource: '@CodeRhapsodieEzDataflowBundle/Resources/config/routing.yaml'
+```
+
 Create the new location content type 
 
 ```
