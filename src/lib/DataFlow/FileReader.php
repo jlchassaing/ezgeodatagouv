@@ -26,7 +26,7 @@ class FileReader extends AbstractReader
 
         $keys = [];
 
-        while (false !== ($read = fread($fh,1024))) {
+        while (false !== ($read = fgets($fh,1024))) {
             $data = $this->getData($line);
             if (empty($data)) continue;
             else yield $data;
