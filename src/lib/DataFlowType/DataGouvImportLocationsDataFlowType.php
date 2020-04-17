@@ -91,6 +91,7 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
     protected function addFilterTask(DataflowBuilder $builder)
     {
         $builder->addStep(function ($data){
+            /** Put your code here to invalidate a row return null */
             return $data;
         });
     }
