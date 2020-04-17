@@ -126,7 +126,7 @@ will return a json formated response.
 
 The query will return a maximum of 5 answers  
 
-## Extending for to add custom import manager
+## Extending to add a custom import manager
 
 The DataGouvImportLocationsDataFlowType class can be extended
 
