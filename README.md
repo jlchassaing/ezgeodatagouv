@@ -126,6 +126,45 @@ will return a json formated response.
 
 The query will return a maximum of 5 answers  
 
+## Extending for to add custom import manager
+
+The DataGouvImportLocationsDataFlowType class can be extended
+
+This could be necessary to execute some changes on the csv data before
+creating content. 
+
+Create a custom class that extends DataGouvImportLocationsDataFlowType and add methods :
+
+```php
+...
+    public function getLabel(): string
+    {
+        return "My DataFlow";
+    }
+
+    public function getAliases(): iterable
+    {
+        return ['mydf'];
+    }
+
+    protected function addFilterTask(DataflowBuilder $builder)
+    {
+        $builder->addStep(function ($data){
+            /** add here your code and return data or null to invalidate line */
+            return $data;
+        });
+    }
+... 
+```
+
+Once the class is created declare it as a service and add tag *coderhapsodie.dataflow.type*
+
+```yaml
+AppBundle\DataFlow\MyDataFlowType:
+    tags:
+        - { name: coderhapsodie.dataflow.type }
+```
+
 
 ## Todos
 
