@@ -8,9 +8,16 @@
 
 namespace eZGeoDataGouvBundle;
 
+use eZGeoDataGouvBundle\DependencyInjection\EzGeoDataGouvExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EzGeoDataGouvBundle extends Bundle
 {
+    protected $name = 'EzGeoDataGouvBundle';
+
+    public function getContainerExtension()
+    {
+        return new EzGeoDataGouvExtension();
+    }
 
 }

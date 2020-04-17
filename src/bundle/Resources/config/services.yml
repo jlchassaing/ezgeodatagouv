@@ -15,3 +15,13 @@ services:
   eZGeoDataGouv\DataFlow\GeocodingFileReader:
     arguments:
       $api_url: '%ez_geo_data_gouv.api_url%'
+
+  eZGeoDataGouvBundle\Rest\DefaultController:
+    autoconfigure: false
+    autowire: false
+    public: true
+    parent: 'ezpublish_rest.controller.base'
+
+  ez_geo_data_gouv.rest.controller:
+    alias: eZGeoDataGouvBundle\Rest\DefaultController
+    public: true

@@ -1,0 +1,40 @@
+EzGeoDataGouv_search_proximity:
+
+  path: '/ez_geo_data_gouv/search/{longitude}/{latitude}'
+  defaults:
+    _controller:  ez_geo_data_gouv.rest.controller:search
+  methods: [GET]
+  requirements:
+    longitude: '\d+(\.\d{1,6})?'
+    latitude: '\d+(\.\d{1,6})?'
+
+EzGeoDataGouv_search_proximity_with_distance:
+  path: '/ez_geo_data_gouv/search/{distance}/{longitude}/{latitude}'
+  defaults:
+    _controller:  ez_geo_data_gouv.rest.controller:search
+  methods: [GET]
+  requirements:
+    distance: '\d+'
+    longitude: '\d+(\.\d{1,6})?'
+    latitude: '\d+(\.\d{1,6})?'
+
+EzGeoDataGouv_search_proximity_with_content_type:
+  path: '/ez_geo_data_gouv/search/{contentType}/{longitude}/{latitude}'
+  defaults:
+    _controller:  ez_geo_data_gouv.rest.controller:search
+  methods: [GET]
+  requirements:
+    contentType: '\w+'
+    longitude: '\d+(\.\d{1,6})?'
+    latitude: '\d+(\.\d{1,6})?'
+
+EzGeoDataGouv_search_proximity_with_content_type_and_distance:
+  path: '/ez_geo_data_gouv/search/{contentType}/{distance}/{longitude}/{latitude}'
+  defaults:
+    _controller:  ez_geo_data_gouv.rest.controller:search
+  methods: [GET]
+  requirements:
+    contentType: '\w+'
+    distance: '\d+'
+    longitude: '\d+(\.\d{1,6})?'
+    latitude: '\d+(\.\d{1,6})?'

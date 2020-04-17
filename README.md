@@ -40,6 +40,10 @@ in routing.yml add the coderhapsody routing parameter
 ```yaml
 _cr.dataflow:
     resource: '@CodeRhapsodieEzDataflowBundle/Resources/config/routing.yaml'
+
+_ezGeoDataGouv:
+    resource: '@EzGeoDataGouvBundle/Resources/config/rest_routing.yml'
+    prefix: '%ezpublish_rest.path_prefix%'
 ```
 
 Create the new location content type 
@@ -103,6 +107,25 @@ The options to provide are :
 ```shell script
 bin/console code-rhapsodie:dataflow:execute --siteaccess=<siteaccess> dtgi  '{"parent-location-id":<locationId>,"csv-source":"<csvpath>","resource":"<resource_name>"}'
 ```
+
+## Proximity search
+
+The eZ Rest api has been extended with a query that returns proximity points
+
+there are 4 ways to call the perform the request :
+* /ez_geo_data_gouv/search/{longitude}/{latitude}
+* /ez_geo_data_gouv/search/{distance}/{longitude}/{latitude}
+* /ez_geo_data_gouv/search/{contentType}/{longitude}/{latitude}
+* /ez_geo_data_gouv/search/{contentType}/{distance}/{longitude}/{latitude}
+ 
+The default contentType is "location" and the default distance is 5
+
+Remember to use the ezpublish api request prefix
+Adding the Accept: application/vnd.ez.api.ContentList+json header to your request
+will return a json formated response.
+
+The query will return a maximum of 5 answers  
+
 
 ## Todos
 
