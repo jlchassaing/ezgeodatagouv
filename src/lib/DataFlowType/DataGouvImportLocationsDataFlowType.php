@@ -13,6 +13,7 @@ use CodeRhapsodie\DataflowBundle\DataflowType\Result;
 use CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory;
 use CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactoryInterface;
 use CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter;
+use eZGeoDataGouv\Config\ConfigManager;
 use eZGeoDataGouv\DataFlow\FileReader;
 use eZGeoDataGouv\DataFlow\GeocodingFileReader;
 use Symfony\Component\DependencyInjection\Container;
@@ -32,22 +33,31 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
     /** @var \eZGeoDataGouv\DataFlow\GeocodingFileReader  */
     protected $geocodingFileReader;
 
-    protected $config;
+    /** @var \eZGeoDataGouv\Config\ConfigManager  */
+    protected $configManager;
 
-
+    /**
+     * DataGouvImportLocationsDataFlowType constructor.
+     *
+     * @param \CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter $contentWriter
+     * @param \CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory $contentStructureFactory
+     * @param \eZGeoDataGouv\DataFlow\FileReader $fileReader
+     * @param \eZGeoDataGouv\DataFlow\GeocodingFileReader $geocodingFileReader
+     * @param \eZGeoDataGouv\Config\ConfigManager $configManager
+     */
     public function __construct(
         ContentWriter $contentWriter,
         ContentStructureFactory $contentStructureFactory,
         FileReader $fileReader,
         GeocodingFileReader $geocodingFileReader,
-        $config)
+        ConfigManager $configManager)
     {
 
         $this->contentWriter = $contentWriter;
         $this->contentStructureFactory = $contentStructureFactory;
         $this->fileReader = $fileReader;
         $this->geocodingFileReader = $geocodingFileReader;
-        $this->config = $config;
+        $this->configManager = $configManager;
     }
 
     public function getLabel(): string
@@ -63,25 +73,44 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
     protected function buildDataflow(DataflowBuilder $builder, array $options): void
     {
         $resourceName = $options['resource'];
-        $config = $this->config[$resourceName];
+        $config = $this->configManager->getResource($resourceName);
 
         $builder->setReader($this->getReader($config)->read($options['csv-source']));
+        $this->addFilterTask($builder);
+        $this->addCsvFieldMapping($builder, $options, $config);
         $builder->addWriter($this->contentWriter);
+    }
+
+    /**
+     * Use this methods to manage fields in data before creating content
+     * one usecase could be to format the naming field
+     *
+     *
+     * @param \CodeRhapsodie\DataflowBundle\DataflowType\DataflowBuilder $builder
+     */
+    protected function addFilterTask(DataflowBuilder $builder)
+    {
+        $builder->addStep(function ($data){
+            return $data;
+        });
+    }
+
+    protected function addCsvFieldMapping(DataflowBuilder $builder, $options, $config)
+    {
         $builder->addStep(function ($data) use ($config,$options) {
 
             if (!isset($data[$config['id_key']])) {
                 return false;
             }
 
-
-            $remoteId = sprintf('location-%d', $data[$config['id_key']]);
+            $remoteId = sprintf('%s-%d', $config['content_type'],$data[$config['id_key']]);
 
             $contentData['name'] = $data[$config['name']];
             $contentData['address'] = [
                 'longitude' => (float) $data[$config['address']['longitude']],
                 'latitude' => (float) $data[$config['address']['latitude']],
                 'address' => $data[$config['address']['address']],
-                ];
+            ];
 
             foreach ($config['fields'] as $key=>$field) {
                 switch ($field['datatype']){
@@ -93,8 +122,6 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
                 }
             }
 
-
-
             return $this->contentStructureFactory->transform(
                 $contentData,
                 $remoteId,
@@ -103,7 +130,6 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
                 $options['parent-location-id']
             );
         });
-        $builder->addWriter($this->contentWriter);
     }
 
     protected function configureOptions(OptionsResolver $optionsResolver): void

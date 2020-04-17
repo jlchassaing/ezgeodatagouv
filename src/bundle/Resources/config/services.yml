@@ -4,17 +4,15 @@ services:
     autoconfigure: true
     public: false
 
+  eZGeoDataGouv\Config\ConfigManager:
+
   eZGeoDataGouv\DataFlowType\DataGouvImportLocationsDataFlowType:
-    arguments:
-      $config: '%ez_geo_data_gouv.resources%'
     tags:
       - { name: coderhapsodie.dataflow.type }
 
   eZGeoDataGouv\DataFlow\FileReader:
 
   eZGeoDataGouv\DataFlow\GeocodingFileReader:
-    arguments:
-      $api_url: '%ez_geo_data_gouv.api_url%'
 
   eZGeoDataGouvBundle\Rest\DefaultController:
     autoconfigure: false

@@ -7,6 +7,7 @@
 namespace eZGeoDataGouvBundle\DependencyInjection;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use eZGeoDataGouv\Config\ConfigManager;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,7 +26,10 @@ class EzGeoDataGouvExtension extends Extension
 
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('ez_geo_data_gouv.resources', $config['resources']);
-        $container->setParameter('ez_geo_data_gouv.api_url', $config['api_url']);
+        $definition = $container->getDefinition('eZGeoDataGouv\Config\ConfigManager');
+        $definition->setArgument(0, $config);
+
+        $definition = $container->getDefinition('eZGeoDataGouv\DataFlow\GeocodingFileReader');
+        $definition->setArgument(0, $config['api_url']);
     }
 }
