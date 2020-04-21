@@ -9,6 +9,7 @@ namespace eZGeoDataGouv\DataFlow;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Symfony\Component\Filesystem\Filesystem;
 
 class FileReader extends AbstractReader
 {
@@ -16,15 +17,13 @@ class FileReader extends AbstractReader
 
     public function read(string $filename): iterable
     {
-        if (!$filename) {
-            throw new \Exception("The file name is not defined. Define it with 'setFilename' method");
+        if (!$this->fileExists($filename)){
+            throw new FileReaderException("Unable to open file '".$filename."' for read.");
         }
 
-        if (!$fh = fopen($filename, 'r')) {
-            throw new \Exception("Unable to open file '".$filename."' for read.");
+        if (@!$fh = fopen($filename, 'r')) {
+            throw new FileReaderException("Unable to read file '".$filename."'.");
         }
-
-        $keys = [];
 
         while (false !== ($read = fgets($fh,2048))) {
             $data = $this->getData($read);

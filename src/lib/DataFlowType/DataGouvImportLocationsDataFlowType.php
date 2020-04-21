@@ -107,7 +107,7 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
             $remoteId = sprintf('%s-%d', $config['content_type'],$data[$config['id_key']]);
 
             $contentData['name'] = $data[$config['name']];
-            $contentData['address'] = [
+            $contentData[$config['address_field_identifier']] = [
                 'longitude' => (float) $data[$config['address']['longitude']],
                 'latitude' => (float) $data[$config['address']['latitude']],
                 'address' => $data[$config['address']['address']],

@@ -9,6 +9,7 @@ namespace eZGeoDataGouv\DataFlow;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Symfony\Component\Filesystem\Filesystem;
 
 class GeocodingFileReader extends AbstractReader
 {
@@ -24,15 +25,13 @@ class GeocodingFileReader extends AbstractReader
 
     public function read(string $filename): iterable
     {
-        if (!$filename) {
-            throw new \Exception("The file name is not defined. Define it with 'setFilename' method");
+        if (!$this->fileExists($filename)){
+            throw new FileReaderException("Unable to open file '".$filename."' for read.");
         }
 
-        if (!$fh = fopen($filename, 'r')) {
-            throw new \Exception("Unable to open file '".$filename."' for read.");
+        if (@!$fh = fopen($filename, 'r')) {
+            throw new FileReaderException("Unable to read file '".$filename."'.");
         }
-
-        $keys = [];
 
         foreach($this->geocodeFile($filename) as $line){
             $data = $this->getData($line);
@@ -53,35 +52,14 @@ class GeocodingFileReader extends AbstractReader
 
     public function geocodeFile($filename)
     {
-        $params = [];
-
-        foreach ($this->config['geocoding_fields'] as $key => $geocodingField) {
-            if (is_array($geocodingField)){
-                foreach ($geocodingField as $field){
-                    $params[] = ['name' => $key, 'contents' => $field ];
-                }
-            } else {
-                $params[] = ['name' => $key, 'contents' => $geocodingField ];
-            }
-        }
-
-        $params[] = [
-            'name' => 'data',
-            'contents' => fopen($filename, 'r'),
-        ];
-
-        $data = [
-            'multipart' => $params
-        ];
-
         $client = new Client();
-        $response = $client->request('POST', $this->api_url, $data);
+        $response = $client->request('POST', $this->api_url, $this->getRequestData($filename));
 
         if ($response->getStatusCode() === 200) {
             $data = $response->getBody();
             $cache = '';
             while (!$data->eof()) {
-                $read = $cache . $data->read(1024);
+                $read = $cache . $data->read(2048);
                 $lines = explode(PHP_EOL,$read);
                 $nbLines = count($lines);
                 if ($nbLines) {
@@ -103,6 +81,31 @@ class GeocodingFileReader extends AbstractReader
              */
             throw new \Exception($response->getReasonPhrase());
         }
+    }
+
+    private function getRequestData($filename): array
+    {
+        $params = [];
+
+        foreach ($this->config['geocoding_fields'] as $key => $geocodingField) {
+            if (is_array($geocodingField)){
+                foreach ($geocodingField as $field){
+                    $params[] = ['name' => $key, 'contents' => $field ];
+                }
+            } else {
+                $params[] = ['name' => $key, 'contents' => $geocodingField ];
+            }
+        }
+
+        $params[] = [
+            'name' => 'data',
+            'contents' => fopen($filename, 'r'),
+        ];
+
+        $data = [
+            'multipart' => $params
+        ];
+        return $data;
     }
 
 }
