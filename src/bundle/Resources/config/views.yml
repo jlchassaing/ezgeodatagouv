@@ -1,0 +1,9 @@
+ezpublish:
+  system:
+    default:
+      content_view:
+        line:
+          location:
+            template: '@EzGeoDataGouv/line/location.html.twig'
+            match:
+              Identifier\ContentType: [location]

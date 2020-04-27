@@ -1,0 +1,10 @@
+<div class="ezgeodatagouv__line__type--{{ content.contentType.identifier }}">
+  <div class="ezgeodatagouv__line--title">{{ ez_content_name(content) }}</div>
+  <div class="ezgeodatagouv__line--body">
+    <div class="ezgeodatagouv__line--distance">Distance: {{ distance }}Km</div>
+    <div class="ezgeodatagouv__line--address">{{ content.getFieldValue('address').address }}</div>
+    <div class="ezgeodatagouv__line--link">
+      <a href="{{ path('ez_urlalias', {contentId: content.id}) }}">Voir le contenu</a>
+    </div>
+  </div>
+</div>

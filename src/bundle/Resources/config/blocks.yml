@@ -1,0 +1,32 @@
+ezplatform_page_fieldtype:
+  blocks:
+    geo_block:
+      name: Geo Block
+      category: default
+      thumbnail: '/bundles/ezplatformpagefieldtype/images/thumbnails/content_list.svg'
+      views:
+        default:
+          name: 'Default block layout'
+          template: '@EzGeoDataGouv/blocks/geo.html.twig'
+          priority: -255
+      attributes:
+        max_distance:
+          type: 'integer'
+          name: Default max distance
+          validators:
+            not_blank:
+              message: You must provide value
+            regexp:
+              options:
+                pattern: '/^[1-9][0-9]*$/'
+              message: Distance must be a number greater than 0
+        contentType:
+          type: 'contenttypelist'
+          name: Content Types to be searched
+          validators:
+            not_blank:
+              message: You must provide value
+            regexp:
+              options:
+                pattern: '/^([a-zA-Z_-]+|,[a-zA-Z_-]+)+$/i'
+              message: Choose at least one content type

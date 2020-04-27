@@ -12,15 +12,18 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifi
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MapLocationDistance;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use eZ\Publish\Core\REST\Server\Controller;
 use eZ\Publish\Core\REST\Server\Values;
+use eZGeoDataGouvBundle\Rest\Values\LocationContent;
+use eZGeoDataGouvBundle\Rest\Values\RestContent;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
     /**
-     * @param $longitude
-     * @param $latitude
+     * @param float $latitude
+     * @param float $longitude
      * @param int $distance
      * @param string $contentTypeIdentifier
      * @param int $nbResults
@@ -30,8 +33,13 @@ class DefaultController extends Controller
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
-    public function search($longitude,$latitude,$distance = 10, $contentTypeIdentifier = 'location', $nbResults = 5)
-    {
+    public function search(
+        $latitude,
+        $longitude,
+        $distance = 10,
+        $contentTypeIdentifier = 'location',
+        $nbResults = 5
+    ) {
         $searchService = $this->repository->getSearchService();
         $contentTypeService = $this->repository->getContentTypeService();
         $locationService = $this->repository->getLocationService();
@@ -68,8 +76,18 @@ class DefaultController extends Controller
                 $addressContentTypeAttributeIdentifier,
                 Operator::LTE,
                 $distance,
-                $longitude,
-                $latitude),
+                $latitude,
+                $longitude
+            ),
+        ];
+
+        $query->sortClauses = [
+            new Query\SortClause\MapLocationDistance(
+                $contentTypeIdentifier,
+                $addressContentTypeAttributeIdentifier,
+                $latitude,
+                $longitude
+            ),
         ];
 
         $query->limit = $nbResults;
@@ -81,18 +99,21 @@ class DefaultController extends Controller
         foreach ($results->searchHits as $searchHit) {
             /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
             $content = $searchHit->valueObject;
+            $distance = $searchHit->score;
 
             $mainLocation = $locationService->loadLocation($content->contentInfo->mainLocationId);
             $relations = $contentService->loadRelations($content->getVersionInfo());
             $path = $this->router->generate($mainLocation);
 
-            $contentValues[] = new Values\RestContent(
+            $contentValues[] = new LocationContent(
                 $content->contentInfo,
                 null,
                 $content,
                 $contentType,
                 $relations,
-                $path);
+                $path,
+                $distance
+            );
         }
 
         return new Values\ContentList($contentValues);

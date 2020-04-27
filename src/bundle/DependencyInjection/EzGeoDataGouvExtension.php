@@ -12,10 +12,12 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\Yaml\Yaml;
 
 
-class EzGeoDataGouvExtension extends Extension
+class EzGeoDataGouvExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -32,4 +34,20 @@ class EzGeoDataGouvExtension extends Extension
         $definition = $container->getDefinition('eZGeoDataGouv\DataFlow\GeocodingFileReader');
         $definition->setArgument(0, $config['api_url']);
     }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $this->prependFileContent($container, 'blocks.yml');
+        $this->prependFileContent($container, 'views.yml');
+    }
+
+    public function prependFileContent(ContainerBuilder $container, $file)
+    {
+        $configs = Yaml::parseFile(__DIR__ . '/../Resources/config/' . $file);
+        foreach ($configs as $parameter => $config) {
+            $container->prependExtensionConfig($parameter, $config);
+        }
+    }
+
+
 }
