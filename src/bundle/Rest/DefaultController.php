@@ -6,7 +6,6 @@
 
 namespace eZGeoDataGouvBundle\Rest;
 
-
 use Behat\Behat\Definition\SearchResult;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MapLocationDistance;
@@ -49,13 +48,13 @@ class DefaultController extends Controller
         $addressContentTypeAttributeIdentifier = 'address';
 
         foreach ($contentType->fieldDefinitions as $fieldDefinition) {
-            if ($fieldDefinition->fieldTypeIdentifier === 'ezaddress') {
+            if ($fieldDefinition->fieldTypeIdentifier === 'ezgmaplocation') {
                 $addressContentTypeAttributeIdentifier = $fieldDefinition->identifier;
                 break;
             }
         }
 
-       $query = new Query();
+        $query = new Query();
 
         /**
          * Latitude:	45.96062
@@ -118,5 +117,4 @@ class DefaultController extends Controller
 
         return new Values\ContentList($contentValues);
     }
-
 }
