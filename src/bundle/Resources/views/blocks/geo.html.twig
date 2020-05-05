@@ -1,13 +1,15 @@
-
-
 {{ encore_entry_link_tags('ezgeodatagouv-full-css', null, 'ezplatform') }}
 
-
 <div id="{{ block_id }}" class="{{ block_class }}" style="{{ block_style }}">
-  <div id="root_geo_finder" data_distance="{{ max_distance }}" data_content_type="{{ contentType }}"></div>
+  <div
+    id="root_geo_finder"
+    data-siteaccess="{{ ezpublish.siteaccess.name }}"
+    data-distance="{{ max_distance }}"
+    data-contenttype="{{ contentType }}">
+  </div>
 </div>
 
 <script src="{{ asset('bundles/ezplatformadminuiassets/vendors/leaflet/dist/leaflet.js') }}"></script>
 <script src="{{ asset('bundles/ezplatformadminuiassets/vendors/react/umd/react.production.min.js') }}"></script>
 <script src="{{ asset('bundles/ezplatformadminuiassets/vendors/react-dom/umd/react-dom.production.min.js') }}"></script>
-{{ encore_entry_script_tags('ezgeodatagouv-full-js', null, 'ezplatform') }}
+<script src="{{ asset('bundles/ezgeodatagouv/js/geo-finder.js') }}"></script>

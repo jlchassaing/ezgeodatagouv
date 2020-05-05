@@ -34,13 +34,18 @@ export function client(
     })
 }
 
-export function promiseAllWrapper(ContentList) {
+export function promiseAllWrapper(ContentList, siteaccess) {
   return ContentList.reduce(
     (promises, ContentInfo) => [
       ...promises,
       client(
         `view/content/${ContentInfo.Content._id}/line/${ContentInfo._distance}`,
-        { output: 'text' }
+        {
+          output: 'text',
+          headers: {
+            'X-Siteaccess': siteaccess,
+          },
+        }
       ),
     ],
     []

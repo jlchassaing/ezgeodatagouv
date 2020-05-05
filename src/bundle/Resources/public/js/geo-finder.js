@@ -3,11 +3,11 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('react'), require('react-dom'), require('leaflet')) :
   typeof define === 'function' && define.amd ? define(['react', 'react-dom', 'leaflet'], factory) :
   (global = global || self, factory(global.React, global.ReactDOM, global.L));
-}(this, (function (React, reactDom, leaflet) { 'use strict';
+}(this, (function (React, reactDom, L) { 'use strict';
 
   var React__default = 'default' in React ? React['default'] : React;
   var reactDom__default = 'default' in reactDom ? reactDom['default'] : reactDom;
-  var leaflet__default = 'default' in leaflet ? leaflet['default'] : leaflet;
+  var L__default = 'default' in L ? L['default'] : L;
 
   function _arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
@@ -3792,7 +3792,7 @@
     var _proto = AttributionControl.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.Control.Attribution(props);
+      return new L.Control.Attribution(props);
     };
 
     return AttributionControl;
@@ -4142,7 +4142,7 @@
           radius = props.radius,
           options = _objectWithoutPropertiesLoose$3(props, ["center", "radius"]);
 
-      return new leaflet.Circle(center, radius, this.getOptions(options));
+      return new L.Circle(center, radius, this.getOptions(options));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -4170,7 +4170,7 @@
     var _proto = CircleMarker.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      var el = new leaflet.CircleMarker(props.center, this.getOptions(props));
+      var el = new L.CircleMarker(props.center, this.getOptions(props));
       this.contextValue = _extends$3({}, props.leaflet, {
         popupContainer: el
       });
@@ -4202,12 +4202,12 @@
 
   var addClassName = function addClassName(container, className) {
     splitClassName(className).forEach(function (cls) {
-      leaflet.DomUtil.addClass(container, cls);
+      L.DomUtil.addClass(container, cls);
     });
   };
   var removeClassName = function removeClassName(container, className) {
     splitClassName(className).forEach(function (cls) {
-      leaflet.DomUtil.removeClass(container, cls);
+      L.DomUtil.removeClass(container, cls);
     });
   };
   var updateClassName = (function (container, prevClassName, nextClassName) {
@@ -4290,7 +4290,7 @@
     var _proto = FeatureGroup.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      var el = new leaflet.FeatureGroup(this.getOptions(props));
+      var el = new L.FeatureGroup(this.getOptions(props));
       this.contextValue = _extends$3({}, props.leaflet, {
         layerContainer: el,
         popupContainer: el
@@ -4319,7 +4319,7 @@
     var _proto = GeoJSON.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.GeoJSON(props.data, this.getOptions(props));
+      return new L.GeoJSON(props.data, this.getOptions(props));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -4345,7 +4345,7 @@
     var _proto = GridLayer.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.GridLayer(this.getOptions(props));
+      return new L.GridLayer(this.getOptions(props));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -4400,7 +4400,7 @@
     var _proto = ImageOverlay.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      var el = new leaflet.ImageOverlay(props.url, props.bounds, this.getOptions(props));
+      var el = new L.ImageOverlay(props.url, props.bounds, this.getOptions(props));
       this.contextValue = _extends$3({}, props.leaflet, {
         popupContainer: el
       });
@@ -4413,7 +4413,7 @@
       }
 
       if (toProps.bounds !== fromProps.bounds) {
-        this.leafletElement.setBounds(leaflet.latLngBounds(toProps.bounds));
+        this.leafletElement.setBounds(L.latLngBounds(toProps.bounds));
       }
 
       if (toProps.opacity !== fromProps.opacity) {
@@ -4440,7 +4440,7 @@
     var _proto = LayerGroup.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      var el = new leaflet.LayerGroup([], this.getOptions(props));
+      var el = new L.LayerGroup([], this.getOptions(props));
       this.contextValue = _extends$3({}, props.leaflet, {
         layerContainer: el
       });
@@ -4597,7 +4597,7 @@
       var _children = props.children,
           options = _objectWithoutPropertiesLoose$3(props, ["children"]);
 
-      return new leaflet.Control.Layers(undefined, undefined, options);
+      return new L.Control.Layers(undefined, undefined, options);
     };
 
     _proto2.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -4756,7 +4756,7 @@
         }
       }
 
-      return new leaflet.Map(this.container, options);
+      return new L.Map(this.container, options);
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -4951,7 +4951,7 @@
     };
 
     _proto.shouldUpdateBounds = function shouldUpdateBounds(next, prev) {
-      return prev ? !leaflet.latLngBounds(next).equals(leaflet.latLngBounds(prev)) : true;
+      return prev ? !L.latLngBounds(next).equals(L.latLngBounds(prev)) : true;
     };
 
     _proto.render = function render() {
@@ -4978,7 +4978,7 @@
     var _proto = Marker.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      var el = new leaflet.Marker(props.position, this.getOptions(props));
+      var el = new L.Marker(props.position, this.getOptions(props));
       this.contextValue = _extends$3({}, props.leaflet, {
         popupContainer: el
       });
@@ -5199,7 +5199,7 @@
     var _proto = Polygon.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.Polygon(props.positions, this.getOptions(props));
+      return new L.Polygon(props.positions, this.getOptions(props));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -5225,7 +5225,7 @@
     var _proto = Polyline.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.Polyline(props.positions, this.getOptions(props));
+      return new L.Polyline(props.positions, this.getOptions(props));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -5293,7 +5293,7 @@
     _proto.createLeafletElement = function createLeafletElement(props) {
       var options = this.getOptions(props);
       options.autoPan = props.autoPan !== false;
-      return new leaflet.Popup(options, props.leaflet.popupContainer);
+      return new L.Popup(options, props.leaflet.popupContainer);
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -5362,7 +5362,7 @@
     var _proto = Rectangle.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.Rectangle(props.bounds, this.getOptions(props));
+      return new L.Rectangle(props.bounds, this.getOptions(props));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -5388,7 +5388,7 @@
     var _proto = ScaleControl.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.Control.Scale(props);
+      return new L.Control.Scale(props);
     };
 
     return ScaleControl;
@@ -5416,7 +5416,7 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       this.container = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      return new leaflet.SVGOverlay(this.container, props.bounds, this.getOptions(props));
+      return new L.SVGOverlay(this.container, props.bounds, this.getOptions(props));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -5493,7 +5493,7 @@
     var _proto = TileLayer.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.TileLayer(props.url, this.getOptions(props));
+      return new L.TileLayer(props.url, this.getOptions(props));
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -5543,7 +5543,7 @@
     var _proto = Tooltip.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.Tooltip(this.getOptions(props), props.leaflet.popupContainer);
+      return new L.Tooltip(this.getOptions(props), props.leaflet.popupContainer);
     };
 
     _proto.componentDidMount = function componentDidMount() {
@@ -5588,7 +5588,7 @@
     var _proto = VideoOverlay.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.VideoOverlay(props.url, props.bounds, this.getOptions(props));
+      return new L.VideoOverlay(props.url, props.bounds, this.getOptions(props));
     };
 
     _proto.componentDidMount = function componentDidMount() {
@@ -5605,7 +5605,7 @@
       }
 
       if (toProps.bounds !== fromProps.bounds) {
-        this.leafletElement.setBounds(leaflet.latLngBounds(toProps.bounds));
+        this.leafletElement.setBounds(L.latLngBounds(toProps.bounds));
       }
 
       if (toProps.opacity !== fromProps.opacity) {
@@ -5646,7 +5646,7 @@
           _l = _this$getOptions.leaflet,
           options = _objectWithoutPropertiesLoose$3(_this$getOptions, ["leaflet"]);
 
-      return new leaflet.TileLayer.WMS(url, options);
+      return new L.TileLayer.WMS(url, options);
     };
 
     _proto.updateLeafletElement = function updateLeafletElement(fromProps, toProps) {
@@ -5706,7 +5706,7 @@
     var _proto = ZoomControl.prototype;
 
     _proto.createLeafletElement = function createLeafletElement(props) {
-      return new leaflet.Control.Zoom(props);
+      return new L.Control.Zoom(props);
     };
 
     return ZoomControl;
@@ -5753,7 +5753,7 @@
   });
 
   var reactLeafletCustomControl = createCommonjsModule(function (module, exports) {
-  !function(e,t){module.exports=t(leaflet__default,propTypes,es,reactDom__default,React__default);}(commonjsGlobal,function(e,t,o,r,n){return function(e){var t={};function o(r){if(t[r])return t[r].exports;var n=t[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=e,o.c=t,o.d=function(e,t,r){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r});},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0});},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(o.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(r,n,function(t){return e[t]}.bind(null,n));return r},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=6)}([function(t,o){t.exports=e;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=o(0),n=r.Control.extend({options:{className:""},onAdd:function(){var e=r.DomUtil.create("div",this.options.className);return r.DomEvent.disableClickPropagation(e),e}});t.default=n,e.exports=t.default;},function(e,o){e.exports=t;},function(e,t){e.exports=o;},function(e,t){e.exports=r;},function(e,t){e.exports=n;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,o,r){return o&&e(t.prototype,o),r&&e(t,r),t}}(),n=function e(t,o,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,o);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:e(i,o,r)}if("value"in n)return n.value;var u=n.get;return void 0!==u?u.call(r):void 0},i=o(5),u=o(4),l=o(3),a=f(o(2)),c=f(o(1));function f(e){return e&&e.__esModule?e:{default:e}}var p=function(e){function t(){return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),function(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t||"object"!=typeof t&&"function"!=typeof t?e:t}(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t);}(t,l.MapControl),r(t,[{key:"createLeafletElement",value:function(e){var t=e.position,o=e.className;return this.leafletElement=new c.default({position:t,className:o}),this.leafletElement}},{key:"updateLeafletElement",value:function(e,o){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"updateLeafletElement",this).call(this,e,o),this.renderContent();}},{key:"componentDidMount",value:function(){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentDidMount",this).call(this),this.renderContent();}},{key:"componentWillUnmount",value:function(){(0, u.unmountComponentAtNode)(this.leafletElement.getContainer()),n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentWillUnmount",this).call(this);}},{key:"renderContent",value:function(){var e=this.leafletElement.getContainer();(0, u.render)(i.Children.only(this.props.children),e);}}]),t}();p.propTypes={className:a.default.string,children:a.default.node,position:a.default.string},t.default=(0, l.withLeaflet)(p),e.exports=t.default;}])});
+  !function(e,t){module.exports=t(L__default,propTypes,es,reactDom__default,React__default);}(commonjsGlobal,function(e,t,o,r,n){return function(e){var t={};function o(r){if(t[r])return t[r].exports;var n=t[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=e,o.c=t,o.d=function(e,t,r){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r});},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0});},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(o.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(r,n,function(t){return e[t]}.bind(null,n));return r},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=6)}([function(t,o){t.exports=e;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=o(0),n=r.Control.extend({options:{className:""},onAdd:function(){var e=r.DomUtil.create("div",this.options.className);return r.DomEvent.disableClickPropagation(e),e}});t.default=n,e.exports=t.default;},function(e,o){e.exports=t;},function(e,t){e.exports=o;},function(e,t){e.exports=r;},function(e,t){e.exports=n;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,o,r){return o&&e(t.prototype,o),r&&e(t,r),t}}(),n=function e(t,o,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,o);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:e(i,o,r)}if("value"in n)return n.value;var u=n.get;return void 0!==u?u.call(r):void 0},i=o(5),u=o(4),l=o(3),a=f(o(2)),c=f(o(1));function f(e){return e&&e.__esModule?e:{default:e}}var p=function(e){function t(){return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),function(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t||"object"!=typeof t&&"function"!=typeof t?e:t}(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t);}(t,l.MapControl),r(t,[{key:"createLeafletElement",value:function(e){var t=e.position,o=e.className;return this.leafletElement=new c.default({position:t,className:o}),this.leafletElement}},{key:"updateLeafletElement",value:function(e,o){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"updateLeafletElement",this).call(this,e,o),this.renderContent();}},{key:"componentDidMount",value:function(){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentDidMount",this).call(this),this.renderContent();}},{key:"componentWillUnmount",value:function(){(0, u.unmountComponentAtNode)(this.leafletElement.getContainer()),n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentWillUnmount",this).call(this);}},{key:"renderContent",value:function(){var e=this.leafletElement.getContainer();(0, u.render)(i.Children.only(this.props.children),e);}}]),t}();p.propTypes={className:a.default.string,children:a.default.node,position:a.default.string},t.default=(0, l.withLeaflet)(p),e.exports=t.default;}])});
   });
 
   var Control = unwrapExports(reactLeafletCustomControl);
@@ -5854,10 +5854,13 @@
       }
     });
   }
-  function promiseAllWrapper(ContentList) {
+  function promiseAllWrapper(ContentList, siteaccess) {
     return ContentList.reduce(function (promises, ContentInfo) {
       return [].concat(toConsumableArray(promises), [client("view/content/".concat(ContentInfo.Content._id, "/line/").concat(ContentInfo._distance), {
-        output: 'text'
+        output: 'text',
+        headers: {
+          'X-Siteaccess': siteaccess
+        }
       })]);
     }, []);
   }
@@ -5883,7 +5886,7 @@
     return addresses;
   }
 
-  function useLocationSearch(coordinates, contentType, maxDistance) {
+  function useLocationSearch(coordinates, siteaccess, contentType, maxDistance) {
     var _useState = React.useState([]),
         _useState2 = slicedToArray(_useState, 2),
         resultList = _useState2[0],
@@ -5899,7 +5902,8 @@
 
         client("search/".concat(contentType, "/").concat(maxDistance, "/").concat(latitude, "/").concat(longitude), {
           headers: {
-            Accept: 'application/vnd.ez.api.ContentList+json'
+            Accept: 'application/vnd.ez.api.ContentList+json',
+            'X-Siteaccess': siteaccess
           }
         }).then(function (data) {
           return normalizeContentList(data);
@@ -5912,36 +5916,35 @@
       }
     }, [coordinates]);
     return resultList;
-  }
 
-  function normalizeContentList(data) {
-    var ContentList = data.ContentList.ContentInfo;
+    function normalizeContentList(data) {
+      var ContentList = data.ContentList.ContentInfo;
 
-    if (ContentList.length > 0) {
-      return Promise.all(promiseAllWrapper(ContentList)).then(function (html) {
-        return ContentList.reduce(function (acc, ContentInfo, index) {
-          return [].concat(toConsumableArray(acc), [{
-            _id: ContentInfo.Content._id,
-            _href: ContentInfo.Content._href,
-            name: ContentInfo.Content.TranslatedName,
-            distance: ContentInfo._distance,
-            html: html[index],
-            loc: ContentInfo.Content.CurrentVersion.Version.Fields.field.find(function (field) {
-              return field.fieldTypeIdentifier === 'ezgmaplocation';
-            }).fieldValue
-          }]);
-        }, []);
-      });
-    } else {
-      return [];
+      if (ContentList.length > 0) {
+        return Promise.all(promiseAllWrapper(ContentList, siteaccess)).then(function (html) {
+          return ContentList.reduce(function (acc, ContentInfo, index) {
+            return [].concat(toConsumableArray(acc), [{
+              _id: ContentInfo.Content._id,
+              _href: ContentInfo.Content._href,
+              name: ContentInfo.Content.TranslatedName,
+              distance: ContentInfo._distance,
+              html: html[index],
+              loc: ContentInfo.Content.CurrentVersion.Version.Fields.field.find(function (field) {
+                return field.fieldTypeIdentifier === 'ezgmaplocation';
+              }).fieldValue
+            }]);
+          }, []);
+        });
+      } else {
+        return [];
+      }
     }
   }
 
   var ResultList = function ResultList(_ref) {
     var list = _ref.list,
         currentIndex = _ref.currentIndex,
-        changeIndex = _ref.changeIndex,
-        coords = _ref.coords;
+        changeIndex = _ref.changeIndex;
     return list.length > 0 ? list.map(function (item, index) {
       return /*#__PURE__*/React__default.createElement("div", {
         className: "ezgeodatagouv__line__wrapper".concat(index === currentIndex ? '--selected' : ''),
@@ -5965,18 +5968,19 @@
     popupAnchor: [0, -25],
     tooltipAnchor: [0, -25]
   };
-  var defaultMarker = new leaflet.divIcon(_objectSpread$1({}, defaultProps, {
+  var defaultMarker = new L__default.divIcon(_objectSpread$1({}, defaultProps, {
     className: 'ezgeodatagouv__marker'
   }));
-  var homeMarker = new leaflet.divIcon(_objectSpread$1({}, defaultProps, {
+  var homeMarker = new L__default.divIcon(_objectSpread$1({}, defaultProps, {
     className: 'ezgeodatagouv__marker--start'
   }));
-  var selectedMarker = new leaflet.divIcon(_objectSpread$1({}, defaultProps, {
+  var selectedMarker = new L__default.divIcon(_objectSpread$1({}, defaultProps, {
     className: 'ezgeodatagouv__marker--selected'
   }));
 
   var GeoFinder = function GeoFinder(_ref) {
-    var maxDistance = _ref.maxDistance,
+    var siteaccess = _ref.siteaccess,
+        maxDistance = _ref.maxDistance,
         contentType = _ref.contentType;
     var ref = React.useRef();
 
@@ -5996,7 +6000,7 @@
         setIndex = _useState6[1];
 
     var addresses = useAddressSearch(searchTerm);
-    var result = useLocationSearch(coordinates, contentType, maxDistance);
+    var result = useLocationSearch(coordinates, siteaccess, contentType, maxDistance);
 
     var handleSearchTermChange = function handleSearchTermChange(event) {
       setSearchTerm(event.target.value);
@@ -6046,7 +6050,8 @@
       className: "leaflet-bar ezgeodatagouv__control--reset"
     }, /*#__PURE__*/React__default.createElement("a", {
       href: "#",
-      onClick: function onClick() {
+      onClick: function onClick(e) {
+        e.preventDefault();
         setIndex(null);
         ref.current.leafletElement.flyToBounds(ref.current.leafletElement.getBounds(), {
           maxZoom: 15
@@ -6087,7 +6092,6 @@
         autoClose: true
       }, name));
     })))), /*#__PURE__*/React__default.createElement(Combobox, {
-      "aria-label": "Cities",
       onSelect: function onSelect(value) {
         var coords = addresses.find(function (a) {
           return a.properties.label === value;
@@ -6097,7 +6101,7 @@
       }
     }, /*#__PURE__*/React__default.createElement(ComboboxInput, {
       selectOnClick: true,
-      className: "city-search-input",
+      className: "ezgeodatagouv__search--input",
       onChange: handleSearchTermChange
     }), addresses && /*#__PURE__*/React__default.createElement(ComboboxPopover, {
       className: "shadow-popup"
@@ -6119,8 +6123,9 @@
 
   var root = document.getElementById('root_geo_finder');
   var props$1 = {
-    maxDistance: root.getAttribute('data_distance'),
-    contentType: root.getAttribute('data_content_type')
+    siteaccess: root.getAttribute('data-siteaccess'),
+    maxDistance: root.getAttribute('data-distance'),
+    contentType: root.getAttribute('data-contenttype')
   };
   reactDom__default.render( /*#__PURE__*/React__default.createElement(GeoFinder, props$1), document.getElementById('root_geo_finder'));
 

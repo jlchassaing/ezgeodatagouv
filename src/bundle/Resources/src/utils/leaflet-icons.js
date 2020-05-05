@@ -1,4 +1,4 @@
-import { divIcon } from 'leaflet'
+import L from 'leaflet'
 
 const defaultProps = {
   iconSize: 30,
@@ -7,17 +7,17 @@ const defaultProps = {
   tooltipAnchor: [0, -25],
 }
 
-export const defaultMarker = new divIcon({
+export const defaultMarker = new L.divIcon({
   ...defaultProps,
   className: 'ezgeodatagouv__marker',
 })
 
-export const homeMarker = new divIcon({
+export const homeMarker = new L.divIcon({
   ...defaultProps,
   className: 'ezgeodatagouv__marker--start',
 })
 
-export const selectedMarker = new divIcon({
+export const selectedMarker = new L.divIcon({
   ...defaultProps,
   className: 'ezgeodatagouv__marker--selected',
 })

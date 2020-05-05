@@ -24,13 +24,18 @@ import {
   selectedMarker,
 } from '../utils/leaflet-icons'
 
-const GeoFinder = ({ maxDistance, contentType }) => {
+const GeoFinder = ({ siteaccess, maxDistance, contentType }) => {
   const ref = useRef()
   const [coordinates, setCoordinates] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [currentIndex, setIndex] = useState(null)
   const addresses = useAddressSearch(searchTerm)
-  const result = useLocationSearch(coordinates, contentType, maxDistance)
+  const result = useLocationSearch(
+    coordinates,
+    siteaccess,
+    contentType,
+    maxDistance
+  )
 
   const handleSearchTermChange = event => {
     setSearchTerm(event.target.value)
@@ -81,7 +86,8 @@ const GeoFinder = ({ maxDistance, contentType }) => {
               >
                 <a
                   href="#"
-                  onClick={() => {
+                  onClick={e => {
+                    e.preventDefault()
                     setIndex(null)
                     ref.current.leafletElement.flyToBounds(
                       ref.current.leafletElement.getBounds(),
@@ -128,7 +134,6 @@ const GeoFinder = ({ maxDistance, contentType }) => {
         </div>
       )}
       <Combobox
-        aria-label="Cities"
         onSelect={value => {
           const coords = addresses.find(a => a.properties.label === value)
             .geometry.coordinates
@@ -138,7 +143,7 @@ const GeoFinder = ({ maxDistance, contentType }) => {
       >
         <ComboboxInput
           selectOnClick
-          className="city-search-input"
+          className="ezgeodatagouv__search--input"
           onChange={handleSearchTermChange}
         />
         {addresses && (

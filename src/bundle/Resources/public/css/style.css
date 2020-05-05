@@ -60,7 +60,8 @@
 
 .ezgeodatagouv__control--reset svg {
   padding: 5px;
-  width: 16px;
+  width: 29px;
+  font-size: 1rem;
 }
 
 .ezgeodatagouv__line__wrapper--selected {

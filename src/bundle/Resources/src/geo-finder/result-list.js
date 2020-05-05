@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ResultList = ({ list, currentIndex, changeIndex, coords }) => {
+const ResultList = ({ list, currentIndex, changeIndex }) => {
   return list.length > 0
     ? list.map((item, index) => (
         <div
