@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './geo-finder'
+
+import { SymfonyContextProvider } from './context/symfony'
+import App from './app'
 
 const root = document.getElementById('root_geo_finder')
 const props = {
@@ -9,4 +11,9 @@ const props = {
   contentType: root.getAttribute('data-contenttype'),
 }
 
-ReactDOM.render(<App {...props} />, document.getElementById('root_geo_finder'))
+ReactDOM.render(
+  <SymfonyContextProvider value={props}>
+    <App />
+  </SymfonyContextProvider>,
+  document.getElementById('root_geo_finder')
+)

@@ -9,58 +9,122 @@
   var reactDom__default = 'default' in reactDom ? reactDom['default'] : reactDom;
   var L__default = 'default' in L ? L['default'] : L;
 
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
+  var SymfonyContext = React.createContext();
+  var SymfonyContextProvider = function SymfonyContextProvider(_ref) {
+    var value = _ref.value,
+        children = _ref.children;
+    return /*#__PURE__*/React__default.createElement(SymfonyContext.Provider, {
+      value: value
+    }, children);
+  };
+  var useSymfonyContext = function useSymfonyContext() {
+    return React.useContext(SymfonyContext);
+  };
 
-    for (var i = 0, arr2 = new Array(len); i < len; i++) {
-      arr2[i] = arr[i];
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
     }
 
-    return arr2;
+    return obj;
   }
 
-  var arrayLikeToArray = _arrayLikeToArray;
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
 
-  function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return arrayLikeToArray(arr);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
   }
 
-  var arrayWithoutHoles = _arrayWithoutHoles;
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
 
-  function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
   }
 
-  var iterableToArray = _iterableToArray;
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
 
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      target[key] = source[key];
+    }
+
+    return target;
   }
 
-  var unsupportedIterableToArray = _unsupportedIterableToArray;
+  function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
 
-  function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+
+    var key, i;
+
+    if (Object.getOwnPropertySymbols) {
+      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+      for (i = 0; i < sourceSymbolKeys.length; i++) {
+        key = sourceSymbolKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+        target[key] = source[key];
+      }
+    }
+
+    return target;
   }
 
-  var nonIterableSpread = _nonIterableSpread;
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
 
   function _toConsumableArray(arr) {
-    return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
 
-  var toConsumableArray = _toConsumableArray;
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
 
   function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
   }
 
-  var arrayWithHoles = _arrayWithHoles;
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
 
   function _iterableToArrayLimit(arr, i) {
     if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
@@ -89,19 +153,30 @@
     return _arr;
   }
 
-  var iterableToArrayLimit = _iterableToArrayLimit;
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
 
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
-
-  var nonIterableRest = _nonIterableRest;
-
-  function _slicedToArray(arr, i) {
-    return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
-  }
-
-  var slicedToArray = _slicedToArray;
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -1394,7 +1469,7 @@
     return _extends.apply(this, arguments);
   }
 
-  function _objectWithoutPropertiesLoose(source, excluded) {
+  function _objectWithoutPropertiesLoose$1(source, excluded) {
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
@@ -1447,7 +1522,7 @@
   function useDescendant(_ref, indexProp) {
     var context = _ref.context,
         element = _ref.element,
-        rest = _objectWithoutPropertiesLoose(_ref, ["context", "element"]);
+        rest = _objectWithoutPropertiesLoose$1(_ref, ["context", "element"]);
 
     var _useState = React.useState(),
         forceUpdate = _useState[1];
@@ -1482,7 +1557,7 @@
         set = _ref2.set;
     var registerDescendant = React__default.useCallback(function (_ref3) {
       var element = _ref3.element,
-          rest = _objectWithoutPropertiesLoose(_ref3, ["element"]);
+          rest = _objectWithoutPropertiesLoose$1(_ref3, ["element"]);
 
       if (!element) {
         return;
@@ -2329,7 +2404,7 @@
     return _extends$1.apply(this, arguments);
   }
 
-  function _objectWithoutPropertiesLoose$1(source, excluded) {
+  function _objectWithoutPropertiesLoose$2(source, excluded) {
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
@@ -2370,7 +2445,7 @@
         _ref$position = _ref.position,
         position = _ref$position === void 0 ? positionDefault : _ref$position,
         style = _ref.style,
-        rest = _objectWithoutPropertiesLoose$1(_ref, ["targetRef", "position", "style"]);
+        rest = _objectWithoutPropertiesLoose$2(_ref, ["targetRef", "position", "style"]);
 
     var popoverRef = React.useRef(null);
     var popoverRect = useRect(popoverRef);
@@ -2626,7 +2701,7 @@
     return _extends$2.apply(this, arguments);
   }
 
-  function _objectWithoutPropertiesLoose$2(source, excluded) {
+  function _objectWithoutPropertiesLoose$3(source, excluded) {
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
@@ -2798,7 +2873,7 @@
         Comp = _ref$as === void 0 ? "div" : _ref$as,
         ariaLabel = _ref["aria-label"],
         ariaLabelledby = _ref["aria-labelledby"],
-        props = _objectWithoutPropertiesLoose$2(_ref, ["onSelect", "openOnFocus", "children", "as", "aria-label", "aria-labelledby"]);
+        props = _objectWithoutPropertiesLoose$3(_ref, ["onSelect", "openOnFocus", "children", "as", "aria-label", "aria-labelledby"]);
 
     var _useDescendants = useDescendants(),
         options = _useDescendants[0],
@@ -2898,7 +2973,7 @@
         onBlur = _ref2.onBlur,
         onFocus = _ref2.onFocus,
         controlledValue = _ref2.value,
-        props = _objectWithoutPropertiesLoose$2(_ref2, ["as", "selectOnClick", "autocomplete", "onClick", "onChange", "onKeyDown", "onBlur", "onFocus", "value"]);
+        props = _objectWithoutPropertiesLoose$3(_ref2, ["as", "selectOnClick", "autocomplete", "onClick", "onChange", "onKeyDown", "onBlur", "onFocus", "value"]);
 
     // https://github.com/reach/reach-ui/issues/464
     var _useRef = React.useRef(controlledValue),
@@ -3034,7 +3109,7 @@
         portal = _ref3$portal === void 0 ? true : _ref3$portal,
         onKeyDown = _ref3.onKeyDown,
         onBlur = _ref3.onBlur,
-        props = _objectWithoutPropertiesLoose$2(_ref3, ["children", "portal", "onKeyDown", "onBlur"]);
+        props = _objectWithoutPropertiesLoose$3(_ref3, ["children", "portal", "onKeyDown", "onBlur"]);
 
     var _useContext2 = React.useContext(ComboboxContext),
         popoverRef = _useContext2.popoverRef,
@@ -3086,7 +3161,7 @@
         persistSelection = _ref4$persistSelectio === void 0 ? false : _ref4$persistSelectio,
         _ref4$as = _ref4.as,
         Comp = _ref4$as === void 0 ? "ul" : _ref4$as,
-        props = _objectWithoutPropertiesLoose$2(_ref4, ["persistSelection", "as"]);
+        props = _objectWithoutPropertiesLoose$3(_ref4, ["persistSelection", "as"]);
 
     var _useContext3 = React.useContext(ComboboxContext),
         persistSelectionRef = _useContext3.persistSelectionRef,
@@ -3124,7 +3199,7 @@
         children = _ref5.children,
         value = _ref5.value,
         onClick = _ref5.onClick,
-        props = _objectWithoutPropertiesLoose$2(_ref5, ["as", "children", "value", "onClick"]);
+        props = _objectWithoutPropertiesLoose$3(_ref5, ["as", "children", "value", "onClick"]);
 
     var _useContext4 = React.useContext(ComboboxContext),
         onSelect = _useContext4.onSelect,
@@ -3228,7 +3303,7 @@
         Comp = _ref6$as === void 0 ? "button" : _ref6$as,
         onClick = _ref6.onClick,
         onKeyDown = _ref6.onKeyDown,
-        props = _objectWithoutPropertiesLoose$2(_ref6, ["as", "onClick", "onKeyDown"]);
+        props = _objectWithoutPropertiesLoose$3(_ref6, ["as", "onClick", "onKeyDown"]);
 
     var _useContext7 = React.useContext(ComboboxContext),
         transition = _useContext7.transition,
@@ -3566,6 +3641,74 @@
     return String(str).replace(/([.*+?=^!:${}()|[\]/\\])/g, "\\$1");
   } ////////////////////////////////////////////////////////////////////////////////
 
+  var API_DATAGOUV = 'https://api-adresse.data.gouv.fr/search/';
+  var API_EZGEODATAGOUV = '/api/ezp/v2/ez_geo_data_gouv/';
+  function client(endpoint) {
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        body = _ref.body,
+        _ref$output = _ref.output,
+        output = _ref$output === void 0 ? 'json' : _ref$output,
+        customConfig = _objectWithoutProperties(_ref, ["body", "output"]);
+
+    var headers = {
+      json: {
+        'Content-Type': 'application/json'
+      },
+      text: {
+        'Content-Type': 'text/html'
+      }
+    };
+
+    var config = _objectSpread2({
+      method: body ? 'POST' : 'GET'
+    }, customConfig, {
+      headers: _objectSpread2({}, headers[output], {}, customConfig.headers)
+    });
+
+    if (body) {
+      config.body = JSON.stringify(body);
+    }
+
+    return window.fetch(new URL(endpoint, document.location.origin + API_EZGEODATAGOUV).href, config).then(function (response) {
+      if (response.ok) {
+        return response[output]();
+      } else {
+        return Promise.reject(response.statusText);
+      }
+    });
+  }
+  function promiseAllWrapper(ContentList, siteaccess) {
+    return ContentList.reduce(function (promises, ContentInfo) {
+      return [].concat(_toConsumableArray(promises), [client("view/content/".concat(ContentInfo.Content._id, "/line/").concat(ContentInfo._distance), {
+        output: 'text',
+        headers: {
+          'X-Siteaccess': siteaccess
+        }
+      })]);
+    }, []);
+  }
+
+  function useAddressSearch(searchTerm) {
+    var _useState = React.useState([]),
+        _useState2 = _slicedToArray(_useState, 2),
+        addresses = _useState2[0],
+        setAddress = _useState2[1];
+
+    React.useEffect(function () {
+      if (searchTerm.trim() !== '') {
+        var isFresh = true;
+        client("".concat(API_DATAGOUV, "?q=").concat(searchTerm)).then(function (_ref) {
+          var features = _ref.features;
+          if (isFresh) setAddress(features);
+        });
+        return function () {
+          return isFresh = false;
+        };
+      }
+    }, [searchTerm]);
+    return addresses;
+  }
+
   function _extends$3() {
     _extends$3 = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
@@ -3722,7 +3865,7 @@
     return self;
   }
 
-  function _defineProperty(obj, key, value) {
+  function _defineProperty$1(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -3745,7 +3888,7 @@
 
       _this = _Component.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
 
       _this.leafletElement = _this.createLeafletElement(_this.props);
       return _this;
@@ -3800,7 +3943,7 @@
 
   var AttributionControl$1 = withLeaflet(AttributionControl);
 
-  function _objectWithoutPropertiesLoose$3(source, excluded) {
+  function _objectWithoutPropertiesLoose$4(source, excluded) {
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
@@ -3886,9 +4029,9 @@
 
       _this = _Component.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "_leafletEvents", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "_leafletEvents", void 0);
 
-      _defineProperty(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
 
       _this._leafletEvents = _this.extractLeafletEvents(props);
       return _this;
@@ -4001,9 +4144,9 @@
 
       _this = _MapComponent.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "contextValue", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "contextValue", void 0);
 
-      _defineProperty(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
 
       _this.leafletElement = _this.createLeafletElement(props);
       return _this;
@@ -4140,7 +4283,7 @@
     _proto.createLeafletElement = function createLeafletElement(props) {
       var center = props.center,
           radius = props.radius,
-          options = _objectWithoutPropertiesLoose$3(props, ["center", "radius"]);
+          options = _objectWithoutPropertiesLoose$4(props, ["center", "radius"]);
 
       return new L.Circle(center, radius, this.getOptions(options));
     };
@@ -4230,13 +4373,13 @@
 
       _this = _MapComponent.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "onClose", function () {
+      _defineProperty$1(_assertThisInitialized(_this), "onClose", function () {
         if (_this.props.onClose) {
           _this.props.onClose();
         }
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onOpen", function () {
+      _defineProperty$1(_assertThisInitialized(_this), "onOpen", function () {
         _this.forceUpdate(); // Re-render now that leafletElement is created
 
 
@@ -4465,9 +4608,9 @@
 
       _this = _Component.call.apply(_Component, [this].concat(args)) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "contextValue", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "contextValue", void 0);
 
-      _defineProperty(_assertThisInitialized(_this), "layer", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "layer", void 0);
 
       return _this;
     }
@@ -4519,7 +4662,7 @@
 
       _this2 = _ControlledLayer.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this2), "addLayer", function (layer) {
+      _defineProperty$1(_assertThisInitialized(_this2), "addLayer", function (layer) {
         _this2.layer = layer; // Keep layer reference to handle dynamic changes of props
 
         var _this2$props = _this2.props,
@@ -4549,7 +4692,7 @@
 
       _this3 = _ControlledLayer2.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this3), "addLayer", function (layer) {
+      _defineProperty$1(_assertThisInitialized(_this3), "addLayer", function (layer) {
         _this3.layer = layer; // Keep layer reference to handle dynamic changes of props
 
         var _this3$props = _this3.props,
@@ -4579,7 +4722,7 @@
 
       _this4 = _MapControl.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this4), "controlProps", void 0);
+      _defineProperty$1(_assertThisInitialized(_this4), "controlProps", void 0);
 
       _this4.controlProps = {
         addBaseLayer: _this4.addBaseLayer.bind(_assertThisInitialized(_this4)),
@@ -4595,7 +4738,7 @@
 
     _proto2.createLeafletElement = function createLeafletElement(props) {
       var _children = props.children,
-          options = _objectWithoutPropertiesLoose$3(props, ["children"]);
+          options = _objectWithoutPropertiesLoose$4(props, ["children"]);
 
       return new L.Control.Layers(undefined, undefined, options);
     };
@@ -4698,22 +4841,22 @@
 
       _this = _MapEvented.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "className", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "className", void 0);
 
-      _defineProperty(_assertThisInitialized(_this), "contextValue", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "contextValue", void 0);
 
-      _defineProperty(_assertThisInitialized(_this), "container", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "container", void 0);
 
-      _defineProperty(_assertThisInitialized(_this), "viewport", {
+      _defineProperty$1(_assertThisInitialized(_this), "viewport", {
         center: undefined,
         zoom: undefined
       });
 
-      _defineProperty(_assertThisInitialized(_this), "_ready", false);
+      _defineProperty$1(_assertThisInitialized(_this), "_ready", false);
 
-      _defineProperty(_assertThisInitialized(_this), "_updating", false);
+      _defineProperty$1(_assertThisInitialized(_this), "_updating", false);
 
-      _defineProperty(_assertThisInitialized(_this), "onViewportChange", function () {
+      _defineProperty$1(_assertThisInitialized(_this), "onViewportChange", function () {
         var center = _this.leafletElement.getCenter();
 
         _this.viewport = {
@@ -4726,13 +4869,13 @@
         }
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onViewportChanged", function () {
+      _defineProperty$1(_assertThisInitialized(_this), "onViewportChanged", function () {
         if (_this.props.onViewportChanged && !_this._updating) {
           _this.props.onViewportChanged(_this.viewport);
         }
       });
 
-      _defineProperty(_assertThisInitialized(_this), "bindContainer", function (container) {
+      _defineProperty$1(_assertThisInitialized(_this), "bindContainer", function (container) {
         _this.container = container;
       });
 
@@ -4744,7 +4887,7 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       var viewport = props.viewport,
-          options = _objectWithoutPropertiesLoose$3(props, ["viewport"]);
+          options = _objectWithoutPropertiesLoose$4(props, ["viewport"]);
 
       if (viewport) {
         if (viewport.center) {
@@ -5056,12 +5199,12 @@
 
       _this = _Component.call.apply(_Component, [this].concat(args)) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "state", {
+      _defineProperty$1(_assertThisInitialized(_this), "state", {
         name: undefined,
         context: undefined
       });
 
-      _defineProperty(_assertThisInitialized(_this), "setStyle", function (_temp) {
+      _defineProperty$1(_assertThisInitialized(_this), "setStyle", function (_temp) {
         var _ref = _temp === void 0 ? _this.props : _temp,
             style = _ref.style,
             className = _ref.className;
@@ -5253,7 +5396,7 @@
 
       _this = _DivOverlay.call.apply(_DivOverlay, [this].concat(args)) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "onPopupOpen", function (_ref) {
+      _defineProperty$1(_assertThisInitialized(_this), "onPopupOpen", function (_ref) {
         var popup = _ref.popup;
 
         if (popup === _this.leafletElement) {
@@ -5261,7 +5404,7 @@
         }
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onPopupClose", function (_ref2) {
+      _defineProperty$1(_assertThisInitialized(_this), "onPopupClose", function (_ref2) {
         var popup = _ref2.popup;
 
         if (popup === _this.leafletElement) {
@@ -5269,7 +5412,7 @@
         }
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onRender", function () {
+      _defineProperty$1(_assertThisInitialized(_this), "onRender", function () {
         if (_this.props.autoPan !== false && _this.leafletElement.isOpen()) {
           if (_this.leafletElement._map && _this.leafletElement._map._panAnim) {
             _this.leafletElement._map._panAnim = undefined;
@@ -5346,7 +5489,7 @@
     return Popup;
   }(DivOverlay);
 
-  _defineProperty(Popup, "defaultProps", {
+  _defineProperty$1(Popup, "defaultProps", {
     pane: 'popupPane'
   });
 
@@ -5404,9 +5547,9 @@
 
       _this = _MapComponent.call(this, props) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
 
-      _defineProperty(_assertThisInitialized(_this), "container", void 0);
+      _defineProperty$1(_assertThisInitialized(_this), "container", void 0);
 
       _this.leafletElement = _this.createLeafletElement(props);
       return _this;
@@ -5521,7 +5664,7 @@
 
       _this = _DivOverlay.call.apply(_DivOverlay, [this].concat(args)) || this;
 
-      _defineProperty(_assertThisInitialized(_this), "onTooltipOpen", function (_ref) {
+      _defineProperty$1(_assertThisInitialized(_this), "onTooltipOpen", function (_ref) {
         var tooltip = _ref.tooltip;
 
         if (tooltip === _this.leafletElement) {
@@ -5529,7 +5672,7 @@
         }
       });
 
-      _defineProperty(_assertThisInitialized(_this), "onTooltipClose", function (_ref2) {
+      _defineProperty$1(_assertThisInitialized(_this), "onTooltipClose", function (_ref2) {
         var tooltip = _ref2.tooltip;
 
         if (tooltip === _this.leafletElement) {
@@ -5572,7 +5715,7 @@
     return Tooltip;
   }(DivOverlay);
 
-  _defineProperty(Tooltip, "defaultProps", {
+  _defineProperty$1(Tooltip, "defaultProps", {
     pane: 'tooltipPane'
   });
 
@@ -5640,11 +5783,11 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       var url = props.url,
-          params = _objectWithoutPropertiesLoose$3(props, ["url"]);
+          params = _objectWithoutPropertiesLoose$4(props, ["url"]);
 
       var _this$getOptions = this.getOptions(params),
           _l = _this$getOptions.leaflet,
-          options = _objectWithoutPropertiesLoose$3(_this$getOptions, ["leaflet"]);
+          options = _objectWithoutPropertiesLoose$4(_this$getOptions, ["leaflet"]);
 
       return new L.TileLayer.WMS(url, options);
     };
@@ -5655,20 +5798,20 @@
       var prevUrl = fromProps.url,
           _po = fromProps.opacity,
           _pz = fromProps.zIndex,
-          prevProps = _objectWithoutPropertiesLoose$3(fromProps, ["url", "opacity", "zIndex"]);
+          prevProps = _objectWithoutPropertiesLoose$4(fromProps, ["url", "opacity", "zIndex"]);
 
       var _this$getOptions2 = this.getOptions(prevProps),
           _pl = _this$getOptions2.leaflet,
-          prevParams = _objectWithoutPropertiesLoose$3(_this$getOptions2, ["leaflet"]);
+          prevParams = _objectWithoutPropertiesLoose$4(_this$getOptions2, ["leaflet"]);
 
       var url = toProps.url,
           _o = toProps.opacity,
           _z = toProps.zIndex,
-          props = _objectWithoutPropertiesLoose$3(toProps, ["url", "opacity", "zIndex"]);
+          props = _objectWithoutPropertiesLoose$4(toProps, ["url", "opacity", "zIndex"]);
 
       var _this$getOptions3 = this.getOptions(props),
           _l = _this$getOptions3.leaflet,
-          params = _objectWithoutPropertiesLoose$3(_this$getOptions3, ["leaflet"]);
+          params = _objectWithoutPropertiesLoose$4(_this$getOptions3, ["leaflet"]);
 
       if (url !== prevUrl) {
         this.leafletElement.setUrl(url);
@@ -5759,136 +5902,30 @@
   var Control = unwrapExports(reactLeafletCustomControl);
   var reactLeafletCustomControl_1 = reactLeafletCustomControl.ReactLeafletCustomControl;
 
-  function _defineProperty$1(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
+  var defaultProps = {
+    iconSize: 30,
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -25],
+    tooltipAnchor: [0, -25]
+  };
+  var defaultMarker = new L__default.divIcon(_objectSpread2({}, defaultProps, {
+    className: 'ezgeodatagouv__marker'
+  }));
+  var homeMarker = new L__default.divIcon(_objectSpread2({}, defaultProps, {
+    className: 'ezgeodatagouv__marker--start'
+  }));
+  var selectedMarker = new L__default.divIcon(_objectSpread2({}, defaultProps, {
+    className: 'ezgeodatagouv__marker--selected'
+  }));
 
-    return obj;
-  }
+  function useLocationSearch(coordinates) {
+    var _useSymfonyContext = useSymfonyContext(),
+        siteaccess = _useSymfonyContext.siteaccess,
+        contentType = _useSymfonyContext.contentType,
+        maxDistance = _useSymfonyContext.maxDistance;
 
-  var defineProperty$1 = _defineProperty$1;
-
-  function _objectWithoutPropertiesLoose$4(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-
-    for (i = 0; i < sourceKeys.length; i++) {
-      key = sourceKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      target[key] = source[key];
-    }
-
-    return target;
-  }
-
-  var objectWithoutPropertiesLoose = _objectWithoutPropertiesLoose$4;
-
-  function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {};
-    var target = objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-
-    if (Object.getOwnPropertySymbols) {
-      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-      for (i = 0; i < sourceSymbolKeys.length; i++) {
-        key = sourceSymbolKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-        target[key] = source[key];
-      }
-    }
-
-    return target;
-  }
-
-  var objectWithoutProperties = _objectWithoutProperties;
-
-  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty$1(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-  var API_DATAGOUV = 'https://api-adresse.data.gouv.fr/search/';
-  var API_EZGEODATAGOUV = '/api/ezp/v2/ez_geo_data_gouv/';
-  function client(endpoint) {
-    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-        body = _ref.body,
-        _ref$output = _ref.output,
-        output = _ref$output === void 0 ? 'json' : _ref$output,
-        customConfig = objectWithoutProperties(_ref, ["body", "output"]);
-
-    var headers = {
-      json: {
-        'Content-Type': 'application/json'
-      },
-      text: {
-        'Content-Type': 'text/html'
-      }
-    };
-
-    var config = _objectSpread({
-      method: body ? 'POST' : 'GET'
-    }, customConfig, {
-      headers: _objectSpread({}, headers[output], {}, customConfig.headers)
-    });
-
-    if (body) {
-      config.body = JSON.stringify(body);
-    }
-
-    return window.fetch(new URL(endpoint, document.location.origin + API_EZGEODATAGOUV).href, config).then(function (response) {
-      if (response.ok) {
-        return response[output]();
-      } else {
-        return Promise.reject(response.statusText);
-      }
-    });
-  }
-  function promiseAllWrapper(ContentList, siteaccess) {
-    return ContentList.reduce(function (promises, ContentInfo) {
-      return [].concat(toConsumableArray(promises), [client("view/content/".concat(ContentInfo.Content._id, "/line/").concat(ContentInfo._distance), {
-        output: 'text',
-        headers: {
-          'X-Siteaccess': siteaccess
-        }
-      })]);
-    }, []);
-  }
-
-  function useAddressSearch(searchTerm) {
     var _useState = React.useState([]),
-        _useState2 = slicedToArray(_useState, 2),
-        addresses = _useState2[0],
-        setAddress = _useState2[1];
-
-    React.useEffect(function () {
-      if (searchTerm.trim() !== '') {
-        var isFresh = true;
-        client("".concat(API_DATAGOUV, "?q=").concat(searchTerm)).then(function (_ref) {
-          var features = _ref.features;
-          if (isFresh) setAddress(features);
-        });
-        return function () {
-          return isFresh = false;
-        };
-      }
-    }, [searchTerm]);
-    return addresses;
-  }
-
-  function useLocationSearch(coordinates, siteaccess, contentType, maxDistance) {
-    var _useState = React.useState([]),
-        _useState2 = slicedToArray(_useState, 2),
+        _useState2 = _slicedToArray(_useState, 2),
         resultList = _useState2[0],
         setResultList = _useState2[1];
 
@@ -5896,7 +5933,7 @@
       if (coordinates.length > 0) {
         var isFresh = true;
 
-        var _coordinates = slicedToArray(coordinates, 2),
+        var _coordinates = _slicedToArray(coordinates, 2),
             latitude = _coordinates[0],
             longitude = _coordinates[1];
 
@@ -5923,7 +5960,7 @@
       if (ContentList.length > 0) {
         return Promise.all(promiseAllWrapper(ContentList, siteaccess)).then(function (html) {
           return ContentList.reduce(function (acc, ContentInfo, index) {
-            return [].concat(toConsumableArray(acc), [{
+            return [].concat(_toConsumableArray(acc), [{
               _id: ContentInfo.Content._id,
               _href: ContentInfo.Content._href,
               name: ContentInfo.Content.TranslatedName,
@@ -5959,59 +5996,22 @@
     }) : null;
   };
 
-  function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-  function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty$1(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-  var defaultProps = {
-    iconSize: 30,
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -25],
-    tooltipAnchor: [0, -25]
-  };
-  var defaultMarker = new L__default.divIcon(_objectSpread$1({}, defaultProps, {
-    className: 'ezgeodatagouv__marker'
-  }));
-  var homeMarker = new L__default.divIcon(_objectSpread$1({}, defaultProps, {
-    className: 'ezgeodatagouv__marker--start'
-  }));
-  var selectedMarker = new L__default.divIcon(_objectSpread$1({}, defaultProps, {
-    className: 'ezgeodatagouv__marker--selected'
-  }));
-
-  var GeoFinder = function GeoFinder(_ref) {
-    var siteaccess = _ref.siteaccess,
-        maxDistance = _ref.maxDistance,
-        contentType = _ref.contentType;
+  var ResultMap = function ResultMap(_ref) {
+    var coordinates = _ref.coordinates;
     var ref = React.useRef();
 
-    var _useState = React.useState([]),
-        _useState2 = slicedToArray(_useState, 2),
-        coordinates = _useState2[0],
-        setCoordinates = _useState2[1];
+    var _useState = React.useState(null),
+        _useState2 = _slicedToArray(_useState, 2),
+        currentIndex = _useState2[0],
+        setIndex = _useState2[1];
 
-    var _useState3 = React.useState(''),
-        _useState4 = slicedToArray(_useState3, 2),
-        searchTerm = _useState4[0],
-        setSearchTerm = _useState4[1];
-
-    var _useState5 = React.useState(null),
-        _useState6 = slicedToArray(_useState5, 2),
-        currentIndex = _useState6[0],
-        setIndex = _useState6[1];
-
-    var addresses = useAddressSearch(searchTerm);
-    var result = useLocationSearch(coordinates, siteaccess, contentType, maxDistance);
-
-    var handleSearchTermChange = function handleSearchTermChange(event) {
-      setSearchTerm(event.target.value);
-    };
-
+    var result = useLocationSearch(coordinates);
     React.useEffect(function () {
       if (currentIndex !== null) {
         ref.current.leafletElement.flyTo([result[currentIndex].loc.latitude, result[currentIndex].loc.longitude], 15);
       }
     }, [currentIndex, result]);
-    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, result.length > 0 && /*#__PURE__*/React__default.createElement("div", {
+    return result.length > 0 && /*#__PURE__*/React__default.createElement("div", {
       style: {
         display: 'flex'
       }
@@ -6031,11 +6031,11 @@
     }, /*#__PURE__*/React__default.createElement(Map$1, {
       ref: ref,
       zoom: 15,
-      bounds: [coordinates].concat(toConsumableArray(result.reduce(function (acc, _ref2) {
+      bounds: [coordinates].concat(_toConsumableArray(result.reduce(function (acc, _ref2) {
         var _ref2$loc = _ref2.loc,
             latitude = _ref2$loc.latitude,
             longitude = _ref2$loc.longitude;
-        return [].concat(toConsumableArray(acc), [[latitude, longitude]]);
+        return [].concat(_toConsumableArray(acc), [[latitude, longitude]]);
       }, []))),
       boundsOptions: {
         padding: [30, 30]
@@ -6080,8 +6080,7 @@
       var name = _ref3.name,
           _ref3$loc = _ref3.loc,
           latitude = _ref3$loc.latitude,
-          longitude = _ref3$loc.longitude,
-          address = _ref3$loc.address;
+          longitude = _ref3$loc.longitude;
       return /*#__PURE__*/React__default.createElement(Marker$1, {
         icon: index === currentIndex ? selectedMarker : defaultMarker,
         position: [latitude, longitude],
@@ -6091,7 +6090,27 @@
       }, /*#__PURE__*/React__default.createElement(Popup$1, {
         autoClose: true
       }, name));
-    })))), /*#__PURE__*/React__default.createElement(Combobox, {
+    }))));
+  };
+
+  var GeoFinder = function GeoFinder() {
+    var _useState = React.useState([]),
+        _useState2 = _slicedToArray(_useState, 2),
+        coordinates = _useState2[0],
+        setCoordinates = _useState2[1];
+
+    var _useState3 = React.useState(''),
+        _useState4 = _slicedToArray(_useState3, 2),
+        searchTerm = _useState4[0],
+        setSearchTerm = _useState4[1];
+
+    var addresses = useAddressSearch(searchTerm);
+
+    var handleSearchTermChange = function handleSearchTermChange(event) {
+      setSearchTerm(event.target.value);
+    };
+
+    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Combobox, {
       onSelect: function onSelect(value) {
         var coords = addresses.find(function (a) {
           return a.properties.label === value;
@@ -6105,10 +6124,10 @@
       onChange: handleSearchTermChange
     }), addresses && /*#__PURE__*/React__default.createElement(ComboboxPopover, {
       className: "shadow-popup"
-    }, addresses.length > 0 ? /*#__PURE__*/React__default.createElement(ComboboxList, null, addresses.map(function (_ref4) {
-      var _ref4$properties = _ref4.properties,
-          id = _ref4$properties.id,
-          label = _ref4$properties.label;
+    }, addresses.length > 0 ? /*#__PURE__*/React__default.createElement(ComboboxList, null, addresses.map(function (_ref) {
+      var _ref$properties = _ref.properties,
+          id = _ref$properties.id,
+          label = _ref$properties.label;
       return /*#__PURE__*/React__default.createElement(ComboboxOption, {
         key: id,
         value: label
@@ -6118,7 +6137,9 @@
         display: 'block',
         margin: 8
       }
-    }, "No results found"))));
+    }, "No results found"))), /*#__PURE__*/React__default.createElement(ResultMap, {
+      coordinates: coordinates
+    }));
   };
 
   var root = document.getElementById('root_geo_finder');
@@ -6127,6 +6148,8 @@
     maxDistance: root.getAttribute('data-distance'),
     contentType: root.getAttribute('data-contenttype')
   };
-  reactDom__default.render( /*#__PURE__*/React__default.createElement(GeoFinder, props$1), document.getElementById('root_geo_finder'));
+  reactDom__default.render( /*#__PURE__*/React__default.createElement(SymfonyContextProvider, {
+    value: props$1
+  }, /*#__PURE__*/React__default.createElement(GeoFinder, null)), document.getElementById('root_geo_finder'));
 
 })));

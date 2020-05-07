@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useSymfonyContext } from '../context/symfony'
 import { client, promiseAllWrapper } from '../utils/api'
 
-export default function useLocationSearch(
-  coordinates,
-  siteaccess,
-  contentType,
-  maxDistance
-) {
+export default function useLocationSearch(coordinates) {
+  const { siteaccess, contentType, maxDistance } = useSymfonyContext()
   const [resultList, setResultList] = useState([])
+
   useEffect(() => {
     if (coordinates.length > 0) {
       let isFresh = true
