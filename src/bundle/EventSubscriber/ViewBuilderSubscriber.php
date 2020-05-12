@@ -24,7 +24,6 @@ class ViewBuilderSubscriber implements EventSubscriberInterface
      */
     public function addDistanceParameter(FilterViewParametersEvent $event)
     {
-
         $parameterBag = $event->getParameterBag();
         $builderParameters = $event->getBuilderParameters();
 
@@ -35,11 +34,10 @@ class ViewBuilderSubscriber implements EventSubscriberInterface
         if (isset($builderParameters['distance']) && !$parameterBag->has('distance')) {
             $parameterBag->add(['distance' => $builderParameters['distance']]);
         }
-
     }
 
     private function isEzGeoDataGouvRoute(array $parameters): bool
     {
-        return $parameters['_route'] === 'EzGeoDataGouv_content_view';
+        return isset($parameters['_route']) && $parameters['_route'] === 'EzGeoDataGouv_content_view';
     }
 }
