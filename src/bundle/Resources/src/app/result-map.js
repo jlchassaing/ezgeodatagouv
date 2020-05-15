@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from 'react-leaflet'
 import Control from '@skyeer/react-leaflet-custom-control'
+import { useSymfonyContext } from '../context/symfony'
 
 import {
   homeMarker,
@@ -21,6 +22,7 @@ const ResultMap = ({ coordinates }) => {
   const ref = useRef()
   const [currentIndex, setIndex] = useState(null)
   const result = useLocationSearch(coordinates)
+  const { mapWidth } = useSymfonyContext()
 
   useEffect(() => {
     if (currentIndex !== null) {
@@ -33,7 +35,7 @@ const ResultMap = ({ coordinates }) => {
 
   return (
     result.length > 0 && (
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', 'flexFlow': 'column', marginTop: '10px' }}>
         <div style={{ display: 'block' }}>
           <ResultList
             list={result}
@@ -42,7 +44,7 @@ const ResultMap = ({ coordinates }) => {
             coords={coordinates}
           />
         </div>
-        <div style={{ maxWidth: 400 }}>
+        <div style={{ maxWidth: mapWidth, 'overflow': 'hidden' }}>
           <Map
             ref={ref}
             zoom={15}
@@ -58,7 +60,7 @@ const ResultMap = ({ coordinates }) => {
             ]}
             boundsOptions={{ padding: [30, 30] }}
             useFlyTo
-            style={{ width: 300, height: 300 }}
+            style={{ width: mapWidth, height: 300, zIndex: 0 }}
           >
             <Control
               position="topleft"

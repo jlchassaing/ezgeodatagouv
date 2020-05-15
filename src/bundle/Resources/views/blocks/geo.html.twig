@@ -1,6 +1,6 @@
 {{ encore_entry_link_tags('ezgeodatagouv-full-css', null, 'ezplatform') }}
 
-<div id="{{ block_id }}" class="{{ block_class }}" style="{{ block_style }}">
+<div id="{{ block_id }}" class="{{ block_class }}" style="{{ block_style|raw }}">
   <div
     id="root_geo_finder"
     data-siteaccess="{{ ezpublish.siteaccess.name }}"

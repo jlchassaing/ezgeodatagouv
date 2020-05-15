@@ -6006,6 +6006,10 @@
         setIndex = _useState2[1];
 
     var result = useLocationSearch(coordinates);
+
+    var _useSymfonyContext = useSymfonyContext(),
+        mapWidth = _useSymfonyContext.mapWidth;
+
     React.useEffect(function () {
       if (currentIndex !== null) {
         ref.current.leafletElement.flyTo([result[currentIndex].loc.latitude, result[currentIndex].loc.longitude], 15);
@@ -6013,7 +6017,9 @@
     }, [currentIndex, result]);
     return result.length > 0 && /*#__PURE__*/React__default.createElement("div", {
       style: {
-        display: 'flex'
+        display: 'flex',
+        'flexFlow': 'column',
+        marginTop: '10px'
       }
     }, /*#__PURE__*/React__default.createElement("div", {
       style: {
@@ -6026,7 +6032,8 @@
       coords: coordinates
     })), /*#__PURE__*/React__default.createElement("div", {
       style: {
-        maxWidth: 400
+        maxWidth: mapWidth,
+        'overflow': 'hidden'
       }
     }, /*#__PURE__*/React__default.createElement(Map$1, {
       ref: ref,
@@ -6042,8 +6049,9 @@
       },
       useFlyTo: true,
       style: {
-        width: 300,
-        height: 300
+        width: mapWidth,
+        height: 300,
+        zIndex: 0
       }
     }, /*#__PURE__*/React__default.createElement(Control, {
       position: "topleft",
@@ -6106,11 +6114,27 @@
 
     var addresses = useAddressSearch(searchTerm);
 
+    var _useSymfonyContext = useSymfonyContext(),
+        label = _useSymfonyContext.label;
+
     var handleSearchTermChange = function handleSearchTermChange(event) {
       setSearchTerm(event.target.value);
     };
 
-    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(Combobox, {
+    var handleDoSearch = function handleDoSearch(event) {
+      event.preventDefault();
+      setSearchTerm(searchTerm);
+    };
+
+    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement("label", {
+      id: "combosearch_label",
+      "class": "sr-only"
+    }, label), /*#__PURE__*/React__default.createElement(Combobox, {
+      style: {
+        display: 'inline-block',
+        width: '75%'
+      },
+      "aria-labelledby": "combosearch_label",
       onSelect: function onSelect(value) {
         var coords = addresses.find(function (a) {
           return a.properties.label === value;
@@ -6120,24 +6144,37 @@
       }
     }, /*#__PURE__*/React__default.createElement(ComboboxInput, {
       selectOnClick: true,
-      className: "ezgeodatagouv__search--input",
+      placeholder: "Addresse...",
+      className: "form-control ezgeodatagouv__search--input",
       onChange: handleSearchTermChange
     }), addresses && /*#__PURE__*/React__default.createElement(ComboboxPopover, {
       className: "shadow-popup"
     }, addresses.length > 0 ? /*#__PURE__*/React__default.createElement(ComboboxList, null, addresses.map(function (_ref) {
       var _ref$properties = _ref.properties,
           id = _ref$properties.id,
+          name = _ref$properties.name,
+          postcode = _ref$properties.postcode,
+          city = _ref$properties.city,
           label = _ref$properties.label;
       return /*#__PURE__*/React__default.createElement(ComboboxOption, {
         key: id,
         value: label
-      });
+      }, name !== city ? name + ' ' + postcode + ' ' + city : name + ' ' + postcode);
     })) : /*#__PURE__*/React__default.createElement("span", {
       style: {
         display: 'block',
         margin: 8
       }
-    }, "No results found"))), /*#__PURE__*/React__default.createElement(ResultMap, {
+    }, "No results found"))), /*#__PURE__*/React__default.createElement("button", {
+      className: "button btn bnt-submit",
+      type: "submit",
+      style: {
+        padding: '6px 10px 7px',
+        'margin': '0 0 0 10px',
+        'verticalAlign': 'baseline'
+      },
+      onClick: handleDoSearch
+    }, "Ok"), /*#__PURE__*/React__default.createElement(ResultMap, {
       coordinates: coordinates
     }));
   };
@@ -6146,7 +6183,9 @@
   var props$1 = {
     siteaccess: root.getAttribute('data-siteaccess'),
     maxDistance: root.getAttribute('data-distance'),
-    contentType: root.getAttribute('data-contenttype')
+    contentType: root.getAttribute('data-contenttype'),
+    width: root.hasAttribute('data-width') ? root.getAttribute('data-width') : root.offsetWidth,
+    label: root.hasAttribute('data-label') ? root.getAttribute('data-label') : 'type text to search'
   };
   reactDom__default.render( /*#__PURE__*/React__default.createElement(SymfonyContextProvider, {
     value: props$1
