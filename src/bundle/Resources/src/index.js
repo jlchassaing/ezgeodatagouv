@@ -4,19 +4,27 @@ import ReactDOM from 'react-dom'
 import { SymfonyContextProvider } from './context/symfony'
 import App from './app'
 
-const root = document.getElementById('root_geo_finder')
+class GeoFinderElement extends HTMLElement {
+  connectedCallback() {
+    const props = {
+      siteaccess: this.dataset.siteaccess,
+      maxDistance: parseInt(this.dataset.distance, 10),
+      contentType: this.dataset.contenttype,
+      width: this.dataset.width ?? this.offsetWidth,
+      label: this.dataset.label ?? 'type text to search',
+    }
 
-const props = {
-  siteaccess: root.getAttribute('data-siteaccess'),
-  maxDistance: root.getAttribute('data-distance'),
-  contentType: root.getAttribute('data-contenttype'),
-  width: root.hasAttribute('data-width') ? root.getAttribute('data-width') : root.offsetWidth,
-  label: root.hasAttribute('data-label') ? root.getAttribute('data-label') : 'type text to search',
+    ReactDOM.render(
+      <SymfonyContextProvider value={props}>
+        <App />
+      </SymfonyContextProvider>,
+      this
+    )
+  }
+
+  disconnectedCallback() {
+    ReactDOM.unmountComponentAtNode(this)
+  }
 }
 
-ReactDOM.render(
-  <SymfonyContextProvider value={props}>
-    <App />
-  </SymfonyContextProvider>,
-  document.getElementById('root_geo_finder')
-)
+customElements.define('geo-finder', GeoFinderElement)

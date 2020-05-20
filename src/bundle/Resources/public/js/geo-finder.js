@@ -3,23 +3,33 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('react'), require('react-dom'), require('leaflet')) :
   typeof define === 'function' && define.amd ? define(['react', 'react-dom', 'leaflet'], factory) :
   (global = global || self, factory(global.React, global.ReactDOM, global.L));
-}(this, (function (React, reactDom, L) { 'use strict';
+}(this, (function (React, ReactDOM, L) { 'use strict';
 
   var React__default = 'default' in React ? React['default'] : React;
-  var reactDom__default = 'default' in reactDom ? reactDom['default'] : reactDom;
+  var ReactDOM__default = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
   var L__default = 'default' in L ? L['default'] : L;
 
-  var SymfonyContext = React.createContext();
-  var SymfonyContextProvider = function SymfonyContextProvider(_ref) {
-    var value = _ref.value,
-        children = _ref.children;
-    return /*#__PURE__*/React__default.createElement(SymfonyContext.Provider, {
-      value: value
-    }, children);
-  };
-  var useSymfonyContext = function useSymfonyContext() {
-    return React.useContext(SymfonyContext);
-  };
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
 
   function _defineProperty(obj, key, value) {
     if (key in obj) {
@@ -70,6 +80,105 @@
     return target;
   }
 
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+  }
+
+  function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function _construct(Parent, args, Class) {
+    if (_isNativeReflectConstruct()) {
+      _construct = Reflect.construct;
+    } else {
+      _construct = function _construct(Parent, args, Class) {
+        var a = [null];
+        a.push.apply(a, args);
+        var Constructor = Function.bind.apply(Parent, a);
+        var instance = new Constructor();
+        if (Class) _setPrototypeOf(instance, Class.prototype);
+        return instance;
+      };
+    }
+
+    return _construct.apply(null, arguments);
+  }
+
+  function _isNativeFunction(fn) {
+    return Function.toString.call(fn).indexOf("[native code]") !== -1;
+  }
+
+  function _wrapNativeSuper(Class) {
+    var _cache = typeof Map === "function" ? new Map() : undefined;
+
+    _wrapNativeSuper = function _wrapNativeSuper(Class) {
+      if (Class === null || !_isNativeFunction(Class)) return Class;
+
+      if (typeof Class !== "function") {
+        throw new TypeError("Super expression must either be null or a function");
+      }
+
+      if (typeof _cache !== "undefined") {
+        if (_cache.has(Class)) return _cache.get(Class);
+
+        _cache.set(Class, Wrapper);
+      }
+
+      function Wrapper() {
+        return _construct(Class, arguments, _getPrototypeOf(this).constructor);
+      }
+
+      Wrapper.prototype = Object.create(Class.prototype, {
+        constructor: {
+          value: Wrapper,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      return _setPrototypeOf(Wrapper, Class);
+    };
+
+    return _wrapNativeSuper(Class);
+  }
+
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null) return {};
     var target = {};
@@ -104,6 +213,39 @@
     }
 
     return target;
+  }
+
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return self;
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (call && (typeof call === "object" || typeof call === "function")) {
+      return call;
+    }
+
+    return _assertThisInitialized(self);
+  }
+
+  function _createSuper(Derived) {
+    return function () {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (_isNativeReflectConstruct()) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
   }
 
   function _slicedToArray(arr, i) {
@@ -177,6 +319,18 @@
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
+
+  var SymfonyContext = React.createContext();
+  var SymfonyContextProvider = function SymfonyContextProvider(_ref) {
+    var value = _ref.value,
+        children = _ref.children;
+    return /*#__PURE__*/React__default.createElement(SymfonyContext.Provider, {
+      value: value
+    }, children);
+  };
+  var useSymfonyContext = function useSymfonyContext() {
+    return React.useContext(SymfonyContext);
+  };
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2064,7 +2218,7 @@
         }
       };
     }, [type]);
-    return portalNode.current ? reactDom.createPortal(children, portalNode.current) : React__default.createElement("span", {
+    return portalNode.current ? ReactDOM.createPortal(children, portalNode.current) : React__default.createElement("span", {
       ref: mountNode
     });
   };
@@ -3857,7 +4011,7 @@
     subClass.__proto__ = superClass;
   }
 
-  function _assertThisInitialized(self) {
+  function _assertThisInitialized$1(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
@@ -3888,7 +4042,7 @@
 
       _this = _Component.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "leafletElement", void 0);
 
       _this.leafletElement = _this.createLeafletElement(_this.props);
       return _this;
@@ -4003,7 +4157,7 @@
     return a!==a && b!==b;
   };
 
-  function _defineProperties(target, props) {
+  function _defineProperties$1(target, props) {
     for (var i = 0; i < props.length; i++) {
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
@@ -4013,9 +4167,9 @@
     }
   }
 
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
+  function _createClass$1(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties$1(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties$1(Constructor, staticProps);
     return Constructor;
   }
 
@@ -4029,9 +4183,9 @@
 
       _this = _Component.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "_leafletEvents", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "_leafletEvents", void 0);
 
-      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "leafletElement", void 0);
 
       _this._leafletEvents = _this.extractLeafletEvents(props);
       return _this;
@@ -4144,9 +4298,9 @@
 
       _this = _MapComponent.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "contextValue", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "contextValue", void 0);
 
-      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "leafletElement", void 0);
 
       _this.leafletElement = _this.createLeafletElement(props);
       return _this;
@@ -4199,7 +4353,7 @@
       }, children);
     };
 
-    _createClass(MapLayer, [{
+    _createClass$1(MapLayer, [{
       key: "layerContainer",
       get: function get() {
         return this.props.leaflet.layerContainer || this.props.leaflet.map;
@@ -4373,13 +4527,13 @@
 
       _this = _MapComponent.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "onClose", function () {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onClose", function () {
         if (_this.props.onClose) {
           _this.props.onClose();
         }
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "onOpen", function () {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onOpen", function () {
         _this.forceUpdate(); // Re-render now that leafletElement is created
 
 
@@ -4414,7 +4568,7 @@
 
     _proto.render = function render() {
       if (this.leafletElement._contentNode) {
-        return reactDom.createPortal(this.props.children, this.leafletElement._contentNode);
+        return ReactDOM.createPortal(this.props.children, this.leafletElement._contentNode);
       }
 
       return null;
@@ -4608,9 +4762,9 @@
 
       _this = _Component.call.apply(_Component, [this].concat(args)) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "contextValue", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "contextValue", void 0);
 
-      _defineProperty$1(_assertThisInitialized(_this), "layer", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "layer", void 0);
 
       return _this;
     }
@@ -4662,7 +4816,7 @@
 
       _this2 = _ControlledLayer.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this2), "addLayer", function (layer) {
+      _defineProperty$1(_assertThisInitialized$1(_this2), "addLayer", function (layer) {
         _this2.layer = layer; // Keep layer reference to handle dynamic changes of props
 
         var _this2$props = _this2.props,
@@ -4674,8 +4828,8 @@
 
       _this2.contextValue = _extends$3({}, props.leaflet, {
         layerContainer: {
-          addLayer: _this2.addLayer.bind(_assertThisInitialized(_this2)),
-          removeLayer: _this2.removeLayer.bind(_assertThisInitialized(_this2))
+          addLayer: _this2.addLayer.bind(_assertThisInitialized$1(_this2)),
+          removeLayer: _this2.removeLayer.bind(_assertThisInitialized$1(_this2))
         }
       });
       return _this2;
@@ -4692,7 +4846,7 @@
 
       _this3 = _ControlledLayer2.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this3), "addLayer", function (layer) {
+      _defineProperty$1(_assertThisInitialized$1(_this3), "addLayer", function (layer) {
         _this3.layer = layer; // Keep layer reference to handle dynamic changes of props
 
         var _this3$props = _this3.props,
@@ -4704,8 +4858,8 @@
 
       _this3.contextValue = _extends$3({}, props.leaflet, {
         layerContainer: {
-          addLayer: _this3.addLayer.bind(_assertThisInitialized(_this3)),
-          removeLayer: _this3.removeLayer.bind(_assertThisInitialized(_this3))
+          addLayer: _this3.addLayer.bind(_assertThisInitialized$1(_this3)),
+          removeLayer: _this3.removeLayer.bind(_assertThisInitialized$1(_this3))
         }
       });
       return _this3;
@@ -4722,14 +4876,14 @@
 
       _this4 = _MapControl.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this4), "controlProps", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this4), "controlProps", void 0);
 
       _this4.controlProps = {
-        addBaseLayer: _this4.addBaseLayer.bind(_assertThisInitialized(_this4)),
-        addOverlay: _this4.addOverlay.bind(_assertThisInitialized(_this4)),
+        addBaseLayer: _this4.addBaseLayer.bind(_assertThisInitialized$1(_this4)),
+        addOverlay: _this4.addOverlay.bind(_assertThisInitialized$1(_this4)),
         leaflet: props.leaflet,
-        removeLayer: _this4.removeLayer.bind(_assertThisInitialized(_this4)),
-        removeLayerControl: _this4.removeLayerControl.bind(_assertThisInitialized(_this4))
+        removeLayer: _this4.removeLayer.bind(_assertThisInitialized$1(_this4)),
+        removeLayerControl: _this4.removeLayerControl.bind(_assertThisInitialized$1(_this4))
       };
       return _this4;
     }
@@ -4841,22 +4995,22 @@
 
       _this = _MapEvented.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "className", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "className", void 0);
 
-      _defineProperty$1(_assertThisInitialized(_this), "contextValue", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "contextValue", void 0);
 
-      _defineProperty$1(_assertThisInitialized(_this), "container", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "container", void 0);
 
-      _defineProperty$1(_assertThisInitialized(_this), "viewport", {
+      _defineProperty$1(_assertThisInitialized$1(_this), "viewport", {
         center: undefined,
         zoom: undefined
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "_ready", false);
+      _defineProperty$1(_assertThisInitialized$1(_this), "_ready", false);
 
-      _defineProperty$1(_assertThisInitialized(_this), "_updating", false);
+      _defineProperty$1(_assertThisInitialized$1(_this), "_updating", false);
 
-      _defineProperty$1(_assertThisInitialized(_this), "onViewportChange", function () {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onViewportChange", function () {
         var center = _this.leafletElement.getCenter();
 
         _this.viewport = {
@@ -4869,13 +5023,13 @@
         }
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "onViewportChanged", function () {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onViewportChanged", function () {
         if (_this.props.onViewportChanged && !_this._updating) {
           _this.props.onViewportChanged(_this.viewport);
         }
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "bindContainer", function (container) {
+      _defineProperty$1(_assertThisInitialized$1(_this), "bindContainer", function (container) {
         _this.container = container;
       });
 
@@ -5199,12 +5353,12 @@
 
       _this = _Component.call.apply(_Component, [this].concat(args)) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "state", {
+      _defineProperty$1(_assertThisInitialized$1(_this), "state", {
         name: undefined,
         context: undefined
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "setStyle", function (_temp) {
+      _defineProperty$1(_assertThisInitialized$1(_this), "setStyle", function (_temp) {
         var _ref = _temp === void 0 ? _this.props : _temp,
             style = _ref.style,
             className = _ref.className;
@@ -5396,7 +5550,7 @@
 
       _this = _DivOverlay.call.apply(_DivOverlay, [this].concat(args)) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "onPopupOpen", function (_ref) {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onPopupOpen", function (_ref) {
         var popup = _ref.popup;
 
         if (popup === _this.leafletElement) {
@@ -5404,7 +5558,7 @@
         }
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "onPopupClose", function (_ref2) {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onPopupClose", function (_ref2) {
         var popup = _ref2.popup;
 
         if (popup === _this.leafletElement) {
@@ -5412,7 +5566,7 @@
         }
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "onRender", function () {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onRender", function () {
         if (_this.props.autoPan !== false && _this.leafletElement.isOpen()) {
           if (_this.leafletElement._map && _this.leafletElement._map._panAnim) {
             _this.leafletElement._map._panAnim = undefined;
@@ -5547,9 +5701,9 @@
 
       _this = _MapComponent.call(this, props) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "leafletElement", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "leafletElement", void 0);
 
-      _defineProperty$1(_assertThisInitialized(_this), "container", void 0);
+      _defineProperty$1(_assertThisInitialized$1(_this), "container", void 0);
 
       _this.leafletElement = _this.createLeafletElement(props);
       return _this;
@@ -5611,10 +5765,10 @@
         return null;
       }
 
-      return reactDom.createPortal(children, this.container);
+      return ReactDOM.createPortal(children, this.container);
     };
 
-    _createClass(SVGOverlay, [{
+    _createClass$1(SVGOverlay, [{
       key: "layerContainer",
       get: function get() {
         return this.props.leaflet.layerContainer || this.props.leaflet.map;
@@ -5664,7 +5818,7 @@
 
       _this = _DivOverlay.call.apply(_DivOverlay, [this].concat(args)) || this;
 
-      _defineProperty$1(_assertThisInitialized(_this), "onTooltipOpen", function (_ref) {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onTooltipOpen", function (_ref) {
         var tooltip = _ref.tooltip;
 
         if (tooltip === _this.leafletElement) {
@@ -5672,7 +5826,7 @@
         }
       });
 
-      _defineProperty$1(_assertThisInitialized(_this), "onTooltipClose", function (_ref2) {
+      _defineProperty$1(_assertThisInitialized$1(_this), "onTooltipClose", function (_ref2) {
         var tooltip = _ref2.tooltip;
 
         if (tooltip === _this.leafletElement) {
@@ -5896,7 +6050,7 @@
   });
 
   var reactLeafletCustomControl = createCommonjsModule(function (module, exports) {
-  !function(e,t){module.exports=t(L__default,propTypes,es,reactDom__default,React__default);}(commonjsGlobal,function(e,t,o,r,n){return function(e){var t={};function o(r){if(t[r])return t[r].exports;var n=t[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=e,o.c=t,o.d=function(e,t,r){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r});},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0});},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(o.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(r,n,function(t){return e[t]}.bind(null,n));return r},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=6)}([function(t,o){t.exports=e;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=o(0),n=r.Control.extend({options:{className:""},onAdd:function(){var e=r.DomUtil.create("div",this.options.className);return r.DomEvent.disableClickPropagation(e),e}});t.default=n,e.exports=t.default;},function(e,o){e.exports=t;},function(e,t){e.exports=o;},function(e,t){e.exports=r;},function(e,t){e.exports=n;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,o,r){return o&&e(t.prototype,o),r&&e(t,r),t}}(),n=function e(t,o,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,o);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:e(i,o,r)}if("value"in n)return n.value;var u=n.get;return void 0!==u?u.call(r):void 0},i=o(5),u=o(4),l=o(3),a=f(o(2)),c=f(o(1));function f(e){return e&&e.__esModule?e:{default:e}}var p=function(e){function t(){return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),function(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t||"object"!=typeof t&&"function"!=typeof t?e:t}(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t);}(t,l.MapControl),r(t,[{key:"createLeafletElement",value:function(e){var t=e.position,o=e.className;return this.leafletElement=new c.default({position:t,className:o}),this.leafletElement}},{key:"updateLeafletElement",value:function(e,o){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"updateLeafletElement",this).call(this,e,o),this.renderContent();}},{key:"componentDidMount",value:function(){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentDidMount",this).call(this),this.renderContent();}},{key:"componentWillUnmount",value:function(){(0, u.unmountComponentAtNode)(this.leafletElement.getContainer()),n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentWillUnmount",this).call(this);}},{key:"renderContent",value:function(){var e=this.leafletElement.getContainer();(0, u.render)(i.Children.only(this.props.children),e);}}]),t}();p.propTypes={className:a.default.string,children:a.default.node,position:a.default.string},t.default=(0, l.withLeaflet)(p),e.exports=t.default;}])});
+  !function(e,t){module.exports=t(L__default,propTypes,es,ReactDOM__default,React__default);}(commonjsGlobal,function(e,t,o,r,n){return function(e){var t={};function o(r){if(t[r])return t[r].exports;var n=t[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=e,o.c=t,o.d=function(e,t,r){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r});},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0});},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(o.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(r,n,function(t){return e[t]}.bind(null,n));return r},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=6)}([function(t,o){t.exports=e;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=o(0),n=r.Control.extend({options:{className:""},onAdd:function(){var e=r.DomUtil.create("div",this.options.className);return r.DomEvent.disableClickPropagation(e),e}});t.default=n,e.exports=t.default;},function(e,o){e.exports=t;},function(e,t){e.exports=o;},function(e,t){e.exports=r;},function(e,t){e.exports=n;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,o,r){return o&&e(t.prototype,o),r&&e(t,r),t}}(),n=function e(t,o,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,o);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:e(i,o,r)}if("value"in n)return n.value;var u=n.get;return void 0!==u?u.call(r):void 0},i=o(5),u=o(4),l=o(3),a=f(o(2)),c=f(o(1));function f(e){return e&&e.__esModule?e:{default:e}}var p=function(e){function t(){return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),function(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t||"object"!=typeof t&&"function"!=typeof t?e:t}(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t);}(t,l.MapControl),r(t,[{key:"createLeafletElement",value:function(e){var t=e.position,o=e.className;return this.leafletElement=new c.default({position:t,className:o}),this.leafletElement}},{key:"updateLeafletElement",value:function(e,o){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"updateLeafletElement",this).call(this,e,o),this.renderContent();}},{key:"componentDidMount",value:function(){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentDidMount",this).call(this),this.renderContent();}},{key:"componentWillUnmount",value:function(){(0, u.unmountComponentAtNode)(this.leafletElement.getContainer()),n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentWillUnmount",this).call(this);}},{key:"renderContent",value:function(){var e=this.leafletElement.getContainer();(0, u.render)(i.Children.only(this.props.children),e);}}]),t}();p.propTypes={className:a.default.string,children:a.default.node,position:a.default.string},t.default=(0, l.withLeaflet)(p),e.exports=t.default;}])});
   });
 
   var Control = unwrapExports(reactLeafletCustomControl);
@@ -6159,7 +6313,7 @@
       return /*#__PURE__*/React__default.createElement(ComboboxOption, {
         key: id,
         value: label
-      }, name !== city ? name + ' ' + postcode + ' ' + city : name + ' ' + postcode);
+      }, name !== city ? "".concat(name, " ").concat(postcode, " ").concat(city) : "".concat(name, " ").concat(postcode));
     })) : /*#__PURE__*/React__default.createElement("span", {
       style: {
         display: 'block',
@@ -6170,8 +6324,8 @@
       type: "submit",
       style: {
         padding: '6px 10px 7px',
-        'margin': '0 0 0 10px',
-        'verticalAlign': 'baseline'
+        margin: '0 0 0 10px',
+        verticalAlign: 'baseline'
       },
       onClick: handleDoSearch
     }, "Ok"), /*#__PURE__*/React__default.createElement(ResultMap, {
@@ -6179,16 +6333,43 @@
     }));
   };
 
-  var root = document.getElementById('root_geo_finder');
-  var props$1 = {
-    siteaccess: root.getAttribute('data-siteaccess'),
-    maxDistance: root.getAttribute('data-distance'),
-    contentType: root.getAttribute('data-contenttype'),
-    width: root.hasAttribute('data-width') ? root.getAttribute('data-width') : root.offsetWidth,
-    label: root.hasAttribute('data-label') ? root.getAttribute('data-label') : 'type text to search'
-  };
-  reactDom__default.render( /*#__PURE__*/React__default.createElement(SymfonyContextProvider, {
-    value: props$1
-  }, /*#__PURE__*/React__default.createElement(GeoFinder, null)), document.getElementById('root_geo_finder'));
+  var GeoFinderElement = /*#__PURE__*/function (_HTMLElement) {
+    _inherits(GeoFinderElement, _HTMLElement);
+
+    var _super = _createSuper(GeoFinderElement);
+
+    function GeoFinderElement() {
+      _classCallCheck(this, GeoFinderElement);
+
+      return _super.apply(this, arguments);
+    }
+
+    _createClass(GeoFinderElement, [{
+      key: "connectedCallback",
+      value: function connectedCallback() {
+        var _this$dataset$width, _this$dataset$label;
+
+        var props = {
+          siteaccess: this.dataset.siteaccess,
+          maxDistance: parseInt(this.dataset.distance, 10),
+          contentType: this.dataset.contenttype,
+          width: (_this$dataset$width = this.dataset.width) !== null && _this$dataset$width !== void 0 ? _this$dataset$width : this.offsetWidth,
+          label: (_this$dataset$label = this.dataset.label) !== null && _this$dataset$label !== void 0 ? _this$dataset$label : 'type text to search'
+        };
+        ReactDOM__default.render( /*#__PURE__*/React__default.createElement(SymfonyContextProvider, {
+          value: props
+        }, /*#__PURE__*/React__default.createElement(GeoFinder, null)), this);
+      }
+    }, {
+      key: "disconnectedCallback",
+      value: function disconnectedCallback() {
+        ReactDOM__default.unmountComponentAtNode(this);
+      }
+    }]);
+
+    return GeoFinderElement;
+  }( /*#__PURE__*/_wrapNativeSuper(HTMLElement));
+
+  customElements.define('geo-finder', GeoFinderElement);
 
 })));

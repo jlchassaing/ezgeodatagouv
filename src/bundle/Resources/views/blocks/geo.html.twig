@@ -1,12 +1,11 @@
 {{ encore_entry_link_tags('ezgeodatagouv-full-css', null, 'ezplatform') }}
 
-<div id="{{ block_id }}" class="{{ block_class }}" style="{{ block_style|raw }}">
-  <div
-    id="root_geo_finder"
+<div id="{{'block-' ~ block_id }}" class="{{ block_class }}" style="{{ block_style|raw }}">
+  <geo-finder
     data-siteaccess="{{ ezpublish.siteaccess.name }}"
     data-distance="{{ max_distance }}"
     data-contenttype="{{ contentType }}">
-  </div>
+  </geo-finder>
 </div>
 
 <script src="{{ asset('bundles/ezplatformadminuiassets/vendors/leaflet/dist/leaflet.js') }}"></script>
