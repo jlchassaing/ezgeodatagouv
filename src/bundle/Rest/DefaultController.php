@@ -95,6 +95,7 @@ class DefaultController extends Controller
 
         $results = $searchService->findContent($query);
 
+        $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
         $contentValues = [];
         foreach ($results->searchHits as $searchHit) {
             /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
@@ -104,8 +105,9 @@ class DefaultController extends Controller
             $mainLocation = $locationService->loadLocation($content->contentInfo->mainLocationId);
             $relations = $contentService->loadRelations($content->getVersionInfo());
             $siteaccess = $this->container->get('ezpublish.siteaccess');
-            $path = $this->router->generate($mainLocation,['siteaccess' => $this->container->get('ezpublish.siteaccess')->name], UrlGeneratorInterface::ABSOLUTE_URL);
 
+            $path = $this->router->generate($mainLocation,['siteaccess' => $siteaccess], UrlGeneratorInterface::ABSOLUTE_PATH);
+            
             $contentValues[] = new LocationContent(
                 $content->contentInfo,
                 null,
