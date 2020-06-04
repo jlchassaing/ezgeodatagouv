@@ -17,6 +17,7 @@ use eZ\Publish\Core\REST\Server\Values;
 use eZGeoDataGouvBundle\Rest\Values\LocationContent;
 use eZGeoDataGouvBundle\Rest\Values\RestContent;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends Controller
 {
@@ -102,7 +103,8 @@ class DefaultController extends Controller
 
             $mainLocation = $locationService->loadLocation($content->contentInfo->mainLocationId);
             $relations = $contentService->loadRelations($content->getVersionInfo());
-            $path = $this->router->generate($mainLocation);
+            $siteaccess = $this->container->get('ezpublish.siteaccess');
+            $path = $this->router->generate($mainLocation,['siteaccess' => $this->container->get('ezpublish.siteaccess')->name], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $contentValues[] = new LocationContent(
                 $content->contentInfo,
