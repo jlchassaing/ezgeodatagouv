@@ -3,7 +3,7 @@ ezplatform_page_fieldtype:
     geo_block:
       name: Geo Block
       category: default
-      thumbnail: '/bundles/ezplatformpagefieldtype/images/thumbnails/content_list.svg'
+      thumbnail: '/bundles/ezplatformadminui/img/ez-icons.svg#places'
       views:
         default:
           name: 'Default block layout'
