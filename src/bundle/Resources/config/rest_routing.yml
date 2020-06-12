@@ -38,13 +38,4 @@ EzGeoDataGouv_search_proximity_with_content_type_and_distance:
     latitude: '-?\d+(\.\d{1,6})?'
     longitude: '-?\d+(\.\d{1,6})?'
 
-EzGeoDataGouv_content_view:
-  path: /ez_geo_data_gouv/view/content/{contentId}/{viewType}/{distance}
-  defaults:
-    _controller: ez_content:viewAction
-    viewType: line
-    locationId: null
-    layout: false
-    distance: 0
-  options:
-    expose: true
+

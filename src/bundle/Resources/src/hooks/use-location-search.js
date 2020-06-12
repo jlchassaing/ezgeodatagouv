@@ -3,7 +3,7 @@ import { useSymfonyContext } from '../context/symfony'
 import { client, promiseAllWrapper } from '../utils/api'
 
 export default function useLocationSearch(coordinates) {
-  const { siteaccess, contentType, maxDistance } = useSymfonyContext()
+  const { siteaccess, contentType, maxDistance, baseUrl } = useSymfonyContext()
   const [resultList, setResultList] = useState([])
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function useLocationSearch(coordinates) {
           'X-Siteaccess': siteaccess,
         },
       })
-        .then(data => normalizeContentList(data))
+        .then(data => normalizeContentList(data, baseUrl))
         .then(result => {
           if (isFresh) setResultList(result)
         })
@@ -26,27 +26,28 @@ export default function useLocationSearch(coordinates) {
 
   return resultList
 
-  function normalizeContentList(data) {
+  function normalizeContentList(data, baseUrl) {
     const ContentList = data.ContentList.ContentInfo
     if (ContentList.length > 0) {
-      return Promise.all(promiseAllWrapper(ContentList, siteaccess)).then(
-        html =>
-          ContentList.reduce(
-            (acc, ContentInfo, index) => [
-              ...acc,
-              {
-                _id: ContentInfo.Content._id,
-                _href: ContentInfo.Content._href,
-                name: ContentInfo.Content.TranslatedName,
-                distance: ContentInfo._distance,
-                html: html[index],
-                loc: ContentInfo.Content.CurrentVersion.Version.Fields.field.find(
-                  field => field.fieldTypeIdentifier === 'ezgmaplocation'
-                ).fieldValue,
-              },
-            ],
-            []
-          )
+      return Promise.all(
+        promiseAllWrapper(ContentList, siteaccess, baseUrl)
+      ).then(html =>
+        ContentList.reduce(
+          (acc, ContentInfo, index) => [
+            ...acc,
+            {
+              _id: ContentInfo.Content._id,
+              _href: ContentInfo.Content._href,
+              name: ContentInfo.Content.TranslatedName,
+              distance: ContentInfo._distance,
+              html: html[index],
+              loc: ContentInfo.Content.CurrentVersion.Version.Fields.field.find(
+                field => field.fieldTypeIdentifier === 'ezgmaplocation'
+              ).fieldValue,
+            },
+          ],
+          []
+        )
       )
     } else {
       return []

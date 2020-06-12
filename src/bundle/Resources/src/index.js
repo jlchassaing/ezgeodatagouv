@@ -12,6 +12,7 @@ class GeoFinderElement extends HTMLElement {
       contentType: this.dataset.contenttype,
       width: this.dataset.width ?? this.offsetWidth,
       label: this.dataset.label ?? 'type text to search',
+      baseUrl: this.dataset.baseurl,
     }
 
     ReactDOM.render(

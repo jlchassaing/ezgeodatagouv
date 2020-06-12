@@ -34,17 +34,14 @@ export function client(
     })
 }
 
-export function promiseAllWrapper(ContentList, siteaccess) {
+export function promiseAllWrapper(ContentList, siteaccess, baseUrl) {
   return ContentList.reduce(
     (promises, ContentInfo) => [
       ...promises,
       client(
-        `view/content/${ContentInfo.Content._id}/line/${ContentInfo._distance}`,
+        `${baseUrl}ez_geo_data_gouv/view/content/${ContentInfo.Content._id}/line/${ContentInfo._distance}`,
         {
           output: 'text',
-          headers: {
-            'X-Siteaccess': siteaccess,
-          },
         }
       ),
     ],

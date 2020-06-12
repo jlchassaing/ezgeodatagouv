@@ -3831,13 +3831,10 @@
       }
     });
   }
-  function promiseAllWrapper(ContentList, siteaccess) {
+  function promiseAllWrapper(ContentList, siteaccess, baseUrl) {
     return ContentList.reduce(function (promises, ContentInfo) {
-      return [].concat(_toConsumableArray(promises), [client("view/content/".concat(ContentInfo.Content._id, "/line/").concat(ContentInfo._distance), {
-        output: 'text',
-        headers: {
-          'X-Siteaccess': siteaccess
-        }
+      return [].concat(_toConsumableArray(promises), [client("".concat(baseUrl, "ez_geo_data_gouv/view/content/").concat(ContentInfo.Content._id, "/line/").concat(ContentInfo._distance), {
+        output: 'text'
       })]);
     }, []);
   }
@@ -6076,7 +6073,8 @@
     var _useSymfonyContext = useSymfonyContext(),
         siteaccess = _useSymfonyContext.siteaccess,
         contentType = _useSymfonyContext.contentType,
-        maxDistance = _useSymfonyContext.maxDistance;
+        maxDistance = _useSymfonyContext.maxDistance,
+        baseUrl = _useSymfonyContext.baseUrl;
 
     var _useState = React.useState([]),
         _useState2 = _slicedToArray(_useState, 2),
@@ -6097,7 +6095,7 @@
             'X-Siteaccess': siteaccess
           }
         }).then(function (data) {
-          return normalizeContentList(data);
+          return normalizeContentList(data, baseUrl);
         }).then(function (result) {
           if (isFresh) setResultList(result);
         });
@@ -6108,11 +6106,11 @@
     }, [coordinates]);
     return resultList;
 
-    function normalizeContentList(data) {
+    function normalizeContentList(data, baseUrl) {
       var ContentList = data.ContentList.ContentInfo;
 
       if (ContentList.length > 0) {
-        return Promise.all(promiseAllWrapper(ContentList, siteaccess)).then(function (html) {
+        return Promise.all(promiseAllWrapper(ContentList, siteaccess, baseUrl)).then(function (html) {
           return ContentList.reduce(function (acc, ContentInfo, index) {
             return [].concat(_toConsumableArray(acc), [{
               _id: ContentInfo.Content._id,
@@ -6354,7 +6352,8 @@
           maxDistance: parseInt(this.dataset.distance, 10),
           contentType: this.dataset.contenttype,
           width: (_this$dataset$width = this.dataset.width) !== null && _this$dataset$width !== void 0 ? _this$dataset$width : this.offsetWidth,
-          label: (_this$dataset$label = this.dataset.label) !== null && _this$dataset$label !== void 0 ? _this$dataset$label : 'type text to search'
+          label: (_this$dataset$label = this.dataset.label) !== null && _this$dataset$label !== void 0 ? _this$dataset$label : 'type text to search',
+          baseUrl: this.dataset.baseurl
         };
         ReactDOM__default.render( /*#__PURE__*/React__default.createElement(SymfonyContextProvider, {
           value: props
