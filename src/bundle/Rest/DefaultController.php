@@ -106,7 +106,7 @@ class DefaultController extends Controller
             $relations = $contentService->loadRelations($content->getVersionInfo());
             $siteaccess = $this->container->get('ezpublish.siteaccess');
 
-            $path = $this->router->generate($mainLocation,['siteaccess' => $siteaccess], UrlGeneratorInterface::ABSOLUTE_PATH);
+            $path = $this->router->generate($mainLocation,['siteaccess' => $siteaccess->name], UrlGeneratorInterface::ABSOLUTE_PATH);
             
             $contentValues[] = new LocationContent(
                 $content->contentInfo,
