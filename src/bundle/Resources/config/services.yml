@@ -35,7 +35,13 @@ services:
       - { name: ezpublish_rest.output.value_object_visitor, type: eZGeoDataGouvBundle\Rest\Values\LocationContent }
 
 
-  ez_feo_data_gouv.event.subscriber.view_builder:
+  ez_geo_data_gouv.event.subscriber.view_builder:
     class: eZGeoDataGouvBundle\EventSubscriber\ViewBuilderSubscriber
     tags:
       - {name: kernel.event_subscriber}
+
+  ez_geo_data_gouv.data_flow.ez_matrix_field_value_creator:
+    class: eZGeoDataGouv\DataFlow\Field\EzMatrixFieldValueCreator
+    tags:
+      - { name: 'coderhapsodie.ezdataflow.field_value_creator' }
+

@@ -118,6 +118,13 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
                     case 'ezurl':
                         $contentData[$key] = ['link' => $data[$field['value']]];
                         break;
+                    case 'ezmatrix':
+                        $contentData[$key] = array_map(function ($row) use ($data) {
+                            return array_map(function ($col) use ($data) {
+                                return $data[$col] ?? $col;
+                            }, $row);
+                        }, $field['value']);
+                        break;
                     default:
                         $contentData[$key] = $data[$field['value']];
                 }
