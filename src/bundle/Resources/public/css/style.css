@@ -37,6 +37,10 @@
   color: red;
 }
 
+[data-reach-combobox-option] {
+  background: none;
+}
+
 .ezgeodatagouv__marker {
   background-position: center center;
   background-repeat: no-repeat;
@@ -66,4 +70,9 @@
 
 .ezgeodatagouv__line__wrapper--selected {
   background-color: lightgrey;
+}
+
+.ezgeodatagouv__result--status {
+  padding: 10px;
+  font-weight: bold;
 }

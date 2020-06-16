@@ -3,9 +3,9 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('react'), require('react-dom'), require('leaflet')) :
   typeof define === 'function' && define.amd ? define(['react', 'react-dom', 'leaflet'], factory) :
   (global = global || self, factory(global.React, global.ReactDOM, global.L));
-}(this, (function (React, ReactDOM, L) { 'use strict';
+}(this, (function (React$1, ReactDOM, L) { 'use strict';
 
-  var React__default = 'default' in React ? React['default'] : React;
+  var React$1__default = 'default' in React$1 ? React$1['default'] : React$1;
   var ReactDOM__default = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
   var L__default = 'default' in L ? L['default'] : L;
 
@@ -44,6 +44,24 @@
     }
 
     return obj;
+  }
+
+  function _extends() {
+    _extends = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+
+      return target;
+    };
+
+    return _extends.apply(this, arguments);
   }
 
   function ownKeys(object, enumerableOnly) {
@@ -320,16 +338,16 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  var SymfonyContext = React.createContext();
+  var SymfonyContext = React$1.createContext();
   var SymfonyContextProvider = function SymfonyContextProvider(_ref) {
     var value = _ref.value,
         children = _ref.children;
-    return /*#__PURE__*/React__default.createElement(SymfonyContext.Provider, {
+    return /*#__PURE__*/React$1__default.createElement(SymfonyContext.Provider, {
       value: value
     }, children);
   };
   var useSymfonyContext = function useSymfonyContext() {
-    return React.useContext(SymfonyContext);
+    return React$1.useContext(SymfonyContext);
   };
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -1421,7 +1439,7 @@
    * @param deps
    */
 
-  var useIsomorphicLayoutEffect = /*#__PURE__*/canUseDOM() ? React__default.useLayoutEffect : React__default.useEffect;
+  var useIsomorphicLayoutEffect = /*#__PURE__*/canUseDOM() ? React$1__default.useLayoutEffect : React$1__default.useEffect;
   var checkedPkgs = {};
   /**
    * When in dev mode, checks that styles for a given @reach package are loaded.
@@ -1480,7 +1498,7 @@
     return typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
   }
   function createNamedContext(name, defaultValue) {
-    var Ctx = React.createContext(defaultValue);
+    var Ctx = React$1.createContext(defaultValue);
     Ctx.displayName = name;
     return Ctx;
   }
@@ -1500,7 +1518,7 @@
    */
 
   function forwardRefWithAs(comp) {
-    return React__default.forwardRef(comp);
+    return React$1__default.forwardRef(comp);
   }
   /**
    * Get an element's owner document. Useful when components are used in iframes
@@ -1554,7 +1572,7 @@
       refs[_key4] = arguments[_key4];
     }
 
-    return React.useMemo(function () {
+    return React$1.useMemo(function () {
       if (refs.every(function (ref) {
         return ref == null;
       })) {
@@ -1576,8 +1594,8 @@
    */
 
   function useUpdateEffect(effect, deps) {
-    var mounted = React.useRef(false);
-    React.useEffect(function () {
+    var mounted = React$1.useRef(false);
+    React$1.useEffect(function () {
       if (mounted.current) {
         effect();
       } else {
@@ -1605,8 +1623,8 @@
     };
   }
 
-  function _extends() {
-    _extends = Object.assign || function (target) {
+  function _extends$1() {
+    _extends$1 = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
 
@@ -1620,7 +1638,7 @@
       return target;
     };
 
-    return _extends.apply(this, arguments);
+    return _extends$1.apply(this, arguments);
   }
 
   function _objectWithoutPropertiesLoose$1(source, excluded) {
@@ -1643,7 +1661,7 @@
       initialValue = {};
     }
 
-    return createNamedContext(name, _extends({
+    return createNamedContext(name, _extends$1({
       descendants: [],
       registerDescendant: noop,
       unregisterDescendant: noop
@@ -1678,10 +1696,10 @@
         element = _ref.element,
         rest = _objectWithoutPropertiesLoose$1(_ref, ["context", "element"]);
 
-    var _useState = React.useState(),
+    var _useState = React$1.useState(),
         forceUpdate = _useState[1];
 
-    var _useContext = React.useContext(context),
+    var _useContext = React$1.useContext(context),
         registerDescendant = _useContext.registerDescendant,
         unregisterDescendant = _useContext.unregisterDescendant,
         descendants = _useContext.descendants; // Prevent any flashing
@@ -1690,7 +1708,7 @@
     useIsomorphicLayoutEffect(function () {
       if (!element) forceUpdate({}); // @ts-ignore
 
-      registerDescendant(_extends({
+      registerDescendant(_extends$1({
         element: element
       }, rest));
       return function () {
@@ -1702,14 +1720,14 @@
     });
   }
   function useDescendants() {
-    return React.useState([]);
+    return React$1.useState([]);
   }
   function DescendantProvider(_ref2) {
     var Ctx = _ref2.context,
         children = _ref2.children,
         items = _ref2.items,
         set = _ref2.set;
-    var registerDescendant = React__default.useCallback(function (_ref3) {
+    var registerDescendant = React$1__default.useCallback(function (_ref3) {
       var element = _ref3.element,
           rest = _objectWithoutPropertiesLoose$1(_ref3, ["element"]);
 
@@ -1722,7 +1740,7 @@
         var newItems; // If there are no items, register at index 0 and bail.
 
         if (items.length === 0) {
-          newItem = _extends({
+          newItem = _extends$1({
             element: element,
             index: 0
           }, rest);
@@ -1756,7 +1774,7 @@
 
             return Boolean(item.element.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_PRECEDING);
           });
-          newItem = _extends({
+          newItem = _extends$1({
             element: element,
             index: index
           }, rest); // If an index is not found we will push the element to the end.
@@ -1769,7 +1787,7 @@
         }
 
         return newItems.map(function (item, index) {
-          return _extends({}, item, {
+          return _extends$1({}, item, {
             index: index
           });
         });
@@ -1779,7 +1797,7 @@
     // between renders.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
-    var unregisterDescendant = React.useCallback(function (element) {
+    var unregisterDescendant = React$1.useCallback(function (element) {
       if (!element) {
         return;
       }
@@ -1794,14 +1812,14 @@
     // between renders.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
-    var value = React.useMemo(function () {
+    var value = React$1.useMemo(function () {
       return {
         descendants: items,
         registerDescendant: registerDescendant,
         unregisterDescendant: unregisterDescendant
       };
     }, [items, registerDescendant, unregisterDescendant]);
-    return React__default.createElement(Ctx.Provider, {
+    return React$1__default.createElement(Ctx.Provider, {
       value: value
     }, children);
   }
@@ -2148,7 +2166,7 @@
      */
     var initialId = idFromProps || (serverHandoffComplete ? genId() : null);
 
-    var _useState = React.useState(initialId),
+    var _useState = React$1.useState(initialId),
         id = _useState[0],
         setId = _useState[1];
 
@@ -2164,7 +2182,7 @@
       } // eslint-disable-next-line react-hooks/exhaustive-deps
 
     }, []);
-    React.useEffect(function () {
+    React$1.useEffect(function () {
       if (serverHandoffComplete === false) {
         /*
          * Flag all future uses of `useId` to skip the update dance. This is in
@@ -2199,10 +2217,10 @@
     var children = _ref.children,
         _ref$type = _ref.type,
         type = _ref$type === void 0 ? "reach-portal" : _ref$type;
-    var mountNode = React.useRef(null);
-    var portalNode = React.useRef(null);
+    var mountNode = React$1.useRef(null);
+    var portalNode = React$1.useRef(null);
 
-    var _useState = React.useState(),
+    var _useState = React$1.useState(),
         forceUpdate = _useState[1];
 
     useIsomorphicLayoutEffect(function () {
@@ -2218,7 +2236,7 @@
         }
       };
     }, [type]);
-    return portalNode.current ? ReactDOM.createPortal(children, portalNode.current) : React__default.createElement("span", {
+    return portalNode.current ? ReactDOM.createPortal(children, portalNode.current) : React$1__default.createElement("span", {
       ref: mountNode
     });
   };
@@ -2320,7 +2338,7 @@
         _ref$observe = _ref.observe,
         observe = _ref$observe === void 0 ? true : _ref$observe,
         children = _ref.children;
-    var ref = React.useRef(null);
+    var ref = React$1.useRef(null);
     var rect = useRect(ref, observe, onChange);
     return children({
       ref: ref,
@@ -2351,13 +2369,13 @@
       observe = true;
     }
 
-    var initialRectSet = React.useRef(false);
+    var initialRectSet = React$1.useRef(false);
 
-    var _useState = React.useState(null),
+    var _useState = React$1.useState(null),
         rect = _useState[0],
         setRect = _useState[1];
 
-    var observerRef = React.useRef(null);
+    var observerRef = React$1.useRef(null);
     useIsomorphicLayoutEffect(function () {
       var cleanup = function cleanup() {
         observerRef.current && observerRef.current.unobserve();
@@ -2540,8 +2558,8 @@
 
   var tabbable_1 = tabbable;
 
-  function _extends$1() {
-    _extends$1 = Object.assign || function (target) {
+  function _extends$2() {
+    _extends$2 = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
 
@@ -2555,7 +2573,7 @@
       return target;
     };
 
-    return _extends$1.apply(this, arguments);
+    return _extends$2.apply(this, arguments);
   }
 
   function _objectWithoutPropertiesLoose$2(source, excluded) {
@@ -2577,8 +2595,8 @@
    * Popover
    */
 
-  var Popover = /*#__PURE__*/React.forwardRef(function Popover(props, ref) {
-    return React__default.createElement(Portal, null, React__default.createElement(PopoverImpl, Object.assign({
+  var Popover = /*#__PURE__*/React$1.forwardRef(function Popover(props, ref) {
+    return React$1__default.createElement(Portal, null, React$1__default.createElement(PopoverImpl, Object.assign({
       ref: ref
     }, props)));
   });
@@ -2594,22 +2612,22 @@
    * up, so useRect needs to live down here not up in Popover
    */
 
-  var PopoverImpl = /*#__PURE__*/React.forwardRef(function PopoverImpl(_ref, forwardedRef) {
+  var PopoverImpl = /*#__PURE__*/React$1.forwardRef(function PopoverImpl(_ref, forwardedRef) {
     var targetRef = _ref.targetRef,
         _ref$position = _ref.position,
         position = _ref$position === void 0 ? positionDefault : _ref$position,
         style = _ref.style,
         rest = _objectWithoutPropertiesLoose$2(_ref, ["targetRef", "position", "style"]);
 
-    var popoverRef = React.useRef(null);
+    var popoverRef = React$1.useRef(null);
     var popoverRect = useRect(popoverRef);
     var targetRect = useRect(targetRef);
     var ref = useForkedRef(popoverRef, forwardedRef);
     useSimulateTabNavigationForReactTree(targetRef, popoverRef);
-    return React__default.createElement("div", Object.assign({
+    return React$1__default.createElement("div", Object.assign({
       "data-reach-popover": "",
       ref: ref,
-      style: _extends$1({}, style, {
+      style: _extends$2({}, style, {
         position: "absolute"
       }, getStyles(position, targetRect, popoverRect))
     }, rest));
@@ -2717,7 +2735,7 @@
       }
     }
 
-    React.useEffect(function () {
+    React$1.useEffect(function () {
       if (ownerDocument) {
         ownerDocument.addEventListener("keydown", handleKeyDown);
         return function () {
@@ -2837,8 +2855,8 @@
     }
   }
 
-  function _extends$2() {
-    _extends$2 = Object.assign || function (target) {
+  function _extends$3() {
+    _extends$3 = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
 
@@ -2852,7 +2870,7 @@
       return target;
     };
 
-    return _extends$2.apply(this, arguments);
+    return _extends$3.apply(this, arguments);
   }
 
   function _objectWithoutPropertiesLoose$3(source, excluded) {
@@ -2921,50 +2939,50 @@
   };
 
   var reducer = function reducer(data, event) {
-    var nextState = _extends$2({}, data, {
+    var nextState = _extends$3({}, data, {
       lastEventType: event.type
     });
 
     switch (event.type) {
       case CHANGE:
       case INITIAL_CHANGE:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           navigationValue: null,
           value: event.value
         });
 
       case NAVIGATE:
       case OPEN_WITH_BUTTON:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           navigationValue: findNavigationValue(nextState, event)
         });
 
       case CLEAR:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           value: "",
           navigationValue: null
         });
 
       case BLUR:
       case ESCAPE:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           navigationValue: null
         });
 
       case SELECT_WITH_CLICK:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           value: event.value,
           navigationValue: null
         });
 
       case SELECT_WITH_KEYBOARD:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           value: data.navigationValue,
           navigationValue: null
         });
 
       case CLOSE_WITH_BUTTON:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           navigationValue: null
         });
 
@@ -2972,7 +2990,7 @@
         return nextState;
 
       case FOCUS:
-        return _extends$2({}, nextState, {
+        return _extends$3({}, nextState, {
           navigationValue: findNavigationValue(nextState, event)
         });
 
@@ -3034,17 +3052,17 @@
         setOptions = _useDescendants[1]; // Need this to focus it
 
 
-    var inputRef = React.useRef();
-    var popoverRef = React.useRef();
-    var buttonRef = React.useRef(); // When <ComboboxInput autocomplete={false} /> we don't want cycle back to
+    var inputRef = React$1.useRef();
+    var popoverRef = React$1.useRef();
+    var buttonRef = React$1.useRef(); // When <ComboboxInput autocomplete={false} /> we don't want cycle back to
     // the user's value while navigating (because it's always the user's value),
     // but we need to know this in useKeyDown which is far away from the prop
     // here, so we do something sneaky and write it to this ref on context so we
     // can use it anywhere else 😛. Another new trick for me and I'm excited
     // about this one too!
 
-    var autocompletePropRef = React.useRef();
-    var persistSelectionRef = React.useRef();
+    var autocompletePropRef = React$1.useRef();
+    var persistSelectionRef = React$1.useRef();
     var defaultData = {
       // The value the user has typed. We derive this also when the developer is
       // controlling the value of ComboboxInput.
@@ -3078,16 +3096,16 @@
       state: state,
       transition: transition
     };
-    React.useEffect(function () {
+    React$1.useEffect(function () {
       return checkStyles("combobox");
     }, []);
-    return React__default.createElement(DescendantProvider, {
+    return React$1__default.createElement(DescendantProvider, {
       context: ComboboxDescendantContext,
       items: options,
       set: setOptions
-    }, React__default.createElement(ComboboxContext.Provider, {
+    }, React$1__default.createElement(ComboboxContext.Provider, {
       value: context
-    }, React__default.createElement(Comp, Object.assign({}, props, {
+    }, React$1__default.createElement(Comp, Object.assign({}, props, {
       "data-reach-combobox": "",
       ref: forwardedRef
     }), isFunction(children) ? children({
@@ -3130,15 +3148,15 @@
         props = _objectWithoutPropertiesLoose$3(_ref2, ["as", "selectOnClick", "autocomplete", "onClick", "onChange", "onKeyDown", "onBlur", "onFocus", "value"]);
 
     // https://github.com/reach/reach-ui/issues/464
-    var _useRef = React.useRef(controlledValue),
+    var _useRef = React$1.useRef(controlledValue),
         initialControlledValue = _useRef.current;
 
-    var controlledValueChangedRef = React.useRef(false);
+    var controlledValueChangedRef = React$1.useRef(false);
     useUpdateEffect(function () {
       controlledValueChangedRef.current = true;
     }, [controlledValue]);
 
-    var _useContext = React.useContext(ComboboxContext),
+    var _useContext = React$1.useContext(ComboboxContext),
         _useContext$data = _useContext.data,
         navigationValue = _useContext$data.navigationValue,
         value = _useContext$data.value,
@@ -3156,7 +3174,7 @@
     var ref = useForkedRef(inputRef, forwardedRef); // Because we close the List on blur, we need to track if the blur is
     // caused by clicking inside the list, and if so, don't close the List.
 
-    var selectOnClickRef = React.useRef(false);
+    var selectOnClickRef = React$1.useRef(false);
     var handleKeyDown = useKeyDown();
     var handleBlur = useBlur();
     var isControlled = controlledValue != null; // Layout effect should be SSR-safe here because we don't actually do
@@ -3166,7 +3184,7 @@
     useIsomorphicLayoutEffect(function () {
       autocompletePropRef.current = autocomplete;
     }, [autocomplete, autocompletePropRef]);
-    var handleValueChange = React.useCallback(function (value) {
+    var handleValueChange = React$1.useCallback(function (value) {
       if (value.trim() === "") {
         transition(CLEAR);
       } else if (value === initialControlledValue && !controlledValueChangedRef.current) {
@@ -3179,7 +3197,7 @@
         });
       }
     }, [initialControlledValue, transition]);
-    React.useEffect(function () {
+    React$1.useEffect(function () {
       // If they are controlling the value we still need to do our transitions,
       // so  we have this derived state to emulate onChange of the input as we
       // receive new `value`s ...[*]
@@ -3221,7 +3239,7 @@
 
     var inputValue = autocomplete && (state === NAVIGATING || state === INTERACTING) ? // When idle, we don't have a navigationValue on ArrowUp/Down
     navigationValue || controlledValue || value : controlledValue || value;
-    return React__default.createElement(Comp, Object.assign({
+    return React$1__default.createElement(Comp, Object.assign({
       "aria-activedescendant": navigationValue ? String(makeHash(navigationValue)) : undefined,
       "aria-autocomplete": "both",
       "aria-controls": listboxId,
@@ -3257,7 +3275,7 @@
    */
 
 
-  var ComboboxPopover = /*#__PURE__*/React.forwardRef(function ComboboxPopover(_ref3, forwardedRef) {
+  var ComboboxPopover = /*#__PURE__*/React$1.forwardRef(function ComboboxPopover(_ref3, forwardedRef) {
     var children = _ref3.children,
         _ref3$portal = _ref3.portal,
         portal = _ref3$portal === void 0 ? true : _ref3$portal,
@@ -3265,7 +3283,7 @@
         onBlur = _ref3.onBlur,
         props = _objectWithoutPropertiesLoose$3(_ref3, ["children", "portal", "onKeyDown", "onBlur"]);
 
-    var _useContext2 = React.useContext(ComboboxContext),
+    var _useContext2 = React$1.useContext(ComboboxContext),
         popoverRef = _useContext2.popoverRef,
         inputRef = _useContext2.inputRef,
         isExpanded = _useContext2.isExpanded;
@@ -3286,12 +3304,12 @@
       tabIndex: -1,
       children: children
     };
-    return portal ? React__default.createElement(Popover, Object.assign({}, props, {
+    return portal ? React$1__default.createElement(Popover, Object.assign({}, props, {
       // @ts-ignore
       ref: ref,
       position: positionMatchWidth,
       targetRef: inputRef
-    }, sharedProps)) : React__default.createElement("div", Object.assign({
+    }, sharedProps)) : React$1__default.createElement("div", Object.assign({
       ref: ref
     }, props, sharedProps));
   });
@@ -3317,7 +3335,7 @@
         Comp = _ref4$as === void 0 ? "ul" : _ref4$as,
         props = _objectWithoutPropertiesLoose$3(_ref4, ["persistSelection", "as"]);
 
-    var _useContext3 = React.useContext(ComboboxContext),
+    var _useContext3 = React$1.useContext(ComboboxContext),
         persistSelectionRef = _useContext3.persistSelectionRef,
         listboxId = _useContext3.listboxId;
 
@@ -3325,7 +3343,7 @@
       persistSelectionRef.current = true;
     }
 
-    return React__default.createElement(Comp, Object.assign({
+    return React$1__default.createElement(Comp, Object.assign({
       role: "listbox"
     }, props, {
       ref: forwardedRef,
@@ -3355,12 +3373,12 @@
         onClick = _ref5.onClick,
         props = _objectWithoutPropertiesLoose$3(_ref5, ["as", "children", "value", "onClick"]);
 
-    var _useContext4 = React.useContext(ComboboxContext),
+    var _useContext4 = React$1.useContext(ComboboxContext),
         onSelect = _useContext4.onSelect,
         navigationValue = _useContext4.data.navigationValue,
         transition = _useContext4.transition;
 
-    var ownRef = React.useRef(null);
+    var ownRef = React$1.useRef(null);
     var ref = useForkedRef(forwardedRef, ownRef);
     var index = useDescendant({
       context: ComboboxDescendantContext,
@@ -3376,12 +3394,12 @@
       });
     };
 
-    return React__default.createElement(OptionContext.Provider, {
+    return React$1__default.createElement(OptionContext.Provider, {
       value: {
         value: value,
         index: index
       }
-    }, React__default.createElement(Comp, Object.assign({
+    }, React$1__default.createElement(Comp, Object.assign({
       "aria-selected": isActive,
       role: "option"
     }, props, {
@@ -3394,7 +3412,7 @@
       // onBlur will work as intended
       tabIndex: -1,
       onClick: wrapEvent(onClick, handleClick),
-      children: children || React__default.createElement(ComboboxOptionText, null)
+      children: children || React$1__default.createElement(ComboboxOptionText, null)
     })));
   });
 
@@ -3421,21 +3439,21 @@
 
 
   function ComboboxOptionText() {
-    var _useContext5 = React.useContext(OptionContext),
+    var _useContext5 = React$1.useContext(OptionContext),
         value = _useContext5.value;
 
-    var _useContext6 = React.useContext(ComboboxContext),
+    var _useContext6 = React$1.useContext(ComboboxContext),
         contextValue = _useContext6.data.value;
 
-    var results = React.useMemo(function () {
+    var results = React$1.useMemo(function () {
       return dist_3({
         searchWords: escapeRegexp(contextValue || "").split(/\s+/),
         textToHighlight: value
       });
     }, [contextValue, value]);
-    return React__default.createElement(React__default.Fragment, null, results.length ? results.map(function (result, index) {
+    return React$1__default.createElement(React$1__default.Fragment, null, results.length ? results.map(function (result, index) {
       var str = value.slice(result.start, result.end);
-      return React__default.createElement("span", {
+      return React$1__default.createElement("span", {
         key: index,
         "data-user-value": result.highlight ? true : undefined,
         "data-suggested-value": result.highlight ? undefined : true
@@ -3459,7 +3477,7 @@
         onKeyDown = _ref6.onKeyDown,
         props = _objectWithoutPropertiesLoose$3(_ref6, ["as", "onClick", "onKeyDown"]);
 
-    var _useContext7 = React.useContext(ComboboxContext),
+    var _useContext7 = React$1.useContext(ComboboxContext),
         transition = _useContext7.transition,
         state = _useContext7.state,
         buttonRef = _useContext7.buttonRef,
@@ -3477,7 +3495,7 @@
       }
     };
 
-    return React__default.createElement(Comp, Object.assign({
+    return React$1__default.createElement(Comp, Object.assign({
       "aria-controls": listboxId,
       "aria-haspopup": "listbox",
       "aria-expanded": isExpanded
@@ -3521,7 +3539,7 @@
 
 
   function useKeyDown() {
-    var _useContext8 = React.useContext(ComboboxContext),
+    var _useContext8 = React$1.useContext(ComboboxContext),
         navigationValue = _useContext8.data.navigationValue,
         onSelect = _useContext8.onSelect,
         state = _useContext8.state,
@@ -3529,7 +3547,7 @@
         autocompletePropRef = _useContext8.autocompletePropRef,
         persistSelectionRef = _useContext8.persistSelectionRef;
 
-    var _useContext9 = React.useContext(ComboboxDescendantContext),
+    var _useContext9 = React$1.useContext(ComboboxDescendantContext),
         options = _useContext9.descendants;
 
     return function handleKeyDown(event) {
@@ -3689,7 +3707,7 @@
   }
 
   function useBlur() {
-    var _useContext10 = React.useContext(ComboboxContext),
+    var _useContext10 = React$1.useContext(ComboboxContext),
         state = _useContext10.state,
         transition = _useContext10.transition,
         popoverRef = _useContext10.popoverRef,
@@ -3725,11 +3743,11 @@
 
 
   function useReducerMachine(chart, reducer, initialData) {
-    var _useState = React.useState(chart.initial),
+    var _useState = React$1.useState(chart.initial),
         state = _useState[0],
         setState = _useState[1];
 
-    var _useReducer = React.useReducer(reducer, initialData),
+    var _useReducer = React$1.useReducer(reducer, initialData),
         data = _useReducer[0],
         dispatch = _useReducer[1];
 
@@ -3742,7 +3760,7 @@
       var nextState = currentState && currentState.on[event];
 
       if (nextState) {
-        dispatch(_extends$2({
+        dispatch(_extends$3({
           type: event,
           state: state,
           nextState: state
@@ -3840,12 +3858,12 @@
   }
 
   function useAddressSearch(searchTerm) {
-    var _useState = React.useState([]),
+    var _useState = React$1.useState([]),
         _useState2 = _slicedToArray(_useState, 2),
         addresses = _useState2[0],
         setAddress = _useState2[1];
 
-    React.useEffect(function () {
+    React$1.useEffect(function () {
       if (searchTerm.trim() !== '') {
         var isFresh = true;
         client("".concat(API_DATAGOUV, "?q=").concat(searchTerm)).then(function (_ref) {
@@ -3860,8 +3878,70 @@
     return addresses;
   }
 
-  function _extends$3() {
-    _extends$3 = Object.assign || function (target) {
+  var defaultSettings = {
+    enableHighAccuracy: false,
+    timeout: Infinity,
+    maximumAge: 0
+  };
+  function usePosition() {
+    var enabled = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+    var watch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var settings = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultSettings;
+
+    var _useState = React$1.useState({}),
+        _useState2 = _slicedToArray(_useState, 2),
+        position = _useState2[0],
+        setPosition = _useState2[1];
+
+    var _useState3 = React$1.useState(null),
+        _useState4 = _slicedToArray(_useState3, 2),
+        error = _useState4[0],
+        setError = _useState4[1];
+
+    var onChange = function onChange(_ref) {
+      var coords = _ref.coords,
+          timestamp = _ref.timestamp;
+      setPosition({
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        accuracy: coords.accuracy,
+        timestamp: timestamp
+      });
+    };
+
+    var onError = function onError(error) {
+      setError(error.message);
+    };
+
+    React$1.useEffect(function () {
+      if (!navigator || !navigator.geolocation) {
+        setError('Geolocation is not supported');
+        return;
+      }
+
+      if (!enabled) {
+        return;
+      }
+
+      var watcher = null;
+
+      if (watch) {
+        watcher = navigator.geolocation.watchPosition(onChange, onError, settings);
+      } else {
+        navigator.geolocation.getCurrentPosition(onChange, onError, settings);
+      }
+
+      return function () {
+        return watcher && navigator.geolocation.clearWatch(watcher);
+      };
+    }, [enabled, watch, settings.enableHighAccuracy, settings.timeout, settings.maximumAge]);
+    return _objectSpread2({}, position, {
+      error: error
+    });
+  }
+
+  function _extends$4() {
+    _extends$4 = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
 
@@ -3875,7 +3955,7 @@
       return target;
     };
 
-    return _extends$3.apply(this, arguments);
+    return _extends$4.apply(this, arguments);
   }
 
   /**
@@ -3978,16 +4058,16 @@
 
   var hoistNonReactStatics_cjs = hoistNonReactStatics;
 
-  var leafletContext = React.createContext({});
+  var leafletContext = React$1.createContext({});
   var useLeaflet = function useLeaflet() {
-    return React.useContext(leafletContext);
+    return React$1.useContext(leafletContext);
   };
   var LeafletConsumer = leafletContext.Consumer;
   var LeafletProvider = leafletContext.Provider;
   var withLeaflet = function withLeaflet(WrappedComponent) {
     var WithLeafletComponent = function WithLeafletComponent(props, ref) {
-      return React__default.createElement(LeafletConsumer, null, function (leaflet) {
-        return React__default.createElement(WrappedComponent, _extends$3({}, props, {
+      return React$1__default.createElement(LeafletConsumer, null, function (leaflet) {
+        return React$1__default.createElement(WrappedComponent, _extends$4({}, props, {
           leaflet: leaflet,
           ref: ref
         }));
@@ -3997,7 +4077,7 @@
     var name = // flowlint-next-line sketchy-null-string:off
     WrappedComponent.displayName || WrappedComponent.name || 'Component';
     WithLeafletComponent.displayName = "Leaflet(" + name + ")";
-    var LeafletComponent = React.forwardRef(WithLeafletComponent);
+    var LeafletComponent = React$1.forwardRef(WithLeafletComponent);
     hoistNonReactStatics_cjs(LeafletComponent, WrappedComponent);
     return LeafletComponent;
   };
@@ -4074,7 +4154,7 @@
     };
 
     return MapControl;
-  }(React.Component);
+  }(React$1.Component);
 
   var AttributionControl = /*#__PURE__*/function (_MapControl) {
     _inheritsLoose(AttributionControl, _MapControl);
@@ -4236,7 +4316,7 @@
       var el = this.leafletElement;
       if (el == null || el.on == null) return {};
 
-      var diff = _extends$3({}, prev);
+      var diff = _extends$4({}, prev);
 
       Object.keys(prev).forEach(function (ev) {
         if (next[ev] == null || prev[ev] !== next[ev]) {
@@ -4259,7 +4339,7 @@
     };
 
     return MapEvented;
-  }(React.Component);
+  }(React$1.Component);
 
   var MapComponent = /*#__PURE__*/function (_MapEvented) {
     _inheritsLoose(MapComponent, _MapEvented);
@@ -4276,7 +4356,7 @@
       }
 
       if (props.leaflet != null && props.leaflet.pane != null) {
-        return _extends$3({}, props, {
+        return _extends$4({}, props, {
           pane: props.leaflet.pane
         });
       }
@@ -4345,7 +4425,7 @@
         return null;
       }
 
-      return this.contextValue == null ? React__default.createElement(React.Fragment, null, children) : React__default.createElement(LeafletProvider, {
+      return this.contextValue == null ? React$1__default.createElement(React$1.Fragment, null, children) : React$1__default.createElement(LeafletProvider, {
         value: this.contextValue
       }, children);
     };
@@ -4383,7 +4463,7 @@
       _this = _MapLayer.call(this, props) || this;
 
       if (_this.contextValue == null) {
-        _this.contextValue = _extends$3({}, props.leaflet, {
+        _this.contextValue = _extends$4({}, props.leaflet, {
           popupContainer: _this.leafletElement
         });
       }
@@ -4465,7 +4545,7 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       var el = new L.CircleMarker(props.center, this.getOptions(props));
-      this.contextValue = _extends$3({}, props.leaflet, {
+      this.contextValue = _extends$4({}, props.leaflet, {
         popupContainer: el
       });
       return el;
@@ -4585,7 +4665,7 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       var el = new L.FeatureGroup(this.getOptions(props));
-      this.contextValue = _extends$3({}, props.leaflet, {
+      this.contextValue = _extends$4({}, props.leaflet, {
         layerContainer: el,
         popupContainer: el
       });
@@ -4656,7 +4736,7 @@
     };
 
     _proto.getOptions = function getOptions(props) {
-      var options = _extends$3({}, _MapLayer.prototype.getOptions.call(this, props));
+      var options = _extends$4({}, _MapLayer.prototype.getOptions.call(this, props));
 
       var map = props.leaflet.map;
 
@@ -4695,7 +4775,7 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       var el = new L.ImageOverlay(props.url, props.bounds, this.getOptions(props));
-      this.contextValue = _extends$3({}, props.leaflet, {
+      this.contextValue = _extends$4({}, props.leaflet, {
         popupContainer: el
       });
       return el;
@@ -4735,7 +4815,7 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       var el = new L.LayerGroup([], this.getOptions(props));
-      this.contextValue = _extends$3({}, props.leaflet, {
+      this.contextValue = _extends$4({}, props.leaflet, {
         layerContainer: el
       });
       return el;
@@ -4797,13 +4877,13 @@
 
     _proto.render = function render() {
       var children = this.props.children;
-      return children ? React__default.createElement(LeafletProvider, {
+      return children ? React$1__default.createElement(LeafletProvider, {
         value: this.contextValue
       }, children) : null;
     };
 
     return ControlledLayer;
-  }(React.Component);
+  }(React$1.Component);
 
   var BaseLayer = /*#__PURE__*/function (_ControlledLayer) {
     _inheritsLoose(BaseLayer, _ControlledLayer);
@@ -4823,7 +4903,7 @@
         addBaseLayer(layer, name, checked);
       });
 
-      _this2.contextValue = _extends$3({}, props.leaflet, {
+      _this2.contextValue = _extends$4({}, props.leaflet, {
         layerContainer: {
           addLayer: _this2.addLayer.bind(_assertThisInitialized$1(_this2)),
           removeLayer: _this2.removeLayer.bind(_assertThisInitialized$1(_this2))
@@ -4853,7 +4933,7 @@
         addOverlay(layer, name, checked);
       });
 
-      _this3.contextValue = _extends$3({}, props.leaflet, {
+      _this3.contextValue = _extends$4({}, props.leaflet, {
         layerContainer: {
           addLayer: _this3.addLayer.bind(_assertThisInitialized$1(_this3)),
           removeLayer: _this3.removeLayer.bind(_assertThisInitialized$1(_this3))
@@ -4951,10 +5031,10 @@
     _proto2.render = function render() {
       var _this6 = this;
 
-      var children = React.Children.map(this.props.children, function (child) {
-        return child ? React.cloneElement(child, _this6.controlProps) : null;
+      var children = React$1.Children.map(this.props.children, function (child) {
+        return child ? React$1.cloneElement(child, _this6.controlProps) : null;
       });
-      return React__default.createElement(React.Fragment, null, children);
+      return React$1__default.createElement(React$1.Fragment, null, children);
     };
 
     return LayersControl;
@@ -5184,7 +5264,7 @@
 
     _proto.getFitBoundsOptions = function getFitBoundsOptions(props) {
       var zoomPanOptions = this.getZoomPanOptions(props);
-      return _extends$3({}, zoomPanOptions, {}, props.boundsOptions);
+      return _extends$4({}, zoomPanOptions, {}, props.boundsOptions);
     };
 
     _proto.componentDidMount = function componentDidMount() {
@@ -5249,12 +5329,12 @@
     };
 
     _proto.render = function render() {
-      return React__default.createElement("div", {
+      return React$1__default.createElement("div", {
         className: this.className,
         id: this.props.id,
         ref: this.bindContainer,
         style: this.props.style
-      }, this.contextValue ? React__default.createElement(LeafletProvider, {
+      }, this.contextValue ? React$1__default.createElement(LeafletProvider, {
         value: this.contextValue
       }, this.props.children) : null);
     };
@@ -5273,7 +5353,7 @@
 
     _proto.createLeafletElement = function createLeafletElement(props) {
       var el = new L.Marker(props.position, this.getOptions(props));
-      this.contextValue = _extends$3({}, props.leaflet, {
+      this.contextValue = _extends$4({}, props.leaflet, {
         popupContainer: el
       });
       return el;
@@ -5307,7 +5387,7 @@
 
     _proto.render = function render() {
       var children = this.props.children;
-      return children == null || this.contextValue == null ? null : React__default.createElement(LeafletProvider, {
+      return children == null || this.contextValue == null ? null : React$1__default.createElement(LeafletProvider, {
         value: this.contextValue
       }, children);
     };
@@ -5436,7 +5516,7 @@
 
         this.setState({
           name: name,
-          context: _extends$3({}, props.leaflet, {
+          context: _extends$4({}, props.leaflet, {
             pane: name
           })
         }, this.setStyle);
@@ -5471,15 +5551,15 @@
 
     _proto.render = function render() {
       var context = this.state.context;
-      return context ? React__default.createElement(LeafletProvider, {
+      return context ? React$1__default.createElement(LeafletProvider, {
         value: context
-      }, React__default.createElement("div", {
+      }, React$1__default.createElement("div", {
         style: paneStyles
       }, this.props.children)) : null;
     };
 
     return Pane;
-  }(React.Component);
+  }(React$1.Component);
 
   var Pane$1 = withLeaflet(Pane);
 
@@ -5579,7 +5659,7 @@
     var _proto = Popup.prototype;
 
     _proto.getOptions = function getOptions(props) {
-      return _extends$3({}, _DivOverlay.prototype.getOptions.call(this, props), {
+      return _extends$4({}, _DivOverlay.prototype.getOptions.call(this, props), {
         autoPan: false
       });
     };
@@ -6047,7 +6127,7 @@
   });
 
   var reactLeafletCustomControl = createCommonjsModule(function (module, exports) {
-  !function(e,t){module.exports=t(L__default,propTypes,es,ReactDOM__default,React__default);}(commonjsGlobal,function(e,t,o,r,n){return function(e){var t={};function o(r){if(t[r])return t[r].exports;var n=t[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=e,o.c=t,o.d=function(e,t,r){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r});},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0});},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(o.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(r,n,function(t){return e[t]}.bind(null,n));return r},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=6)}([function(t,o){t.exports=e;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=o(0),n=r.Control.extend({options:{className:""},onAdd:function(){var e=r.DomUtil.create("div",this.options.className);return r.DomEvent.disableClickPropagation(e),e}});t.default=n,e.exports=t.default;},function(e,o){e.exports=t;},function(e,t){e.exports=o;},function(e,t){e.exports=r;},function(e,t){e.exports=n;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,o,r){return o&&e(t.prototype,o),r&&e(t,r),t}}(),n=function e(t,o,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,o);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:e(i,o,r)}if("value"in n)return n.value;var u=n.get;return void 0!==u?u.call(r):void 0},i=o(5),u=o(4),l=o(3),a=f(o(2)),c=f(o(1));function f(e){return e&&e.__esModule?e:{default:e}}var p=function(e){function t(){return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),function(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t||"object"!=typeof t&&"function"!=typeof t?e:t}(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t);}(t,l.MapControl),r(t,[{key:"createLeafletElement",value:function(e){var t=e.position,o=e.className;return this.leafletElement=new c.default({position:t,className:o}),this.leafletElement}},{key:"updateLeafletElement",value:function(e,o){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"updateLeafletElement",this).call(this,e,o),this.renderContent();}},{key:"componentDidMount",value:function(){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentDidMount",this).call(this),this.renderContent();}},{key:"componentWillUnmount",value:function(){(0, u.unmountComponentAtNode)(this.leafletElement.getContainer()),n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentWillUnmount",this).call(this);}},{key:"renderContent",value:function(){var e=this.leafletElement.getContainer();(0, u.render)(i.Children.only(this.props.children),e);}}]),t}();p.propTypes={className:a.default.string,children:a.default.node,position:a.default.string},t.default=(0, l.withLeaflet)(p),e.exports=t.default;}])});
+  !function(e,t){module.exports=t(L__default,propTypes,es,ReactDOM__default,React$1__default);}(commonjsGlobal,function(e,t,o,r,n){return function(e){var t={};function o(r){if(t[r])return t[r].exports;var n=t[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=e,o.c=t,o.d=function(e,t,r){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r});},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0});},o.t=function(e,t){if(1&t&&(e=o(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(o.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)o.d(r,n,function(t){return e[t]}.bind(null,n));return r},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="",o(o.s=6)}([function(t,o){t.exports=e;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=o(0),n=r.Control.extend({options:{className:""},onAdd:function(){var e=r.DomUtil.create("div",this.options.className);return r.DomEvent.disableClickPropagation(e),e}});t.default=n,e.exports=t.default;},function(e,o){e.exports=t;},function(e,t){e.exports=o;},function(e,t){e.exports=r;},function(e,t){e.exports=n;},function(e,t,o){Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r);}}return function(t,o,r){return o&&e(t.prototype,o),r&&e(t,r),t}}(),n=function e(t,o,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,o);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:e(i,o,r)}if("value"in n)return n.value;var u=n.get;return void 0!==u?u.call(r):void 0},i=o(5),u=o(4),l=o(3),a=f(o(2)),c=f(o(1));function f(e){return e&&e.__esModule?e:{default:e}}var p=function(e){function t(){return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t),function(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t||"object"!=typeof t&&"function"!=typeof t?e:t}(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t);}(t,l.MapControl),r(t,[{key:"createLeafletElement",value:function(e){var t=e.position,o=e.className;return this.leafletElement=new c.default({position:t,className:o}),this.leafletElement}},{key:"updateLeafletElement",value:function(e,o){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"updateLeafletElement",this).call(this,e,o),this.renderContent();}},{key:"componentDidMount",value:function(){n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentDidMount",this).call(this),this.renderContent();}},{key:"componentWillUnmount",value:function(){(0, u.unmountComponentAtNode)(this.leafletElement.getContainer()),n(t.prototype.__proto__||Object.getPrototypeOf(t.prototype),"componentWillUnmount",this).call(this);}},{key:"renderContent",value:function(){var e=this.leafletElement.getContainer();(0, u.render)(i.Children.only(this.props.children),e);}}]),t}();p.propTypes={className:a.default.string,children:a.default.node,position:a.default.string},t.default=(0, l.withLeaflet)(p),e.exports=t.default;}])});
   });
 
   var Control = unwrapExports(reactLeafletCustomControl);
@@ -6076,14 +6156,20 @@
         maxDistance = _useSymfonyContext.maxDistance,
         baseUrl = _useSymfonyContext.baseUrl;
 
-    var _useState = React.useState([]),
+    var _useState = React$1.useState([]),
         _useState2 = _slicedToArray(_useState, 2),
         resultList = _useState2[0],
         setResultList = _useState2[1];
 
-    React.useEffect(function () {
+    var _useState3 = React$1.useState(false),
+        _useState4 = _slicedToArray(_useState3, 2),
+        isNew = _useState4[0],
+        setIsNew = _useState4[1];
+
+    React$1.useEffect(function () {
       if (coordinates.length > 0) {
         var isFresh = true;
+        setIsNew(false);
 
         var _coordinates = _slicedToArray(coordinates, 2),
             latitude = _coordinates[0],
@@ -6097,14 +6183,17 @@
         }).then(function (data) {
           return normalizeContentList(data, baseUrl);
         }).then(function (result) {
-          if (isFresh) setResultList(result);
+          if (isFresh) {
+            setResultList(result);
+            setIsNew(true);
+          }
         });
         return function () {
           return isFresh = false;
         };
       }
     }, [coordinates]);
-    return resultList;
+    return [resultList, isNew];
 
     function normalizeContentList(data, baseUrl) {
       var ContentList = data.ContentList.ContentInfo;
@@ -6135,7 +6224,7 @@
         currentIndex = _ref.currentIndex,
         changeIndex = _ref.changeIndex;
     return list.length > 0 ? list.map(function (item, index) {
-      return /*#__PURE__*/React__default.createElement("div", {
+      return /*#__PURE__*/React$1__default.createElement("div", {
         className: "ezgeodatagouv__line__wrapper".concat(index === currentIndex ? '--selected' : ''),
         key: item._id,
         onClick: function onClick() {
@@ -6149,45 +6238,51 @@
   };
 
   var ResultMap = function ResultMap(_ref) {
-    var coordinates = _ref.coordinates;
-    var ref = React.useRef();
+    var coordinates = _ref.coordinates,
+        disableLoading = _ref.disableLoading;
+    var ref = React$1.useRef();
 
-    var _useState = React.useState(null),
+    var _useState = React$1.useState(null),
         _useState2 = _slicedToArray(_useState, 2),
         currentIndex = _useState2[0],
         setIndex = _useState2[1];
 
-    var result = useLocationSearch(coordinates);
+    var _useLocationSearch = useLocationSearch(coordinates),
+        _useLocationSearch2 = _slicedToArray(_useLocationSearch, 2),
+        result = _useLocationSearch2[0],
+        isFresh = _useLocationSearch2[1];
 
     var _useSymfonyContext = useSymfonyContext(),
         mapWidth = _useSymfonyContext.mapWidth;
 
-    React.useEffect(function () {
+    React$1.useEffect(function () {
       if (currentIndex !== null) {
         ref.current.leafletElement.flyTo([result[currentIndex].loc.latitude, result[currentIndex].loc.longitude], 15);
       }
-    }, [currentIndex, result]);
-    return result.length > 0 && /*#__PURE__*/React__default.createElement("div", {
+
+      result && isFresh && disableLoading();
+    }, [currentIndex, result, isFresh]);
+    return result.length > 0 ? /*#__PURE__*/React$1__default.createElement("div", {
       style: {
         display: 'flex',
-        'flexFlow': 'column',
+        flexFlow: 'column',
         marginTop: '10px'
       }
-    }, /*#__PURE__*/React__default.createElement("div", {
+    }, /*#__PURE__*/React$1__default.createElement("div", {
       style: {
         display: 'block'
       }
-    }, /*#__PURE__*/React__default.createElement(ResultList, {
+    }, /*#__PURE__*/React$1__default.createElement(ResultList, {
       list: result,
       currentIndex: currentIndex,
       changeIndex: setIndex,
       coords: coordinates
-    })), /*#__PURE__*/React__default.createElement("div", {
+    })), /*#__PURE__*/React$1__default.createElement("div", {
       style: {
         maxWidth: mapWidth,
-        'overflow': 'hidden'
+        overflow: 'hidden'
       }
-    }, /*#__PURE__*/React__default.createElement(Map$1, {
+    }, /*#__PURE__*/React$1__default.createElement(Map$1, {
       ref: ref,
       zoom: 15,
       bounds: [coordinates].concat(_toConsumableArray(result.reduce(function (acc, _ref2) {
@@ -6205,10 +6300,10 @@
         height: 300,
         zIndex: 0
       }
-    }, /*#__PURE__*/React__default.createElement(Control, {
+    }, /*#__PURE__*/React$1__default.createElement(Control, {
       position: "topleft",
       className: "leaflet-bar ezgeodatagouv__control--reset"
-    }, /*#__PURE__*/React__default.createElement("a", {
+    }, /*#__PURE__*/React$1__default.createElement("a", {
       href: "#",
       onClick: function onClick(e) {
         e.preventDefault();
@@ -6217,53 +6312,86 @@
           maxZoom: 15
         });
       }
-    }, /*#__PURE__*/React__default.createElement("svg", {
+    }, /*#__PURE__*/React$1__default.createElement("svg", {
       viewBox: "0 0 32 32"
-    }, /*#__PURE__*/React__default.createElement("path", {
+    }, /*#__PURE__*/React$1__default.createElement("path", {
       d: "M32 0h-13l5 5-6 6 3 3 6-6 5 5z"
-    }), /*#__PURE__*/React__default.createElement("path", {
+    }), /*#__PURE__*/React$1__default.createElement("path", {
       d: "M32 32v-13l-5 5-6-6-3 3 6 6-5 5z"
-    }), /*#__PURE__*/React__default.createElement("path", {
+    }), /*#__PURE__*/React$1__default.createElement("path", {
       d: "M0 32h13l-5-5 6-6-3-3-6 6-5-5z"
-    }), /*#__PURE__*/React__default.createElement("path", {
+    }), /*#__PURE__*/React$1__default.createElement("path", {
       d: "M0 0v13l5-5 6 6 3-3-6-6 5-5z"
-    })))), /*#__PURE__*/React__default.createElement(ScaleControl$1, {
+    })))), /*#__PURE__*/React$1__default.createElement(ScaleControl$1, {
       imperial: false
-    }), /*#__PURE__*/React__default.createElement(TileLayer$1, {
+    }), /*#__PURE__*/React$1__default.createElement(TileLayer$1, {
       attribution: "&copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    }), /*#__PURE__*/React__default.createElement(Marker$1, {
+    }), /*#__PURE__*/React$1__default.createElement(Marker$1, {
       zIndexOffset: 1000,
       position: coordinates,
       icon: homeMarker
-    }, /*#__PURE__*/React__default.createElement(Tooltip$1, null, "Search point")), result.map(function (_ref3, index) {
+    }, /*#__PURE__*/React$1__default.createElement(Tooltip$1, null, "Search point")), result.map(function (_ref3, index) {
       var name = _ref3.name,
           _ref3$loc = _ref3.loc,
           latitude = _ref3$loc.latitude,
           longitude = _ref3$loc.longitude;
-      return /*#__PURE__*/React__default.createElement(Marker$1, {
+      return /*#__PURE__*/React$1__default.createElement(Marker$1, {
         icon: index === currentIndex ? selectedMarker : defaultMarker,
         position: [latitude, longitude],
         onClick: function onClick() {
           return setIndex(index);
         }
-      }, /*#__PURE__*/React__default.createElement(Popup$1, {
+      }, /*#__PURE__*/React$1__default.createElement(Popup$1, {
         autoClose: true
       }, name));
-    }))));
+    })))) : isFresh && /*#__PURE__*/React$1__default.createElement("div", {
+      className: "ezgeodatagouv__result--status"
+    }, "Aucun r\xE9sultat.");
+  };
+
+  var Target = function Target(_ref) {
+    var props = _extends({}, _ref);
+
+    return /*#__PURE__*/React.createElement("svg", _extends({}, props, {
+      "stroke-width": "0",
+      stroke: "currentColor",
+      fill: "currentColor",
+      viewBox: "0 0 32 32"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M32 14h-3.154c-0.864-5.57-5.276-9.982-10.846-10.846v-3.154h-4v3.154c-5.57 0.864-9.982 5.276-10.846 10.846h-3.154v4h3.154c0.864 5.57 5.276 9.982 10.846 10.846v3.154h4v-3.154c5.57-0.864 9.982-5.276 10.846-10.846h3.154v-4zM24.776 14h-3.118c-0.603-1.705-1.953-3.056-3.658-3.658v-3.118c3.36 0.765 6.010 3.416 6.776 6.776zM16 18c-1.105 0-2-0.895-2-2s0.895-2 2-2c1.105 0 2 0.895 2 2s-0.895 2-2 2zM14 7.224v3.118c-1.705 0.603-3.056 1.953-3.658 3.658h-3.118c0.765-3.36 3.416-6.010 6.776-6.776zM7.224 18h3.118c0.603 1.705 1.953 3.056 3.658 3.658v3.118c-3.36-0.765-6.010-3.416-6.776-6.776zM18 24.776v-3.118c1.705-0.603 3.056-1.953 3.658-3.658h3.118c-0.765 3.36-3.416 6.010-6.776 6.776z"
+    }));
+  };
+
+  var getLabel = function getLabel(_ref) {
+    var name = _ref.name,
+        postcode = _ref.postcode,
+        city = _ref.city;
+    return name !== city ? "".concat(name, " ").concat(postcode, " ").concat(city) : "".concat(name, " ").concat(postcode);
   };
 
   var GeoFinder = function GeoFinder() {
-    var _useState = React.useState([]),
+    var _useState = React$1.useState([]),
         _useState2 = _slicedToArray(_useState, 2),
         coordinates = _useState2[0],
         setCoordinates = _useState2[1];
 
-    var _useState3 = React.useState(''),
+    var _useState3 = React$1.useState(''),
         _useState4 = _slicedToArray(_useState3, 2),
         searchTerm = _useState4[0],
         setSearchTerm = _useState4[1];
 
+    var _useState5 = React$1.useState(false),
+        _useState6 = _slicedToArray(_useState5, 2),
+        loading = _useState6[0],
+        setLoading = _useState6[1];
+
+    var _useState7 = React$1.useState(false),
+        _useState8 = _slicedToArray(_useState7, 2),
+        geo = _useState8[0],
+        setGeo = _useState8[1];
+
+    var pos = usePosition(geo);
     var addresses = useAddressSearch(searchTerm);
 
     var _useSymfonyContext = useSymfonyContext(),
@@ -6273,61 +6401,82 @@
       setSearchTerm(event.target.value);
     };
 
-    var handleDoSearch = function handleDoSearch(event) {
-      event.preventDefault();
-      setSearchTerm(searchTerm);
-    };
-
-    return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement("label", {
+    React$1.useEffect(function () {
+      if (geo && !geo.error && geo.latitude && geo.longitude) {
+        setCoordinates([geo.latitude, geo.longitude]);
+        setLoading(true);
+      }
+    }, [geo]);
+    return /*#__PURE__*/React$1__default.createElement(React$1__default.Fragment, null, /*#__PURE__*/React$1__default.createElement("label", {
       id: "combosearch_label",
       "class": "sr-only"
-    }, label), /*#__PURE__*/React__default.createElement(Combobox, {
+    }, label), /*#__PURE__*/React$1__default.createElement(Combobox, {
       style: {
         display: 'inline-block',
         width: '75%'
       },
       "aria-labelledby": "combosearch_label",
       onSelect: function onSelect(value) {
+        setLoading(true);
         var coords = addresses.find(function (a) {
-          return a.properties.label === value;
+          return getLabel(a.properties) === value;
         }).geometry.coordinates;
         coords.reverse();
         setCoordinates(coords);
-      }
-    }, /*#__PURE__*/React__default.createElement(ComboboxInput, {
+      },
+      openOnFocus: true
+    }, /*#__PURE__*/React$1__default.createElement(ComboboxInput, {
       selectOnClick: true,
-      placeholder: "Addresse...",
+      autocomplete: false,
+      placeholder: "Adresse...",
       className: "form-control ezgeodatagouv__search--input",
-      onChange: handleSearchTermChange
-    }), addresses && /*#__PURE__*/React__default.createElement(ComboboxPopover, {
+      onChange: handleSearchTermChange,
+      disabled: loading
+    }), addresses && /*#__PURE__*/React$1__default.createElement(ComboboxPopover, {
       className: "shadow-popup"
-    }, addresses.length > 0 ? /*#__PURE__*/React__default.createElement(ComboboxList, null, addresses.map(function (_ref) {
-      var _ref$properties = _ref.properties,
-          id = _ref$properties.id,
-          name = _ref$properties.name,
-          postcode = _ref$properties.postcode,
-          city = _ref$properties.city,
-          label = _ref$properties.label;
-      return /*#__PURE__*/React__default.createElement(ComboboxOption, {
+    }, addresses.length > 0 ? /*#__PURE__*/React$1__default.createElement(ComboboxList, null, addresses.map(function (_ref2) {
+      var _ref2$properties = _ref2.properties,
+          id = _ref2$properties.id,
+          properties = _objectWithoutProperties(_ref2$properties, ["id"]);
+
+      return /*#__PURE__*/React$1__default.createElement(ComboboxOption, {
         key: id,
-        value: label
-      }, name !== city ? "".concat(name, " ").concat(postcode, " ").concat(city) : "".concat(name, " ").concat(postcode));
-    })) : /*#__PURE__*/React__default.createElement("span", {
+        value: getLabel(properties)
+      }, getLabel(properties));
+    })) : /*#__PURE__*/React$1__default.createElement("span", {
       style: {
         display: 'block',
         margin: 8
       }
-    }, "No results found"))), /*#__PURE__*/React__default.createElement("button", {
+    }, "Entrez une adresse pour affchier la liste des r\xE9sultats."))), /*#__PURE__*/React$1__default.createElement("button", {
+      title: pos && pos.error ? 'Erreur de géolocalisation' : pos && pos.timestamp ? 'Géolocalisation active' : 'Activer la géolocalisation',
       className: "button btn bnt-submit",
-      type: "submit",
+      type: "button",
       style: {
-        padding: '6px 10px 7px',
+        padding: '5px 5px 0px',
         margin: '0 0 0 10px',
-        verticalAlign: 'baseline'
+        verticalAlign: 'top'
       },
-      onClick: handleDoSearch
-    }, "Ok"), /*#__PURE__*/React__default.createElement(ResultMap, {
-      coordinates: coordinates
+      onClick: function onClick() {
+        return setGeo(true);
+      },
+      disabled: pos && pos.error
+    }, /*#__PURE__*/React$1__default.createElement(Target, {
+      className: "true",
+      style: {
+        display: 'inline-block',
+        width: '1.5em',
+        height: '1.5em',
+        color: pos && pos.error ? '#dc3545' : pos && pos.timestamp ? '#28a745' : 'white'
+      }
+    })), loading && /*#__PURE__*/React$1__default.createElement("div", {
+      className: "ezgeodatagouv__result--status"
+    }, "Recherche en cours..."), /*#__PURE__*/React$1__default.createElement(ResultMap, {
+      key: coordinates,
+      coordinates: coordinates,
+      disableLoading: function disableLoading() {
+        return setLoading(false);
+      }
     }));
   };
 
@@ -6355,9 +6504,9 @@
           label: (_this$dataset$label = this.dataset.label) !== null && _this$dataset$label !== void 0 ? _this$dataset$label : 'type text to search',
           baseUrl: this.dataset.baseurl
         };
-        ReactDOM__default.render( /*#__PURE__*/React__default.createElement(SymfonyContextProvider, {
+        ReactDOM__default.render( /*#__PURE__*/React$1__default.createElement(SymfonyContextProvider, {
           value: props
-        }, /*#__PURE__*/React__default.createElement(GeoFinder, null)), this);
+        }, /*#__PURE__*/React$1__default.createElement(GeoFinder, null)), this);
       }
     }, {
       key: "disconnectedCallback",

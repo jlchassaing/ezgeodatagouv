@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Combobox,
   ComboboxInput,
@@ -8,12 +8,20 @@ import {
 } from '@reach/combobox'
 
 import useAddressSearch from '../hooks/use-address-search'
+import usePosition from '../hooks/use-geolocation'
 import ResultMap from './result-map'
 import { useSymfonyContext } from '../context/symfony'
+import { Target } from '../utils/icons'
+
+const getLabel = ({ name, postcode, city }) =>
+  name !== city ? `${name} ${postcode} ${city}` : `${name} ${postcode}`
 
 const GeoFinder = () => {
   const [coordinates, setCoordinates] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [geo, setGeo] = useState(false)
+  const pos = usePosition(geo)
   const addresses = useAddressSearch(searchTerm)
   const { label } = useSymfonyContext()
 
@@ -21,10 +29,12 @@ const GeoFinder = () => {
     setSearchTerm(event.target.value)
   }
 
-  const handleDoSearch = event => {
-    event.preventDefault()
-    setSearchTerm(searchTerm)
-  }
+  useEffect(() => {
+    if (geo && !geo.error && geo.latitude && geo.longitude) {
+      setCoordinates([geo.latitude, geo.longitude])
+      setLoading(true)
+    }
+  }, [geo])
 
   return (
     <>
@@ -35,35 +45,35 @@ const GeoFinder = () => {
         style={{ display: 'inline-block', width: '75%' }}
         aria-labelledby="combosearch_label"
         onSelect={value => {
-          const coords = addresses.find(a => a.properties.label === value)
+          setLoading(true)
+          const coords = addresses.find(a => getLabel(a.properties) === value)
             .geometry.coordinates
           coords.reverse()
           setCoordinates(coords)
         }}
+        openOnFocus
       >
         <ComboboxInput
           selectOnClick
-          placeholder="Addresse..."
+          autocomplete={false}
+          placeholder="Adresse..."
           className="form-control ezgeodatagouv__search--input"
           onChange={handleSearchTermChange}
+          disabled={loading}
         />
         {addresses && (
           <ComboboxPopover className="shadow-popup">
             {addresses.length > 0 ? (
               <ComboboxList>
-                {addresses.map(
-                  ({ properties: { id, name, postcode, city, label } }) => (
-                    <ComboboxOption key={id} value={label}>
-                      {name !== city
-                        ? `${name} ${postcode} ${city}`
-                        : `${name} ${postcode}`}
-                    </ComboboxOption>
-                  )
-                )}
+                {addresses.map(({ properties: { id, ...properties } }) => (
+                  <ComboboxOption key={id} value={getLabel(properties)}>
+                    {getLabel(properties)}
+                  </ComboboxOption>
+                ))}
               </ComboboxList>
             ) : (
               <span style={{ display: 'block', margin: 8 }}>
-                No results found
+                Entrez une adresse pour affchier la liste des résultats.
               </span>
             )}
           </ComboboxPopover>
@@ -71,19 +81,49 @@ const GeoFinder = () => {
       </Combobox>
 
       <button
+        title={
+          pos && pos.error
+            ? 'Erreur de géolocalisation'
+            : pos && pos.timestamp
+            ? 'Géolocalisation active'
+            : 'Activer la géolocalisation'
+        }
         className="button btn bnt-submit"
-        type="submit"
+        type="button"
         style={{
-          padding: '6px 10px 7px',
+          padding: '5px 5px 0px',
           margin: '0 0 0 10px',
-          verticalAlign: 'baseline',
+          verticalAlign: 'top',
         }}
-        onClick={handleDoSearch}
+        onClick={() => setGeo(true)}
+        disabled={pos && pos.error}
       >
-        Ok
+        <Target
+          className="true"
+          style={{
+            display: 'inline-block',
+            width: '1.5em',
+            height: '1.5em',
+            color:
+              pos && pos.error
+                ? '#dc3545'
+                : pos && pos.timestamp
+                ? '#28a745'
+                : 'white',
+          }}
+        />
       </button>
 
-      <ResultMap coordinates={coordinates} />
+      {loading && (
+        <div className="ezgeodatagouv__result--status">
+          Recherche en cours...
+        </div>
+      )}
+      <ResultMap
+        key={coordinates}
+        coordinates={coordinates}
+        disableLoading={() => setLoading(false)}
+      />
     </>
   )
 }
