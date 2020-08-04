@@ -4,8 +4,8 @@ EzGeoDataGouv_search_proximity:
     _controller: ez_geo_data_gouv.rest.controller:search
   methods: [GET]
   requirements:
-    latitude: '-?\d+(\.\d{1,6})?'
-    longitude: '-?\d+(\.\d{1,6})?'
+    latitude: '-?\d+(\.\d{1,7})?'
+    longitude: '-?\d+(\.\d{1,7})?'
 
 EzGeoDataGouv_search_proximity_with_distance:
   path: '/ez_geo_data_gouv/search/{distance}/{latitude}/{longitude}'
@@ -14,8 +14,8 @@ EzGeoDataGouv_search_proximity_with_distance:
   methods: [GET]
   requirements:
     distance: '\d+'
-    latitude: '-?\d+(\.\d{1,6})?'
-    longitude: '-?\d+(\.\d{1,6})?'
+    latitude: '-?\d+(\.\d{1,7})?'
+    longitude: '-?\d+(\.\d{1,7})?'
 
 EzGeoDataGouv_search_proximity_with_content_type:
   path: '/ez_geo_data_gouv/search/{contentTypeIdentifier}/{latitude}/{longitude}'
@@ -24,8 +24,8 @@ EzGeoDataGouv_search_proximity_with_content_type:
   methods: [GET]
   requirements:
     contentTypeIdentifier: '\w+'
-    latitude: '-?\d+(\.\d{1,6})?'
-    longitude: '-?\d+(\.\d{1,6})?'
+    latitude: '-?\d+(\.\d{1,7})?'
+    longitude: '-?\d+(\.\d{1,7})?'
 
 EzGeoDataGouv_search_proximity_with_content_type_and_distance:
   path: '/ez_geo_data_gouv/search/{contentTypeIdentifier}/{distance}/{latitude}/{longitude}'
@@ -35,7 +35,7 @@ EzGeoDataGouv_search_proximity_with_content_type_and_distance:
   requirements:
     contentTypeIdentifier: '\w+'
     distance: '\d+'
-    latitude: '-?\d+(\.\d{1,6})?'
-    longitude: '-?\d+(\.\d{1,6})?'
+    latitude: '-?\d+(\.\d{1,7})?'
+    longitude: '-?\d+(\.\d{1,7})?'
 
 
