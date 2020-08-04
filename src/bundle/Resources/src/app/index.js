@@ -30,11 +30,12 @@ const GeoFinder = () => {
   }
 
   useEffect(() => {
-    if (geo && !geo.error && geo.latitude && geo.longitude) {
-      setCoordinates([geo.latitude, geo.longitude])
+    if (geo && pos && !pos.error && pos.latitude && pos.longitude) {
+      setCoordinates([pos.latitude, pos.longitude])
       setLoading(true)
+      setGeo(false)
     }
-  }, [geo])
+  }, [geo, pos.latitude, pos.longitude])
 
   return (
     <>
@@ -73,7 +74,7 @@ const GeoFinder = () => {
               </ComboboxList>
             ) : (
               <span style={{ display: 'block', margin: 8 }}>
-                Entrez une adresse pour affchier la liste des résultats.
+                Entrez une adresse pour afficher la liste des résultats.
               </span>
             )}
           </ComboboxPopover>

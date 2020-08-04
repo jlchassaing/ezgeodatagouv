@@ -33,7 +33,8 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-delete": "^1.2.0",
     "rollup-plugin-nodent": "^0.2.2",
-    "rollup-plugin-postcss": "^2.8.2"
+    "rollup-plugin-postcss": "^2.8.2",
+    "rollup-plugin-terser": "^6.1.0"
   },
   "dependencies": {
     "@reach/combobox": "^0.10.0",

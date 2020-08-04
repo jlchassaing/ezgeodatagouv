@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
 import babel from 'rollup-plugin-babel'
 import analyze from 'rollup-plugin-analyzer'
+import { terser } from "rollup-plugin-terser";
 import pkg from './package.json'
 
 export default [
@@ -29,8 +30,9 @@ export default [
 
       commonjs(),
       replace({
-        'process.env.NODE_ENV': JSON.stringify('development'),
+        'process.env.NODE_ENV': JSON.stringify('production'),
       }),
+      terser(),
       analyze({ summaryOnly: true }),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
