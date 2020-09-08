@@ -18,10 +18,8 @@
   ],
   "require": {
     "php": "^7.0",
-    "ezsystems/ezpublish-kernel": "^7.5",
-    "symfony/symfony": "^3.4",
-    "code-rhapsodie/ezdataflow-bundle": "^2.0",
-    "kaliop/ezmigrationbundle": "^5.0"
+    "ezsystems/ezplatform-kernel": "^1.1",
+    "code-rhapsodie/ezdataflow-bundle": "^2.0"
   },
   "autoload": {
     "psr-4": {
