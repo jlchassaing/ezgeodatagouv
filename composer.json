@@ -26,5 +26,10 @@
       "eZGeoDataGouvBundle\\": "src/bundle",
       "eZGeoDataGouv\\": "src/lib"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.x-dev"
+    }
   }
 }
