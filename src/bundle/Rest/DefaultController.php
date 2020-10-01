@@ -12,7 +12,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MapLocationDistance
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use eZ\Publish\Core\REST\Server\Controller;
+use EzSystems\EzPlatformRest\Server\Controller;
 use eZ\Publish\Core\REST\Server\Values;
 use eZGeoDataGouvBundle\Rest\Values\LocationContent;
 use eZGeoDataGouvBundle\Rest\Values\RestContent;

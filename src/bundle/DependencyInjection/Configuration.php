@@ -40,8 +40,8 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ez_geo_data_gouv');
+        $treeBuilder = new TreeBuilder('ez_geo_data_gouv');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

@@ -2,10 +2,12 @@
 
 namespace eZGeoDataGouvBundle\Rest\ValueObjectVisitor;
 
-use eZ\Publish\Core\REST\Common\Output\Generator;
-use eZ\Publish\Core\REST\Common\Output\Visitor;
-use eZ\Publish\Core\REST\Server\Output\ValueObjectVisitor\RestContent;
+
+
 use eZGeoDataGouvBundle\Rest\Values\LocationContent as Value;
+use EzSystems\EzPlatformRest\Output\Generator;
+use EzSystems\EzPlatformRest\Output\Visitor;
+use EzSystems\EzPlatformRest\Server\Output\ValueObjectVisitor\RestContent;
 
 /**
  * CreatedContent value object visitor.
@@ -13,11 +15,9 @@ use eZGeoDataGouvBundle\Rest\Values\LocationContent as Value;
 class LocationContent extends RestContent
 {
     /**
-     * Visit struct returned by controllers.
-     *
-     * @param \eZ\Publish\Core\REST\Common\Output\Visitor $visitor
-     * @param \eZ\Publish\Core\REST\Common\Output\Generator $generator
-     * @param Value $data
+     * @param \EzSystems\EzPlatformRest\Output\Visitor $visitor
+     * @param \EzSystems\EzPlatformRest\Output\Generator $generator
+     * @param \EzSystems\EzPlatformRest\Server\Values\RestContent $data
      */
     public function visit(Visitor $visitor, Generator $generator, $data)
     {

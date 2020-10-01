@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
-    public: false
+    public: true
 
   eZGeoDataGouv\Config\ConfigManager:
 
@@ -17,23 +17,20 @@ services:
   eZGeoDataGouvBundle\Rest\DefaultController:
     autoconfigure: false
     autowire: false
-    public: true
     parent: 'ezpublish_rest.controller.base'
 
   ez_geo_data_gouv.rest.controller:
     alias: eZGeoDataGouvBundle\Rest\DefaultController
-    public: true
 
   ez_geo_data_gouv.rest.value_object_visitor.LocationContent:
     autoconfigure: false
     autowire: false
-    public: true
+
     parent: ezpublish_rest.output.value_object_visitor.base
     class: eZGeoDataGouvBundle\Rest\ValueObjectVisitor\LocationContent
     arguments: ['@ezpublish.translation_helper']
     tags:
       - { name: ezpublish_rest.output.value_object_visitor, type: eZGeoDataGouvBundle\Rest\Values\LocationContent }
-
 
   ez_geo_data_gouv.event.subscriber.view_builder:
     class: eZGeoDataGouvBundle\EventSubscriber\ViewBuilderSubscriber

@@ -6,7 +6,8 @@ use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\REST\Server\Values\RestContent;
+use EzSystems\EzPlatformRest\Server\Values\RestContent;
+
 
 class LocationContent extends RestContent
 {
