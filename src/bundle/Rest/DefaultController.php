@@ -13,7 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\EzPlatformRest\Server\Controller;
-use eZ\Publish\Core\REST\Server\Values;
+use EzSystems\EzPlatformRest\Server\Values;
 use eZGeoDataGouvBundle\Rest\Values\LocationContent;
 use eZGeoDataGouvBundle\Rest\Values\RestContent;
 use Symfony\Component\Routing\Annotation\Route;
@@ -95,7 +95,10 @@ class DefaultController extends Controller
 
         $results = $searchService->findContent($query);
 
-        $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
+        /** @var \Symfony\Component\HttpFoundation\Request $request */
+        $request = $this->container->get('request_stack')->getMasterRequest();
+        $siteaccess = $request->get('siteaccess');
+
         $contentValues = [];
         foreach ($results->searchHits as $searchHit) {
             /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
@@ -104,9 +107,8 @@ class DefaultController extends Controller
 
             $mainLocation = $locationService->loadLocation($content->contentInfo->mainLocationId);
             $relations = $contentService->loadRelations($content->getVersionInfo());
-            $siteaccess = $this->container->get('ezpublish.siteaccess');
 
-            $path = $this->router->generate($mainLocation,['siteaccess' => $siteaccess->name], UrlGeneratorInterface::ABSOLUTE_PATH);
+            $path = $this->router->generate('ez_urlalias',['locationId' => $mainLocation->id, 'siteaccess' => $siteaccess->name], UrlGeneratorInterface::ABSOLUTE_PATH);
             
             $contentValues[] = new LocationContent(
                 $content->contentInfo,
@@ -119,6 +121,6 @@ class DefaultController extends Controller
             );
         }
 
-        return new Values\ContentList($contentValues);
+        return new Values\ContentList($contentValues, $results->totalCount);
     }
 }
