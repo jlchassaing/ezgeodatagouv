@@ -79,7 +79,7 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('datatype')->isRequired()
                                         ->validate()
-                                            ->ifNotInArray(['ezurl', 'ezstring', 'ezmatrix'])
+                                            ->ifNotInArray(['ezurl', 'ezstring', 'ezmatrix','ezemail'])
                                             ->thenInvalid("Should be of type ezstring, ezurl or ezmatrix")
                                         ->end()
                                     ->end()
