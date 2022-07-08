@@ -7,10 +7,6 @@
 namespace eZGeoDataGouv\DataFlow;
 
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use Symfony\Component\Filesystem\Filesystem;
-
 class FileReader extends AbstractReader
 {
     protected $keys;
@@ -34,7 +30,7 @@ class FileReader extends AbstractReader
 
     private function getData($line)
     {
-        $data = str_getcsv($line,';','"');
+        $data = str_getcsv($line,$this->separator,'"');
         if (empty($this->keys)){
             $this->keys = $data;
             return null;

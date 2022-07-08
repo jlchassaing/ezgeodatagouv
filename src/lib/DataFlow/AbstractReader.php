@@ -10,10 +10,12 @@ namespace eZGeoDataGouv\DataFlow;
 abstract class AbstractReader implements ReaderInterface
 {
     protected $config;
+    protected $separator;
 
     public function init($config): AbstractReader
     {
         $this->config = $config;
+        $this->separator = $config['csv_field_separator'] ?? ';';
         return $this;
     }
 

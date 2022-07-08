@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @author jlchassaing <jlchassaing@gmail.com>
  * @licence MIT
@@ -9,50 +10,40 @@ namespace eZGeoDataGouv\DataFlowType;
 use CodeRhapsodie\DataflowBundle\DataflowType\AbstractDataflowType;
 use CodeRhapsodie\DataflowBundle\DataflowType\DataflowBuilder;
 use CodeRhapsodie\DataflowBundle\DataflowType\DataflowTypeInterface;
-use CodeRhapsodie\DataflowBundle\DataflowType\Result;
 use CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory;
-use CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactoryInterface;
 use CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter;
 use eZGeoDataGouv\Config\ConfigManager;
 use eZGeoDataGouv\DataFlow\FileReader;
 use eZGeoDataGouv\DataFlow\GeocodingFileReader;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implements DataflowTypeInterface
 {
-    /** @var \CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter  */
+    /** @var \CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter */
     protected $contentWriter;
 
-    /** @var \CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory  */
+    /** @var \CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory */
     protected $contentStructureFactory;
 
-    /** @var \eZGeoDataGouv\DataFlow\FileReader  */
+    /** @var \eZGeoDataGouv\DataFlow\FileReader */
     protected $fileReader;
 
-    /** @var \eZGeoDataGouv\DataFlow\GeocodingFileReader  */
+    /** @var \eZGeoDataGouv\DataFlow\GeocodingFileReader */
     protected $geocodingFileReader;
 
-    /** @var \eZGeoDataGouv\Config\ConfigManager  */
+    /** @var \eZGeoDataGouv\Config\ConfigManager */
     protected $configManager;
 
     /**
      * DataGouvImportLocationsDataFlowType constructor.
-     *
-     * @param \CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter $contentWriter
-     * @param \CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory $contentStructureFactory
-     * @param \eZGeoDataGouv\DataFlow\FileReader $fileReader
-     * @param \eZGeoDataGouv\DataFlow\GeocodingFileReader $geocodingFileReader
-     * @param \eZGeoDataGouv\Config\ConfigManager $configManager
      */
     public function __construct(
         ContentWriter $contentWriter,
         ContentStructureFactory $contentStructureFactory,
         FileReader $fileReader,
         GeocodingFileReader $geocodingFileReader,
-        ConfigManager $configManager)
-    {
-
+        ConfigManager $configManager
+    ) {
         $this->contentWriter = $contentWriter;
         $this->contentStructureFactory = $contentStructureFactory;
         $this->fileReader = $fileReader;
@@ -83,14 +74,11 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
 
     /**
      * Use this methods to manage fields in data before creating content
-     * one usecase could be to format the naming field
-     *
-     *
-     * @param \CodeRhapsodie\DataflowBundle\DataflowType\DataflowBuilder $builder
+     * one usecase could be to format the naming field.
      */
     protected function addFilterTask(DataflowBuilder $builder)
     {
-        $builder->addStep(function ($data){
+        $builder->addStep(function ($data) {
             /** Put your code here to invalidate a row return null */
             return $data;
         });
@@ -98,13 +86,12 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
 
     protected function addCsvFieldMapping(DataflowBuilder $builder, $options, $config)
     {
-        $builder->addStep(function ($data) use ($config,$options) {
-
+        $builder->addStep(function ($data) use ($config, $options) {
             if (!isset($data[$config['id_key']])) {
                 return false;
             }
 
-            $remoteId = sprintf('%s-%d', $config['content_type'],$data[$config['id_key']]);
+            $remoteId = sprintf('%s-%d', $config['content_type'], $data[$config['id_key']]);
 
             $contentData['name'] = $data[$config['name']];
             $contentData[$config['address_field_identifier']] = [
@@ -113,8 +100,8 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
                 'address' => $data[$config['address']['address']],
             ];
 
-            foreach ($config['fields'] as $key=>$field) {
-                switch ($field['datatype']){
+            foreach ($config['fields'] as $key => $field) {
+                switch ($field['datatype']) {
                     case 'ezurl':
                         $contentData[$key] = ['link' => $data[$field['value']]];
                         break;
@@ -153,9 +140,10 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
      */
     protected function getReader($resourceConfig)
     {
-        if ($resourceConfig['do_geocoding'] === true)
+        if ($resourceConfig['do_geocoding'] === true) {
             return $this->geocodingFileReader->init($resourceConfig);
-        else
+        } else {
             return $this->fileReader->init($resourceConfig);
+        }
     }
 }
