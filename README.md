@@ -1,4 +1,10 @@
 # ezgeodatagouv
+
+[![Latest Stable Version](https://poser.pugx.org/jlchassaing/ezgeodatagouv/v/stable)](https://packagist.org/packages/jlchassaing/ezgeodatagouv)
+[![Total Downloads](https://poser.pugx.org/jlchassaing/ezgeodatagouv/downloads)](https://packagist.org/packages/jlchassaing/ezgeodatagouv)
+[![Latest Unstable Version](https://poser.pugx.org/jlchassaing/ezgeodatagouv/v/unstable)](https://packagist.org/packages/jlchassaing/ezgeodatagouv)
+[![License](https://poser.pugx.org/jlchassaing/ezgeodatagouv/license)](https://packagist.org/packages/jlchassaing/ezgeodatagouv)
+
 eZ Geo Data Gouv project
 
 This bundle has two usecases :
