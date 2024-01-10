@@ -25,21 +25,23 @@ abstract class AbstractReader implements ReaderInterface
     public function fileExists(string $filename): bool
     {
         if (preg_match('/^(http[s]*|ftp):\/\//',$filename, $matches)){
-            
-            $ch = curl_init($filename);
-            
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+            $ch = curl_init();
+            $options = [
+                CURLOPT_FOLLOWLOCATION => 1,
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_NOBODY => 1,
+                CURLOPT_URL => $filename,
+            ];
+
+           curl_setopt_array($ch, $options);
 
             // Execute
-            curl_exec($ch);
-            
-            $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            
+            $res = curl_exec($ch);
+
             // Check HTTP status code
             if (!curl_errno($ch)) {
                 return curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200;
             }
-            
             return false;
             
         }
