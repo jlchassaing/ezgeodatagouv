@@ -15,8 +15,8 @@ abstract class AbstractReader implements ReaderInterface
     public function init($config): AbstractReader
     {
         $this->config = $config;
-        $this->separator = $config['csv_field_separator'] ?? ';';
-        $this->enclosure = $config['enclosure'] ?? '';
+        $this->separator = $config['csv_field_separator'] ?? null;
+        $this->enclosure = $config['enclosure'] ?? null;
         return $this;
     }
 
@@ -48,17 +48,21 @@ abstract class AbstractReader implements ReaderInterface
         return file_exists($filename);
     }
 
+    // detect csv field seperataor
     public function initFieldSeparators(string $line): void
     {
-        $this->separator = str_contains($line, ';')
-            ? ';'
-            : ',';
-        if (preg_match('/["\']*' . $this->separator . '["\']*/', $line, $match)) {
-            if (count($match) === 3 && $match[1] === $match[2]) {
-                $this->enclosure = $match[1];
+        if (preg_match_all('/(["\']+)([,;])(["\']+)/', $line, $match)) {
+            
+            if (count($match[1]) === count($match[2])  and count($match[2]) === count($match[3])) {
+                if (empty($this->enclosure)) {
+                    $this->enclosure = $match[1];
+                }
+                if (empty($this->separator)) {
+                    $this->separator = $match[2];
+                }
+                
             }
         }
     }
-
-
+    
 }
