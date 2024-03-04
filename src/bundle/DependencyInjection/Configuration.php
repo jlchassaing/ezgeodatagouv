@@ -51,6 +51,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->booleanNode('do_geocoding')->defaultFalse()->end()
                     ->scalarNode('csv_field_separator')->defaultValue(';')->end()
+            ->scalarNode('enclosure')->defaultValue('"')->end()
                     ->scalarNode('content_type')->isRequired()
                     ->info('content_type identifier to import content')->end()
                     ->scalarNode('language')->defaultValue('eng-GB')->end()
