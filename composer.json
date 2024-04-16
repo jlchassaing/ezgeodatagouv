@@ -17,8 +17,7 @@
     }
   ],
   "require": {
-    "php": "^7.0|^8.1",
-    "ezsystems/ezplatform-kernel": "^1.1"
+    "php": "^7.0|^8.1"
   },
   "autoload": {
     "psr-4": {
