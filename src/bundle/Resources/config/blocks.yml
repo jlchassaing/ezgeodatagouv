@@ -1,4 +1,4 @@
-ezplatform_page_fieldtype:
+ibexaplatform_page_fieldtype:
   blocks:
     geo_block:
       name: Geo Block

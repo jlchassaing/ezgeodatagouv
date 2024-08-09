@@ -2,7 +2,7 @@ const path = require('path')
 
 const deps = {
   leaflet: path.resolve(
-    './vendor/ezsystems/ezplatform-admin-ui-assets/Resources/public/vendors/leaflet/dist/leaflet.css'
+    './vendor/ibexa/admin-ui-assets/src/bundle/Resources/public/vendors/leaflet/dist/leaflet.css'
   ),
   bundle: path.resolve(__dirname, '../public/css/style.css'),
 }

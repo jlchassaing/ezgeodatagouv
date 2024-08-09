@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @author jlchassaing <jlchassaing@gmail.com>
+ *
  * @licence MIT
  */
 
@@ -13,26 +15,23 @@ use CodeRhapsodie\DataflowBundle\DataflowType\DataflowTypeInterface;
 use CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory;
 use CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter;
 use eZGeoDataGouv\Config\ConfigManager;
+use eZGeoDataGouv\Config\Exception\ConfigurationException;
 use eZGeoDataGouv\DataFlow\FileReader;
 use eZGeoDataGouv\DataFlow\GeocodingFileReader;
+use eZGeoDataGouv\DataFlow\ReaderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implements DataflowTypeInterface
 {
-    /** @var \CodeRhapsodie\EzDataflowBundle\Writer\ContentWriter */
-    protected $contentWriter;
+    protected ContentWriter $contentWriter;
 
-    /** @var \CodeRhapsodie\EzDataflowBundle\Factory\ContentStructureFactory */
-    protected $contentStructureFactory;
+    protected ContentStructureFactory $contentStructureFactory;
 
-    /** @var \eZGeoDataGouv\DataFlow\FileReader */
-    protected $fileReader;
+    protected FileReader $fileReader;
 
-    /** @var \eZGeoDataGouv\DataFlow\GeocodingFileReader */
-    protected $geocodingFileReader;
+    protected GeocodingFileReader $geocodingFileReader;
 
-    /** @var \eZGeoDataGouv\Config\ConfigManager */
-    protected $configManager;
+    protected ConfigManager $configManager;
 
     /**
      * DataGouvImportLocationsDataFlowType constructor.
@@ -61,6 +60,9 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
         return ['dtgi'];
     }
 
+    /**
+     * @throws ConfigurationException
+     */
     protected function buildDataflow(DataflowBuilder $builder, array $options): void
     {
         $resourceName = $options['resource'];
@@ -76,15 +78,15 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
      * Use this methods to manage fields in data before creating content
      * one usecase could be to format the naming field.
      */
-    protected function addFilterTask(DataflowBuilder $builder)
+    protected function addFilterTask(DataflowBuilder $builder): void
     {
         $builder->addStep(function ($data) {
-            /** Put your code here to invalidate a row return null */
+            /* Put your code here to invalidate a row return null */
             return $data;
         });
     }
 
-    protected function addCsvFieldMapping(DataflowBuilder $builder, $options, $config)
+    protected function addCsvFieldMapping(DataflowBuilder $builder, $options, $config): void
     {
         $builder->addStep(function ($data) use ($config, $options) {
             if (!isset($data[$config['id_key']])) {
@@ -134,13 +136,11 @@ class DataGouvImportLocationsDataFlowType extends AbstractDataflowType implement
     }
 
     /**
-     * @param bool $do_geocoding
-     *
-     * @return \eZGeoDataGouv\DataFlow\ReaderInterface
+     * @return ReaderInterface
      */
-    protected function getReader($resourceConfig)
+    protected function getReader($resourceConfig): ReaderInterface
     {
-        if ($resourceConfig['do_geocoding'] === true) {
+        if (true === $resourceConfig['do_geocoding']) {
             return $this->geocodingFileReader->init($resourceConfig);
         } else {
             return $this->fileReader->init($resourceConfig);

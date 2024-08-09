@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace eZGeoDataGouv\DataFlow\Field;
 
 use CodeRhapsodie\EzDataflowBundle\Core\Field\FieldValueCreatorInterface;
-use EzSystems\EzPlatformMatrixFieldtype\FieldType\Value as EzMatrix;
-use eZ\Publish\Core\FieldType\Value;
+use Ibexa\Core\FieldType\Value;
+use Ibexa\FieldTypeMatrix\FieldType\Value as EzMatrix;
 
 class EzMatrixFieldValueCreator implements FieldValueCreatorInterface
 {
-
     public function supports(string $fieldTypeIdentifier): bool
     {
-        return $fieldTypeIdentifier === 'ezmatrix';
+        return 'ezmatrix' === $fieldTypeIdentifier;
     }
 
     public function createValue(string $fieldTypeIdentifier, $hash): Value

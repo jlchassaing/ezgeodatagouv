@@ -1,6 +1,7 @@
 <?php
 /**
  * @author jlchassaing <jlchassaing@gmail.com>
+ *
  * @licence MIT
  */
 
@@ -17,6 +18,7 @@ abstract class AbstractReader implements ReaderInterface
         $this->config = $config;
         $this->separator = $config['csv_field_separator'] ?? ';';
         $this->enclosure = $config['enclosure'] ?? '';
+
         return $this;
     }
 
@@ -24,7 +26,7 @@ abstract class AbstractReader implements ReaderInterface
 
     public function fileExists(string $filename): bool
     {
-        if (preg_match('/^(http[s]*|ftp):\/\//',$filename, $matches)){
+        if (preg_match('/^(http[s]*|ftp):\/\//', $filename, $matches)) {
             $ch = curl_init();
             $options = [
                 CURLOPT_FOLLOWLOCATION => 1,
@@ -33,18 +35,19 @@ abstract class AbstractReader implements ReaderInterface
                 CURLOPT_URL => $filename,
             ];
 
-           curl_setopt_array($ch, $options);
+            curl_setopt_array($ch, $options);
 
             // Execute
             $res = curl_exec($ch);
 
             // Check HTTP status code
             if (!curl_errno($ch)) {
-                return curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200;
+                return 200 === curl_getinfo($ch, CURLINFO_HTTP_CODE);
             }
+
             return false;
-            
         }
+
         return file_exists($filename);
     }
 
@@ -53,12 +56,10 @@ abstract class AbstractReader implements ReaderInterface
         $this->separator = str_contains($line, ';')
             ? ';'
             : ',';
-        if (preg_match('/["\']*' . $this->separator . '["\']*/', $line, $match)) {
-            if (count($match) === 3 && $match[1] === $match[2]) {
+        if (preg_match('/["\']*'.$this->separator.'["\']*/', $line, $match)) {
+            if (3 === count($match) && $match[1] === $match[2]) {
                 $this->enclosure = $match[1];
             }
         }
     }
-
-
 }
