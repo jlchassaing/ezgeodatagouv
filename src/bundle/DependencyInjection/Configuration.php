@@ -1,44 +1,21 @@
 <?php
 /**
  * @author jlchassaing <jlchassaing@gmail.com>
+ *
  * @licence MIT
  */
 
 namespace eZGeoDataGouvBundle\DependencyInjection;
 
-
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-
 /**
- * Class Configuration
- * @package eZGeoDataGouvBundle\DependencyInjection
- *
- * ez_geo_data_gouv:
- *  resources:
- *      gie_unites:
- *          do_geocoding: false
- *          mapping:
- *              id_key:
- *              longitude:
- *              latitude:
- *              adresse:
- *          geocoding_fields:
- *              columns:
- *                  - voie
- *                  - commune
- *              postcode:
- *              inseecode:
- *              result_columns:
- *                  - longitude
- *                  - latitude
- *
- *
+ * Class Configuration.
  */
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('ez_geo_data_gouv');
         $rootNode = $treeBuilder->getRootNode();
@@ -51,7 +28,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->booleanNode('do_geocoding')->defaultFalse()->end()
                     ->scalarNode('csv_field_separator')->defaultValue(';')->end()
-            ->scalarNode('enclosure')->defaultValue('"')->end()
+                    ->scalarNode('enclosure')->defaultValue('"')->end()
                     ->scalarNode('content_type')->isRequired()
                     ->info('content_type identifier to import content')->end()
                     ->scalarNode('language')->defaultValue('eng-GB')->end()
@@ -81,8 +58,8 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('datatype')->isRequired()
                                         ->validate()
-                                            ->ifNotInArray(['ezurl', 'ezstring', 'ezmatrix','ezemail'])
-                                            ->thenInvalid("Should be of type ezstring, ezurl or ezmatrix")
+                                            ->ifNotInArray(['ezurl', 'ezstring', 'ezmatrix', 'ezemail'])
+                                            ->thenInvalid('Should be of type ezstring, ezurl or ezmatrix')
                                         ->end()
                                     ->end()
                                     ->variableNode('value')->isRequired()->end()
@@ -104,16 +81,14 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->beforeNormalization()
-                        ->always(function($v){
-
-                            if (!array_key_exists('result_columns',$v)){
+                        ->always(function ($v) {
+                            if (!array_key_exists('result_columns', $v)) {
                                 $v['result_columns'] = ['longiude', 'latitude'];
-                            }
-                            else{
-                                if(!in_array('longitude', $v['result_columns'])){
+                            } else {
+                                if (!in_array('longitude', $v['result_columns'])) {
                                     $v['result_columns'][] = 'longitude';
                                 }
-                                if (!in_array('latitude', $v['result_columns'])){
+                                if (!in_array('latitude', $v['result_columns'])) {
                                     $v['result_columns'][] = 'latitude';
                                 }
                             }
@@ -124,9 +99,9 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->validate()
-                    ->ifTrue(function ($v){
-                        if (!$v['do_geocoding']){
-                            return !array_key_exists('address',$v) or !is_array($v['address']);
+                    ->ifTrue(function ($v) {
+                        if (!$v['do_geocoding']) {
+                            return !array_key_exists('address', $v) or !is_array($v['address']);
                         } else {
                             return !array_key_exists('geocoding_fields', $v);
                         }

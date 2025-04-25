@@ -1,11 +1,11 @@
 <?php
 /**
  * @author jlchassaing <jlchassaing@gmail.com>
+ *
  * @licence MIT
  */
 
 namespace eZGeoDataGouv\Tests\DataFlow;
-
 
 use eZGeoDataGouv\DataFlow\FileReader;
 use eZGeoDataGouv\DataFlow\FileReaderException;
@@ -14,7 +14,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FileReaderTest extends TestCase
 {
-
     public function testFileDoesNotExist()
     {
         $fileReader = new FileReader();
@@ -22,11 +21,10 @@ class FileReaderTest extends TestCase
         $this->expectException(FileReaderException::class);
         $reader = $fileReader->read($filename);
         foreach ($reader as $item) {
-
-       }
+        }
     }
 
-    private function buildCsvData($nbItems, $nbLines,$makeLongKeys = false)
+    private function buildCsvData($nbItems, $nbLines, $makeLongKeys = false): array
     {
         $result = ['csv' => '', 'expected' => []];
         $temp = [];
@@ -34,35 +32,36 @@ class FileReaderTest extends TestCase
         $value = 'csv_data_value';
         $arrayKeys = [];
 
-        $nbLines++;
+        ++$nbLines;
 
-        for($lineIndex = 0; $lineIndex <$nbLines; $lineIndex++) {
-            $linePrefix = $lineIndex === 0 ? $key : $value;
+        for ($lineIndex = 0; $lineIndex < $nbLines; ++$lineIndex) {
+            $linePrefix = 0 === $lineIndex ? $key : $value;
             $temp = [];
-            for($itemIndex = 0; $itemIndex < $nbItems; $itemIndex++) {
+            for ($itemIndex = 0; $itemIndex < $nbItems; ++$itemIndex) {
                 $newItem = $linePrefix.'_'.$itemIndex;
                 $newItem = $makeLongKeys ? md5($newItem) : $newItem;
-                if ($lineIndex === 0) {
+                if (0 === $lineIndex) {
                     $arrayKeys[] = $newItem;
                 }
                 $temp[] = $newItem;
             }
             $result['csv'] .= '"'.implode('";"', $temp).'"'.PHP_EOL;
-            if ($lineIndex > 0)
-
-                $result['expected'][]= array_combine($arrayKeys,$temp);
+            if ($lineIndex > 0) {
+                $result['expected'][] = array_combine($arrayKeys, $temp);
+            }
         }
+
         return $result;
     }
 
-    function testGetData()
+    public function testGetData()
     {
         $fileSystem = new Filesystem();
 
-        $tmpFile = $fileSystem->tempnam('/tmp','test_data_file.csv');
+        $tmpFile = $fileSystem->tempnam('/tmp', 'test_data_file.csv');
 
-        $testData = $this->buildCsvData(5,2);
-        $fileSystem->appendToFile($tmpFile,$testData['csv']);
+        $testData = $this->buildCsvData(5, 2);
+        $fileSystem->appendToFile($tmpFile, $testData['csv']);
 
         $newFileReader = new FileReader();
         $index = 0;
@@ -70,24 +69,23 @@ class FileReaderTest extends TestCase
 
         $reader = $newFileReader->read($tmpFile);
         foreach ($reader as $item) {
-
             if (!empty($item)) {
                 foreach ($item as $key => $value) {
-                    $this->assertEquals($value,$testData['expected'][$index][$key]);
+                    $this->assertEquals($value, $testData['expected'][$index][$key]);
                 }
             }
         }
         $fileSystem->remove($tmpFile);
     }
 
-    function testGetLargeData()
+    public function testGetLargeData()
     {
         $fileSystem = new Filesystem();
 
-        $tmpFile = $fileSystem->tempnam('/tmp','test_data_file.csv');
+        $tmpFile = $fileSystem->tempnam('/tmp', 'test_data_file.csv');
 
-        $testData = $this->buildCsvData(50,5,true);
-        $fileSystem->appendToFile($tmpFile,$testData['csv']);
+        $testData = $this->buildCsvData(50, 5, true);
+        $fileSystem->appendToFile($tmpFile, $testData['csv']);
 
         $newFileReader = new FileReader();
         $index = 0;
@@ -95,14 +93,12 @@ class FileReaderTest extends TestCase
 
         $reader = $newFileReader->read($tmpFile);
         foreach ($reader as $item) {
-
             if (!empty($item)) {
                 foreach ($item as $key => $value) {
-                    $this->assertEquals($value,$testData['expected'][$index][$key]);
+                    $this->assertEquals($value, $testData['expected'][$index][$key]);
                 }
             }
         }
         $fileSystem->remove($tmpFile);
     }
-
 }

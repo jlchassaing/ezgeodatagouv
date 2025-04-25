@@ -1,14 +1,12 @@
 <?php
 /**
  * @author jlchassaing <jlchassaing@gmail.com>
+ *
  * @licence MIT
  */
 
 namespace eZGeoDataGouvBundle\DependencyInjection;
 
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
-use eZGeoDataGouv\Config\ConfigManager;
-use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -16,10 +14,12 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Yaml\Yaml;
 
-
 class EzGeoDataGouvExtension extends Extension implements PrependExtensionInterface
 {
-    public function load(array $configs, ContainerBuilder $container)
+    /**
+     * @throws \Exception
+     */
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -35,19 +35,17 @@ class EzGeoDataGouvExtension extends Extension implements PrependExtensionInterf
         $definition->setArgument(0, $config['api_url']);
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $this->prependFileContent($container, 'blocks.yml');
         $this->prependFileContent($container, 'views.yml');
     }
 
-    public function prependFileContent(ContainerBuilder $container, $file)
+    public function prependFileContent(ContainerBuilder $container, $file): void
     {
-        $configs = Yaml::parseFile(__DIR__ . '/../Resources/config/' . $file);
+        $configs = Yaml::parseFile(__DIR__.'/../Resources/config/'.$file);
         foreach ($configs as $parameter => $config) {
             $container->prependExtensionConfig($parameter, $config);
         }
     }
-
-
 }

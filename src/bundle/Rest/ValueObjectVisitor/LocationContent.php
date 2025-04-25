@@ -2,12 +2,9 @@
 
 namespace eZGeoDataGouvBundle\Rest\ValueObjectVisitor;
 
-
-
-use eZGeoDataGouvBundle\Rest\Values\LocationContent as Value;
-use EzSystems\EzPlatformRest\Output\Generator;
-use EzSystems\EzPlatformRest\Output\Visitor;
-use EzSystems\EzPlatformRest\Server\Output\ValueObjectVisitor\RestContent;
+use Ibexa\Contracts\Rest\Output\Generator;
+use Ibexa\Contracts\Rest\Output\Visitor;
+use Ibexa\Rest\Server\Output\ValueObjectVisitor\RestContent;
 
 /**
  * CreatedContent value object visitor.
@@ -15,11 +12,11 @@ use EzSystems\EzPlatformRest\Server\Output\ValueObjectVisitor\RestContent;
 class LocationContent extends RestContent
 {
     /**
-     * @param \EzSystems\EzPlatformRest\Output\Visitor $visitor
-     * @param \EzSystems\EzPlatformRest\Output\Generator $generator
-     * @param \EzSystems\EzPlatformRest\Server\Values\RestContent $data
+     * @param \Ibexa\Contracts\Rest\Output\Visitor $visitor
+     * @param \Ibexa\Contracts\Rest\Output\Generator $generator
+     * @param \Ibexa\Rest\Server\Values\RestContent $data
      */
-    public function visit(Visitor $visitor, Generator $generator, $data)
+    public function visit(Visitor $visitor, Generator $generator, $data): void
     {
         $generator->startHashElement('Content');
         $generator->startAttribute('distance', $data->distance);

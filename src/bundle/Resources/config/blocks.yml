@@ -1,9 +1,9 @@
-ezplatform_page_fieldtype:
+ibexaplatform_page_fieldtype:
   blocks:
     geo_block:
       name: Geo Block
       category: default
-      thumbnail: '/bundles/ezplatformadminui/img/ez-icons.svg#places'
+      thumbnail: '/bundles/ibexaadminui/img/ibexa-icons.svg#places'
       views:
         default:
           name: 'Default block layout'
